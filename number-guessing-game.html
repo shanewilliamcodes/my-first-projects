@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .game {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .subtitle { font-size: 14px; color: #666; margin: 0 0 1.5rem; }
+    .input-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+    input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      padding: 8px 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover { background: #f5f5f5; }
+    .feedback {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 1rem;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .history { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+    .pill {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 1px solid #ddd;
+      color: #555;
+    }
+    .pill.high { background: #E6F1FB; border-color: #85B7EB; color: #185FA5; }
+    .pill.low { background: #FAECE7; border-color: #F0997B; color: #993C1D; }
+    .win-banner {
+      background: #EAF3DE;
+      border: 1px solid #97C459;
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #3B6D11;
+      font-size: 14px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .meta {
+      font-size: 13px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+    .reset-btn {
+      border: none;
+      background: none;
+      color: #888;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 13px;
+      padding: 0;
+    }
+    .reset-btn:hover { color: #333; }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>Guess the number</h1>
+    <p class="subtitle">I'm thinking of a number between <strong>1</strong> and <strong>100</strong>.</p>
+
+    <div class="input-row">
+      <input type="number" id="guessInput" min="1" max="100" placeholder="Your guess..." />
+      <button onclick="makeGuess()">Guess</button>
+    </div>
+
+    <div class="feedback" id="feedback">Type a number and hit Guess to start!</div>
+    <div class="win-banner" id="winBanner"></div>
+    <div class="history" id="history"></div>
+
+    <div class="meta">
+      <span id="attemptCount">Attempts: 0</span>
+      <button class="reset-btn" onclick="resetGame()">New game</button>
+    </div>
+  </div>
+
+  <script>
+    let secret = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    let gameOver = false;
+
+    function makeGuess() {
+      if (gameOver) return;
+      const input = document.getElementById('guessInput');
+      const guess = parseInt(input.value);
+
+      if (!guess || guess < 1 || guess > 100) {
+        document.getElementById('feedback').textContent = 'Please enter a number between 1 and 100.';
+        return;
+      }
+
+      attempts++;
+      document.getElementById('attemptCount').textContent = `Attempts: ${attempts}`;
+
+      const pill = document.createElement('span');
+      pill.className = `pill ${guess > secret ? 'high' : guess < secret ? 'low' : ''}`;
+      pill.textContent = guess;
+      document.getElementById('history').appendChild(pill);
+
+      if (guess === secret) {
+        document.getElementById('feedback').textContent = `You got it! The number was ${secret}.`;
+        const banner = document.getElementById('winBanner');
+        banner.style.display = 'block';
+        banner.innerHTML = `🎉 You won in <strong>${attempts}</strong> ${attempts === 1 ? 'guess' : 'guesses'}! ${getRating(attempts)}`;
+        gameOver = true;
+      } else if (guess > secret) {
+        document.getElementById('feedback').textContent = '⬇️ Too high! Try a lower number.';
+      } else {
+        document.getElementById('feedback').textContent = '⬆️ Too low! Try a higher number.';
+      }
+
+      input.value = '';
+      input.focus();
+    }
+
+    function getRating(n) {
+      if (n <= 3) return '🤯 Incredible!';
+      if (n <= 5) return '⭐ Excellent!';
+      if (n <= 7) return '👍 Nice work!';
+      return '😅 Keep practicing!';
+    }
+
+    function resetGame() {
+      secret = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      gameOver = false;
+      document.getElementById('guessInput').value = '';
+      document.getElementById('feedback').textContent = 'Type a number and hit Guess to start!';
+      document.getElementById('history').innerHTML = '';
+      document.getElementById('winBanner').style.display = 'none';
+      document.getElementById('attemptCount').textContent = 'Attempts: 0';
+    }
+
+    document.getElementById('guessInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') makeGuess();
+    });
+  </script>
+</body>
+</html>
