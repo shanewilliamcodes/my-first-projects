@@ -9,6 +9,12 @@ html, body, #root {
   height: 100%;
 }
 
+/* never allow sideways scrolling on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;

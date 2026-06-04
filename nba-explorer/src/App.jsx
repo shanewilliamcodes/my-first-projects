@@ -66,7 +66,7 @@ function PlayerCard({ p, onClick, statKey = 'pts' }) {
   return (
     <button
       onClick={onClick}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-slate-800/70 to-slate-900/80 text-left shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/40 hover:shadow-orange-500/10"
+      className="group relative w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-slate-800/70 to-slate-900/80 text-left shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/40 hover:shadow-orange-500/10"
     >
       <div className="relative h-44 overflow-hidden bg-gradient-to-b from-orange-500/20 to-transparent">
         {p.headshot ? (
@@ -692,7 +692,7 @@ export default function App() {
                   {/* league leaders (default view — stars first) */}
                   <div className="mb-6 flex flex-col items-center gap-3">
                     <h2 className="text-lg font-bold text-white">League Leaders</h2>
-                    <div className="flex gap-1 rounded-full border border-white/10 bg-slate-800/60 p-1">
+                    <div className="flex flex-wrap justify-center gap-1 rounded-3xl border border-white/10 bg-slate-800/60 p-1">
                       {LEADER_TABS.map(([key, label]) => (
                         <button
                           key={key}
@@ -708,7 +708,7 @@ export default function App() {
                   </div>
                   <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                     {leaders.map((p, i) => (
-                      <div key={p.id} className="relative">
+                      <div key={p.id} className="relative min-w-0">
                         <span className="absolute -left-1 -top-1 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white shadow">
                           {i + 1}
                         </span>
