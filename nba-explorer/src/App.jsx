@@ -232,9 +232,27 @@ function PlayerDetailModal({ player: p, onClose }) {
           {p.birthPlace && <Pill>📍 {p.birthPlace}</Pill>}
         </div>
 
+        {/* embedded highlight video (top scorers) */}
+        {p.highlightVideo && (
+          <div className="px-6 pb-4">
+            <div className="aspect-video w-full overflow-hidden rounded-xl border border-white/10">
+              <iframe
+                className="h-full w-full"
+                src={`https://www.youtube.com/embed/${p.highlightVideo}`}
+                title={`${p.name} highlights`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
+
         {/* actions */}
         <div className="flex flex-wrap gap-2 px-6 pb-8">
-          <LinkBtn href={ytUrl(p.name)} color="bg-red-600 hover:bg-red-500">▶ Highlights</LinkBtn>
+          {!p.highlightVideo && (
+            <LinkBtn href={ytUrl(p.name)} color="bg-red-600 hover:bg-red-500">▶ Highlights</LinkBtn>
+          )}
           <LinkBtn href={espnUrl(p.id)} color="bg-white/10 hover:bg-white/20">ESPN Profile</LinkBtn>
           <LinkBtn href={wikiUrl(p.name)} color="bg-white/10 hover:bg-white/20">Wikipedia</LinkBtn>
           <LinkBtn href={xUrl(p.name)} color="bg-white/10 hover:bg-white/20">𝕏 Search</LinkBtn>

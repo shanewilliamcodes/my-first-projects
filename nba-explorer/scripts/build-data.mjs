@@ -141,6 +141,45 @@ async function main() {
     if (++done % 50 === 0) console.log(`  …${done}/${players.length} stats`);
   });
 
+  // OPTIONAL: highlight videos for the top scorers, via the YouTube Data API.
+  // Only runs if YT_KEY is set in the environment (never hardcode the key).
+  // Each search costs 100 quota units; free tier is 10,000/day → cap at ~100.
+  const ytKey = process.env.YT_KEY;
+  if (ytKey) {
+    const top = players
+      .filter((p) => p.stats && p.stats.pts != null)
+      .sort((a, b) => (parseFloat(b.stats.pts) || 0) - (parseFloat(a.stats.pts) || 0))
+      .slice(0, 100);
+    console.log(`\nFetching highlight videos for top ${top.length} scorers…`);
+    let n = 0;
+    let quotaHit = false;
+    await mapLimit(top, 4, async (p) => {
+      if (quotaHit) return;
+      try {
+        const q = encodeURIComponent(`${p.name} highlights`);
+        const res = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${q}&key=${ytKey}`
+        );
+        const d = await res.json();
+        if (d.error) {
+          if (res.status === 403 || /quota/i.test(d.error.message || '')) {
+            quotaHit = true;
+            console.warn('  ⚠ YouTube quota/auth limit reached — stopping highlight fetch');
+          }
+          return;
+        }
+        p.highlightVideo = (d.items || [])[0]?.id?.videoId || null;
+      } catch {
+        /* leave highlightVideo unset → app falls back to a search link */
+      }
+      if (++n % 25 === 0) console.log(`  …${n}/${top.length} highlights`);
+    });
+    const got = players.filter((p) => p.highlightVideo).length;
+    console.log(`  embedded ${got} highlight videos`);
+  } else {
+    console.log('\n(no YT_KEY set — skipping highlight videos)');
+  }
+
   teams.sort((a, b) => a.name.localeCompare(b.name));
   players.sort((a, b) => a.name.localeCompare(b.name));
 
