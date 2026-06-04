@@ -42,6 +42,11 @@ function fold(s) {
 
 const FOLDED = PLAYERS.map((p) => fold(p.name));
 
+const BY_ID = new Map(PLAYERS.map((p) => [String(p.id), p]));
+export function getPlayerById(id) {
+  return BY_ID.get(String(id)) || null;
+}
+
 // Instant client-side substring search. Prefix matches rank first.
 export function searchPlayers(query) {
   const q = fold(query.trim());

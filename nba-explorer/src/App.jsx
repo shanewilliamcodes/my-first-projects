@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, PLAYER_COUNT } from './api';
+import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, getPlayerById, PLAYER_COUNT } from './api';
 import { fetchNews, fetchStandings, fetchGames } from './live';
+import awardsData from './data/awards.json';
 
 /* ---------------- helpers ---------------- */
 
@@ -518,6 +519,87 @@ function PlayoffsTab({ active }) {
   );
 }
 
+/* ---------------- awards ---------------- */
+
+const AWARD_ORDER = [
+  'MVP', 'Defensive Player of the Year', 'Rookie of the Year', 'Most Improved Player',
+  'Sixth Man of the Year', 'Clutch Player of the Year', 'Twyman-Stokes Teammate of the Year Award',
+  'All-NBA 1st Team', 'All-NBA 2nd Team', 'All-NBA 3rd Team',
+  'All-Defensive 1st Team', 'All-Defensive 2nd Team',
+  'All-Rookie 1st Team', 'All-Rookie 2nd Team',
+  'NBA Cup MVP', 'NBA Cup All-Tournament Team',
+  'NBA Eastern Conference Finals MVP', 'NBA Western Conference Finals MVP', 'All-Star MVP',
+];
+
+function WinnerChip({ w, onSelect, big }) {
+  const player = getPlayerById(w.id);
+  const headshot = player?.headshot || w.headshot;
+  const team = player?.team;
+  const inner = (
+    <>
+      <div className={`relative ${big ? 'h-28 w-28' : 'h-16 w-16'} overflow-hidden rounded-full bg-gradient-to-b from-orange-500/20 to-slate-800`}>
+        {headshot ? (
+          <img src={headshot} alt="" loading="lazy" className="absolute bottom-0 left-1/2 h-[130%] -translate-x-1/2 object-contain" />
+        ) : (
+          <div className="flex h-full items-center justify-center text-2xl opacity-40">🏀</div>
+        )}
+      </div>
+      <div className={`mt-2 font-bold text-white ${big ? 'text-lg' : 'text-xs'} leading-tight`}>{w.name}</div>
+      {team && <div className="text-[11px] text-orange-300/80">{team}</div>}
+    </>
+  );
+  const cls = `flex flex-col items-center text-center ${player ? 'transition hover:-translate-y-0.5' : ''}`;
+  return player ? (
+    <button onClick={() => onSelect(player)} className={cls}>{inner}</button>
+  ) : (
+    <div className={cls}>{inner}</div>
+  );
+}
+
+function AwardsTab({ onSelectPlayer }) {
+  const awards = useMemo(
+    () =>
+      [...awardsData.awards].sort((a, b) => {
+        const ai = AWARD_ORDER.indexOf(a.name);
+        const bi = AWARD_ORDER.indexOf(b.name);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+      }),
+    []
+  );
+  const singles = awards.filter((a) => a.winners.length === 1);
+  const teams = awards.filter((a) => a.winners.length > 1);
+
+  return (
+    <div className="mx-auto max-w-5xl">
+      <p className="mb-8 text-center text-sm text-slate-400">{awardsData.season - 1}-{String(awardsData.season).slice(2)} season awards & honors</p>
+
+      {/* individual awards */}
+      <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {singles.map((a) => (
+          <div key={a.name} className="flex flex-col items-center rounded-2xl border border-white/10 bg-gradient-to-b from-orange-500/10 to-slate-900/60 p-5 shadow-lg">
+            <div className="mb-3 text-center text-[11px] font-bold uppercase tracking-wider text-orange-300">🏆 {a.name}</div>
+            <WinnerChip w={a.winners[0]} onSelect={onSelectPlayer} big />
+          </div>
+        ))}
+      </div>
+
+      {/* team honors */}
+      <div className="space-y-6">
+        {teams.map((a) => (
+          <div key={a.name} className="rounded-2xl border border-white/10 bg-slate-800/40 p-5">
+            <div className="mb-4 text-center text-sm font-bold uppercase tracking-wider text-orange-300">{a.name}</div>
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
+              {a.winners.map((w) => (
+                <WinnerChip key={w.id} w={w} onSelect={onSelectPlayer} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- main app ---------------- */
 
 export default function App() {
@@ -562,6 +644,7 @@ export default function App() {
               ['teams', 'Teams'],
               ['compare', 'Compare'],
               ['playoffs', 'Playoffs'],
+              ['awards', 'Awards'],
               ['news', 'News'],
             ].map(([key, label]) => (
               <button
@@ -651,6 +734,8 @@ export default function App() {
           )}
 
           {tab === 'playoffs' && <PlayoffsTab active={tab === 'playoffs'} />}
+
+          {tab === 'awards' && <AwardsTab onSelectPlayer={setSelectedPlayer} />}
 
           {tab === 'news' && <NewsTab active={tab === 'news'} />}
         </>
