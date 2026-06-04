@@ -13,9 +13,23 @@ export function getNbaTeams() {
   return TEAMS;
 }
 
-// One team's roster, sorted by name.
+// Numeric value of a stat (they're stored as strings like "33.5"); -1 if none.
+function statNum(p, key) {
+  const n = parseFloat(p.stats?.[key]);
+  return isNaN(n) ? -1 : n;
+}
+
+// One team's roster, best players first (by points per game).
 export function getTeamRoster(teamId) {
-  return PLAYERS.filter((p) => p.teamId === teamId).sort((a, b) => a.name.localeCompare(b.name));
+  return PLAYERS.filter((p) => p.teamId === teamId).sort((a, b) => statNum(b, 'pts') - statNum(a, 'pts'));
+}
+
+// League leaders for a given stat — the default "stars first" view.
+export function getLeaders(key = 'pts', n = 30) {
+  return PLAYERS.filter((p) => p.stats && p.stats[key] != null)
+    .slice()
+    .sort((a, b) => statNum(b, key) - statNum(a, key))
+    .slice(0, n);
 }
 
 // Lowercase + strip accents so "jokic" matches "Jokić", "doncic" -> "Dončić".
@@ -41,7 +55,8 @@ export function searchPlayers(query) {
       const ap = a.name.startsWith(q) ? 0 : 1;
       const bp = b.name.startsWith(q) ? 0 : 1;
       if (ap !== bp) return ap - bp;
-      return a.name.localeCompare(b.name);
+      // within the same relevance tier, bigger stars (higher PPG) first
+      return statNum(b.p, 'pts') - statNum(a.p, 'pts');
     })
     .map((m) => m.p);
 }

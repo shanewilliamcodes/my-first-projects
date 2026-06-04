@@ -1,7 +1,13 @@
 import { useMemo, useState } from 'react';
-import { getNbaTeams, getTeamRoster, searchPlayers, PLAYER_COUNT } from './api';
+import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, PLAYER_COUNT } from './api';
 
 /* ---------------- helpers ---------------- */
+
+const enc = encodeURIComponent;
+const ytUrl = (name) => `https://www.youtube.com/results?search_query=${enc(name + ' highlights')}`;
+const wikiUrl = (name) => `https://en.wikipedia.org/wiki/Special:Search?search=${enc(name)}&go=Go`;
+const espnUrl = (id) => `https://www.espn.com/nba/player/_/id/${id}`;
+const xUrl = (name) => `https://x.com/search?q=${enc(name + ' NBA')}`;
 
 function Pill({ children }) {
   return (
@@ -17,7 +23,9 @@ function isHurt(p) {
 
 /* ---------------- player card ---------------- */
 
-function PlayerCard({ p, onClick }) {
+const STAT_LABEL = { pts: 'PPG', reb: 'RPG', ast: 'APG' };
+
+function PlayerCard({ p, onClick, statKey = 'pts' }) {
   const hurt = isHurt(p);
   return (
     <button
@@ -51,8 +59,10 @@ function PlayerCard({ p, onClick }) {
         <p className="truncate text-sm text-orange-300/90">{p.team}</p>
         <div className="mt-2 flex items-center justify-between text-xs">
           <span className="text-slate-400">{p.position || '—'}</span>
-          {p.stats?.pts != null && (
-            <span className="font-semibold text-white">{p.stats.pts} PPG</span>
+          {p.stats?.[statKey] != null && (
+            <span className="font-semibold text-white">
+              {p.stats[statKey]} {STAT_LABEL[statKey]}
+            </span>
           )}
         </div>
       </div>
@@ -137,9 +147,21 @@ function StatBox({ label, value, big }) {
 
 /* ---------------- player detail modal ---------------- */
 
+function LinkBtn({ href, color, children }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`rounded-xl px-4 py-2 text-sm font-semibold text-white transition ${color}`}
+    >
+      {children}
+    </a>
+  );
+}
+
 function PlayerDetailModal({ player: p, onClose }) {
   const s = p.stats;
-  const yt = `https://www.youtube.com/results?search_query=${encodeURIComponent(p.name + ' highlights')}`;
 
   return (
     <div
@@ -211,15 +233,11 @@ function PlayerDetailModal({ player: p, onClose }) {
         </div>
 
         {/* actions */}
-        <div className="px-6 pb-8">
-          <a
-            href={yt}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-500"
-          >
-            ▶ Watch Highlights
-          </a>
+        <div className="flex flex-wrap gap-2 px-6 pb-8">
+          <LinkBtn href={ytUrl(p.name)} color="bg-red-600 hover:bg-red-500">▶ Highlights</LinkBtn>
+          <LinkBtn href={espnUrl(p.id)} color="bg-white/10 hover:bg-white/20">ESPN Profile</LinkBtn>
+          <LinkBtn href={wikiUrl(p.name)} color="bg-white/10 hover:bg-white/20">Wikipedia</LinkBtn>
+          <LinkBtn href={xUrl(p.name)} color="bg-white/10 hover:bg-white/20">𝕏 Search</LinkBtn>
         </div>
       </div>
     </div>
@@ -231,11 +249,20 @@ function PlayerDetailModal({ player: p, onClose }) {
 export default function App() {
   const [tab, setTab] = useState('players');
   const [query, setQuery] = useState('');
+  const [leaderStat, setLeaderStat] = useState('pts');
   const [viewTeam, setViewTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   const teams = getNbaTeams();
   const results = useMemo(() => searchPlayers(query).slice(0, 60), [query]);
+  const leaders = useMemo(() => getLeaders(leaderStat, 30), [leaderStat]);
+  const searching = query.trim().length > 0;
+
+  const LEADER_TABS = [
+    ['pts', 'Points'],
+    ['reb', 'Rebounds'],
+    ['ast', 'Assists'],
+  ];
 
   return (
     <div className="relative z-10 mx-auto max-w-6xl px-4 pb-20">
@@ -275,28 +302,57 @@ export default function App() {
         <>
           {tab === 'players' && (
             <>
-              <div className="mx-auto mb-10 max-w-xl">
+              <div className="mx-auto mb-8 max-w-xl">
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Type any name — “luka”, “jokic”, “steph”, or just “ja”…"
+                  placeholder={`Search ${PLAYER_COUNT} players — “luka”, “jokic”, or just “ja”…`}
                   className="w-full rounded-xl border border-white/10 bg-slate-800/70 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-orange-400/60"
                 />
               </div>
 
-              {!query.trim() && (
-                <p className="py-16 text-center text-slate-500">
-                  Start typing to search {PLAYER_COUNT} NBA players.
-                </p>
+              {searching ? (
+                <>
+                  {results.length === 0 && (
+                    <p className="py-16 text-center text-slate-400">No players match “{query}”.</p>
+                  )}
+                  <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+                    {results.map((p) => (
+                      <PlayerCard key={p.id} p={p} onClick={() => setSelectedPlayer(p)} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* league leaders (default view — stars first) */}
+                  <div className="mb-6 flex flex-col items-center gap-3">
+                    <h2 className="text-lg font-bold text-white">League Leaders</h2>
+                    <div className="flex gap-1 rounded-full border border-white/10 bg-slate-800/60 p-1">
+                      {LEADER_TABS.map(([key, label]) => (
+                        <button
+                          key={key}
+                          onClick={() => setLeaderStat(key)}
+                          className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                            leaderStat === key ? 'bg-orange-500 text-white' : 'text-slate-300 hover:text-white'
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+                    {leaders.map((p, i) => (
+                      <div key={p.id} className="relative">
+                        <span className="absolute -left-1 -top-1 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white shadow">
+                          {i + 1}
+                        </span>
+                        <PlayerCard p={p} statKey={leaderStat} onClick={() => setSelectedPlayer(p)} />
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
-              {query.trim() && results.length === 0 && (
-                <p className="py-16 text-center text-slate-400">No players match “{query}”.</p>
-              )}
-              <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-                {results.map((p) => (
-                  <PlayerCard key={p.id} p={p} onClick={() => setSelectedPlayer(p)} />
-                ))}
-              </div>
             </>
           )}
 
