@@ -6,19 +6,19 @@
   <title>🏀 3-Point Contest</title>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
-    body{background:#080d18;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f1f5f9;overflow:hidden;}
+    body{background:#050810;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f1f5f9;overflow:hidden;}
     canvas{display:block;}
-    .screen{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#080d18;background-image:radial-gradient(ellipse at 50% 0%,#1a2744 0%,#080d18 70%);z-index:100;padding:2rem;overflow-y:auto;}
+    .screen{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#050810;background-image:radial-gradient(ellipse at 50% 0%,#0f1e3a 0%,#050810 70%);z-index:100;padding:2rem;overflow-y:auto;}
     .screen.hidden{display:none;}
-    .logo{font-size:72px;margin-bottom:.5rem;filter:drop-shadow(0 0 20px rgba(192,39,45,.5));}
-    h1{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;background:linear-gradient(135deg,#fff 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .logo{font-size:72px;margin-bottom:.5rem;filter:drop-shadow(0 0 24px rgba(192,39,45,.6));}
+    h1{font-size:34px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;background:linear-gradient(135deg,#fff 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     .subtitle{font-size:13px;color:#64748b;margin-bottom:2rem;line-height:1.9;text-align:center;}
     .subtitle em{color:#F4C430;font-style:normal;font-weight:600;}
     input[type=text]{width:100%;max-width:340px;padding:14px 18px;font-size:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#f1f5f9;outline:none;margin-bottom:12px;transition:border-color .2s;}
     input[type=text]:focus{border-color:rgba(192,39,45,.6);}
     input[type=text]::placeholder{color:#475569;}
-    .btn-primary{width:100%;max-width:340px;padding:16px;font-size:16px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(135deg,#C0272D 0%,#8B1A1E 100%);color:white;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 24px rgba(192,39,45,.4);transition:transform .1s,box-shadow .1s;margin-bottom:12px;}
-    .btn-primary:active{transform:translateY(1px);box-shadow:0 2px 12px rgba(192,39,45,.3);}
+    .btn-primary{width:100%;max-width:340px;padding:16px;font-size:16px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(135deg,#C0272D 0%,#8B1A1E 100%);color:white;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 24px rgba(192,39,45,.45);transition:transform .1s,box-shadow .1s;margin-bottom:12px;}
+    .btn-primary:active{transform:translateY(1px);}
     .btn-secondary{background:none;border:1px solid rgba(255,255,255,.1);color:#64748b;font-size:12px;padding:8px 18px;border-radius:20px;cursor:pointer;}
     .res-header{font-size:13px;font-weight:500;color:#64748b;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
     .big-score{font-size:88px;font-weight:800;color:#C0272D;line-height:1;text-shadow:0 0 40px rgba(192,39,45,.4);margin:.5rem 0;}
@@ -37,7 +37,7 @@
     .lb-row{display:flex;align-items:center;padding:8px 12px;border-radius:8px;margin-bottom:4px;font-size:13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);}
     .lb-row.me{background:rgba(192,39,45,.12);border-color:rgba(192,39,45,.3);}
     .lb-rank{width:28px;font-size:12px;color:#475569;font-weight:600;}
-    .lb-rank.gold{color:#F4C430;} .lb-rank.silver{color:#94a3b8;} .lb-rank.bronze{color:#c2885a;}
+    .lb-rank.gold{color:#F4C430;}.lb-rank.silver{color:#94a3b8;}.lb-rank.bronze{color:#c2885a;}
     .lb-name{flex:1;color:#e2e8f0;font-weight:500;text-align:left;}
     .lb-score{font-weight:700;color:#f1f5f9;}
     .lb-date{font-size:11px;color:#475569;margin-left:10px;}
@@ -74,506 +74,698 @@
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 <script>
-// ── Constants ────────────────────────────────────────────────
-const SPOTS = ['L Corner','L Wing','Top Key','R Wing','R Corner'];
-const MAKES = ['Splash!','Pure.','Nothing but net.','Automatic.','Money.','Clean.','Butter.','Ice cold.'];
+// ─── Global constants ────────────────────────────────────────────────────────
+const SPOT_NAMES = ['L Corner','L Wing','Top Key','R Wing','R Corner'];
+const MAKES  = ['Splash!','Pure.','Nothing but net.','Automatic.','Money.','Clean.','Butter.','Ice cold.'];
 const MISSES = ['Off the back.','Brick.','Too flat.','Clank.','Just missed.','Rattled out.'];
-const rnd = a => a[Math.floor(Math.random() * a.length)];
-const W = 420, H = 700;
+const rnd = a => a[Math.floor(Math.random()*a.length)];
 
-// Court geometry
-const CX = W / 2;
-const HOOP_Y = 108;
-const ARC_R = 148;
-function arcPt(deg){ const a=deg*Math.PI/180; return {x:Math.round(CX+ARC_R*Math.cos(a)),y:Math.round(HOOP_Y+ARC_R*Math.sin(a))}; }
-const SPOT_POS = [arcPt(180),arcPt(145),arcPt(90),arcPt(35),arcPt(0)];
-const BASELINE_Y = HOOP_Y + ARC_R + 48;
+// Canvas — LANDSCAPE, like a TV broadcast
+const W = 640, H = 400;
 
-// Layout Y positions (below court)
-const INDICATOR_Y = BASELINE_Y + 14;
-const TIMER_Y     = INDICATOR_Y + 22;
-const BOXES_Y     = TIMER_Y + 52;
-const DOTS_Y      = BOXES_Y + 62;
-const PM_Y        = DOTS_Y + 32;
-const BTN_Y       = PM_Y + 52;
-const FEEDBACK_Y  = BTN_Y + 62;
+// ─── Side-view court geometry ────────────────────────────────────────────────
+const FLOOR_Y   = 305;          // court floor line
+const RIM_X     = 540;          // left edge of rim
+const RIM_W     = 28;           // rim diameter
+const RIM_Y     = 202;          // rim height
+const BB_X      = RIM_X+RIM_W; // backboard x
+const BB_TOP    = 160;
+const BB_BOT    = 258;
 
-// ── Global state ─────────────────────────────────────────────
-let playerName = '', bestScore = 0, muted = false, audioCtx = null;
-const state = {
-  score:0, spotIdx:0, ballIdx:0, timerSec:60, gameActive:false,
+// Player/ball start positions per spot (x along the floor)
+// Corner shots are closer to baseline (further right), top-key is furthest left
+const SPOT_X = [148, 178, 218, 262, 296];
+const SHOT_LABELS = ['Corner','Wing','Top Key','Wing','Corner'];
+
+// ─── Shared state ────────────────────────────────────────────────────────────
+let playerName='', bestScore=0, muted=false, audioCtx=null;
+const S = {
+  score:0, spotIdx:0, ballIdx:0, timerSec:60, active:false,
   spotScores:[0,0,0,0,0],
-  ballResults:[], // [spot][ball] = true/false/null
-  shotsMade:0, shotsAttempted:0, currentStreak:0, maxStreak:0, isNew:false
+  results:[],   // [spot][ball] = true/false/null
+  made:0, attempted:0, streak:0, maxStreak:0, isNew:false
 };
 
-// ── Audio ────────────────────────────────────────────────────
-function getCtx(){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
+// ─── Audio ───────────────────────────────────────────────────────────────────
+function ctx(){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
 function toggleMute(){ muted=!muted; document.getElementById('mute-btn').textContent=muted?'🔇 Sound off':'🔊 Sound on'; }
-function playBeep(freq=880,dur=0.08){
-  if(muted)return; const ctx=getCtx();
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.frequency.value=freq; o.type='sine';
-  g.gain.setValueAtTime(.3,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);
-  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+dur);
+function beep(f=880,d=.08,t='sine',v=.3){
+  if(muted)return; const c=ctx(),o=c.createOscillator(),g=c.createGain();
+  o.type=t; o.frequency.value=f;
+  g.gain.setValueAtTime(v,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);
+  o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+d);
 }
-function playSwish(isMoney){
-  if(muted)return; const ctx=getCtx();
-  const buf=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.25),ctx.sampleRate);
+function playSwish(money){
+  if(muted)return; const c=ctx();
+  const buf=c.createBuffer(1,Math.floor(c.sampleRate*.25),c.sampleRate);
   const d=buf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
-  const src=ctx.createBufferSource(); src.buffer=buf;
-  const f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=isMoney?3500:2800; f.Q.value=.8;
-  const g=ctx.createGain(); g.gain.setValueAtTime(.4,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
-  src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(); src.stop(ctx.currentTime+.25);
-  if(isMoney){
-    const o=ctx.createOscillator(),g2=ctx.createGain(); o.type='sine';
-    o.frequency.setValueAtTime(880,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(1320,ctx.currentTime+.15);
-    g2.gain.setValueAtTime(.3,ctx.currentTime); g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.35);
-    o.connect(g2); g2.connect(ctx.destination); o.start(ctx.currentTime+.05); o.stop(ctx.currentTime+.35);
-  }
+  const src=c.createBufferSource(); src.buffer=buf;
+  const f=c.createBiquadFilter(); f.type='bandpass'; f.frequency.value=money?3500:2800; f.Q.value=.8;
+  const g=c.createGain(); g.gain.setValueAtTime(.4,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.25);
+  src.connect(f); f.connect(g); g.connect(c.destination); src.start(); src.stop(c.currentTime+.25);
+  if(money){ const o=c.createOscillator(),g2=c.createGain(); o.type='sine';
+    o.frequency.setValueAtTime(880,c.currentTime); o.frequency.exponentialRampToValueAtTime(1320,c.currentTime+.15);
+    g2.gain.setValueAtTime(.3,c.currentTime); g2.gain.exponentialRampToValueAtTime(.001,c.currentTime+.35);
+    o.connect(g2); g2.connect(c.destination); o.start(c.currentTime+.05); o.stop(c.currentTime+.35); }
 }
-function playClank(){
-  if(muted)return; const ctx=getCtx();
-  const o=ctx.createOscillator(),g=ctx.createGain(); o.type='sawtooth';
-  o.frequency.setValueAtTime(180,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(60,ctx.currentTime+.15);
-  g.gain.setValueAtTime(.5,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.2);
-  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+.2);
-}
-function playBuzzer(){
-  if(muted)return; const ctx=getCtx();
-  const o=ctx.createOscillator(),g=ctx.createGain(); o.type='square';
-  o.frequency.setValueAtTime(120,ctx.currentTime); o.frequency.setValueAtTime(90,ctx.currentTime+.15); o.frequency.setValueAtTime(120,ctx.currentTime+.3);
-  g.gain.setValueAtTime(.5,ctx.currentTime); g.gain.setValueAtTime(.5,ctx.currentTime+.4); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.6);
-  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+.6);
-}
-function playFireSound(){
-  if(muted)return; const ctx=getCtx();
-  [440,554,659,880].forEach((freq,i)=>{
-    const o=ctx.createOscillator(),g=ctx.createGain(); o.type='sine'; o.frequency.value=freq;
-    const t=ctx.currentTime+i*.07;
-    g.gain.setValueAtTime(.25,t); g.gain.exponentialRampToValueAtTime(.001,t+.2);
-    o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t+.2);
-  });
-}
+function playClank(){ if(muted)return; const c=ctx(),o=c.createOscillator(),g=c.createGain();
+  o.type='sawtooth'; o.frequency.setValueAtTime(200,c.currentTime); o.frequency.exponentialRampToValueAtTime(55,c.currentTime+.18);
+  g.gain.setValueAtTime(.55,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.22);
+  o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+.22); }
+function playBuzzer(){ if(muted)return; const c=ctx(),o=c.createOscillator(),g=c.createGain();
+  o.type='square'; o.frequency.setValueAtTime(120,c.currentTime); o.frequency.setValueAtTime(90,c.currentTime+.15); o.frequency.setValueAtTime(120,c.currentTime+.3);
+  g.gain.setValueAtTime(.5,c.currentTime); g.gain.setValueAtTime(.5,c.currentTime+.4); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.65);
+  o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+.65); }
+function playFire(){ if(muted)return; [440,554,659,880].forEach((f,i)=>{
+  const c=ctx(),o=c.createOscillator(),g=c.createGain(); o.type='sine'; o.frequency.value=f;
+  const t=c.currentTime+i*.07; g.gain.setValueAtTime(.25,t); g.gain.exponentialRampToValueAtTime(.001,t+.2);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.2); }); }
 
-// ── Leaderboard ──────────────────────────────────────────────
+// ─── Leaderboard ─────────────────────────────────────────────────────────────
 function loadLB(){ try{return JSON.parse(localStorage.getItem('3pt_lb')||'[]');}catch{return[];} }
-function saveToLB(name,score){
-  const lb=loadLB(); lb.push({name,score,date:new Date().toLocaleDateString()});
-  lb.sort((a,b)=>b.score-a.score); localStorage.setItem('3pt_lb',JSON.stringify(lb.slice(0,10)));
-}
+function saveLB(name,score){ const lb=loadLB(); lb.push({name,score,date:new Date().toLocaleDateString()});
+  lb.sort((a,b)=>b.score-a.score); localStorage.setItem('3pt_lb',JSON.stringify(lb.slice(0,10))); }
 function getRating(s){
   if(s>=27)return'🏆 Legend — Hall of Fame level';
   if(s>=23)return'🔥 Elite — Stephen Curry territory';
   if(s>=18)return'⭐ Great — you can ball';
   if(s>=12)return'👍 Solid — keep shooting';
   if(s>=7) return'😅 Decent — needs work';
-  return'💪 Keep practicing';
-}
+  return'💪 Keep practicing'; }
 
-// ── Phaser Scenes ────────────────────────────────────────────
-
+// ─── COUNTDOWN SCENE ─────────────────────────────────────────────────────────
 class CountdownScene extends Phaser.Scene {
   constructor(){ super({key:'CountdownScene'}); }
   create(){
-    this.add.rectangle(W/2,H/2,W,H,0x080d18);
-    // subtle gradient via two rects
-    const g=this.add.graphics();
-    g.fillGradientStyle(0x1a2744,0x1a2744,0x080d18,0x080d18,1);
-    g.fillRect(0,0,W,H/2);
+    // Full dark background
+    const bg=this.add.graphics();
+    bg.fillGradientStyle(0x0a1428,0x0a1428,0x050810,0x050810,1); bg.fillRect(0,0,W,H);
 
-    this.numText=this.add.text(W/2,H/2-40,'',{fontSize:'128px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D'}).setOrigin(.5);
-    this.subText=this.add.text(W/2,H/2+90,'Get ready…',{fontSize:'18px',fontFamily:'system-ui',color:'#64748b',letterSpacing:3}).setOrigin(.5);
+    // Faint court silhouette
+    this.drawFaintCourt();
+
+    this.numText=this.add.text(W/2,H/2-20,'',{
+      fontSize:'130px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D',
+      shadow:{offsetX:0,offsetY:0,color:'#C0272D',blur:40,fill:true}
+    }).setOrigin(.5);
+    this.subText=this.add.text(W/2,H/2+82,'',{
+      fontSize:'18px',fontFamily:'system-ui',color:'#64748b',letterSpacing:4
+    }).setOrigin(.5);
 
     const nums=['3','2','1','GO!'], subs=['Get ready…','Almost…','Here we go…','SHOOT!'];
     let i=0;
     const next=()=>{
       if(i>=nums.length){ this.scene.start('GameScene'); return; }
-      this.numText.setText(nums[i]).setColor(i===3?'#22c55e':'#C0272D').setScale(1.4);
-      this.tweens.add({targets:this.numText,scaleX:1,scaleY:1,duration:140,ease:'Back.out'});
+      const isGo=i===3;
+      this.numText.setText(nums[i]).setColor(isGo?'#22c55e':'#C0272D').setScale(1.5);
+      this.numText.setShadow(0,0,isGo?'#22c55e':'#C0272D',50,false,true);
+      this.tweens.add({targets:this.numText,scaleX:1,scaleY:1,duration:150,ease:'Back.out'});
       this.subText.setText(subs[i]);
-      if(i<3) playBeep(i===2?1100:880,.1); else playBeep(1320,.18);
+      if(i<3) beep(i===2?1100:880,.1); else beep(1320,.2);
       i++; this.time.delayedCall(i<=3?900:700,next);
     };
     next();
   }
+  drawFaintCourt(){
+    const g=this.add.graphics();
+    g.lineStyle(1,0xffffff,.06);
+    // floor
+    g.beginPath(); g.moveTo(0,FLOOR_Y); g.lineTo(W,FLOOR_Y); g.strokePath();
+    // basket outline
+    g.lineStyle(1,0xE05A00,.08);
+    g.strokeRect(BB_X,BB_TOP,6,BB_BOT-BB_TOP);
+    g.beginPath(); g.moveTo(RIM_X,RIM_Y); g.lineTo(RIM_X+RIM_W,RIM_Y); g.strokePath();
+  }
 }
 
+// ─── GAME SCENE ──────────────────────────────────────────────────────────────
 class GameScene extends Phaser.Scene {
   constructor(){ super({key:'GameScene'}); }
 
   create(){
-    // Reset state
-    Object.assign(state,{
-      score:0,spotIdx:0,ballIdx:0,timerSec:60,gameActive:true,
+    Object.assign(S,{
+      score:0,spotIdx:0,ballIdx:0,timerSec:60,active:true,
       spotScores:[0,0,0,0,0],
-      ballResults:Array.from({length:5},()=>Array(5).fill(null)),
-      shotsMade:0,shotsAttempted:0,currentStreak:0,maxStreak:0
+      results:Array.from({length:5},()=>Array(5).fill(null)),
+      made:0,attempted:0,streak:0,maxStreak:0
     });
-    this.power=0; this.powerDir=1; this.holding=false; this.shooting=false;
-    this.PS=55; this.PH=4.5; this.BAR_SPEED=1.7;
+    this.power=0; this.pDir=1; this.holding=false; this.shooting=false;
+    this.PS=55; this.PH=4.5; this.SPEED=1.75;
+    this.ballTrail=[];
 
-    this.drawBackground();
-    this.drawCourt();
+    this.buildScene();
     this.createHUD();
     this.createBall();
-    this.createScoreBoxes();
-    this.createDotTracker();
+    this.createPlayer();
     this.createPowerMeter();
-    this.createShootButton();
-    this.createFeedbackArea();
+    this.createShootBtn();
+    this.createFloatingScore();
     this.setupInput();
     this.startTimer();
-    this.refreshAll();
+    this.refresh();
   }
 
-  // ── Background ──────────────────────────────────────────────
-  drawBackground(){
-    const g=this.add.graphics();
-    g.fillStyle(0x080d18); g.fillRect(0,0,W,H);
-    g.fillGradientStyle(0x1a2744,0x1a2744,0x080d18,0x080d18,.6);
-    g.fillRect(0,0,W,H*0.5);
-  }
+  // ── Scene construction ──────────────────────────────────────────────────────
+  buildScene(){
+    // Sky / arena ceiling
+    const bg=this.add.graphics();
+    bg.fillGradientStyle(0x08101f,0x08101f,0x030609,0x030609,1); bg.fillRect(0,0,W,H);
 
-  // ── Court ───────────────────────────────────────────────────
-  drawCourt(){
-    const g=this.add.graphics();
-    const laneW=74,laneH=116,laneX=CX-37,laneY=HOOP_Y;
-    const ftCY=HOOP_Y+laneH, ftR=42;
-    const lcX=CX-ARC_R, rcX=CX+ARC_R;
-    const courtTop=20;
+    // Arena upper glow
+    bg.fillGradientStyle(0x0f1e3a,0x0f1e3a,0x08101f,0x08101f,.7); bg.fillRect(0,0,W,120);
 
-    // Wood floor
-    g.fillStyle(0x8B4513); g.fillRect(lcX,courtTop,W-2*lcX,BASELINE_Y-courtTop);
-    // Extend full width below arc ends
-    g.fillStyle(0x8B4513); g.fillRect(0,courtTop,W,BASELINE_Y-courtTop);
+    // Crowd (multiple rows of silhouettes)
+    this.drawCrowd();
 
-    // Wood grain
-    for(let x=6;x<W;x+=13){
-      g.lineStyle(.7,0x7a3d15,.45);
-      g.beginPath(); g.moveTo(x,courtTop); g.lineTo(x,BASELINE_Y); g.strokePath();
-    }
-    // Floor tint
-    g.fillStyle(0x000000,.18); g.fillRect(0,courtTop,W,BASELINE_Y-courtTop);
-    // Edge shadows
-    g.fillStyle(0x000000,.25); g.fillRect(0,courtTop,14,BASELINE_Y-courtTop);
-    g.fillStyle(0x000000,.25); g.fillRect(W-14,courtTop,14,BASELINE_Y-courtTop);
+    // Arena lights (halos at top)
+    this.drawLights();
 
-    // Baseline
-    g.lineStyle(2.5,0xffffff,.6);
-    g.beginPath(); g.moveTo(0,BASELINE_Y); g.lineTo(W,BASELINE_Y); g.strokePath();
+    // Court floor
+    this.drawFloor();
 
-    // Sidelines
-    g.lineStyle(2,0xffffff,.5);
-    g.beginPath(); g.moveTo(lcX,HOOP_Y); g.lineTo(lcX,BASELINE_Y); g.strokePath();
-    g.beginPath(); g.moveTo(rcX,HOOP_Y); g.lineTo(rcX,BASELINE_Y); g.strokePath();
+    // 3-point line marking on floor (side view = vertical stripe)
+    this.draw3ptMark();
 
-    // 3-point arc
-    g.lineStyle(2.5,0xffffff,.7);
-    g.beginPath(); g.arc(CX,HOOP_Y,ARC_R,0,Math.PI,false); g.strokePath();
-
-    // Paint (lane)
-    g.fillStyle(0x642808,.3); g.fillRect(laneX,laneY,laneW,laneH);
-    g.lineStyle(1.5,0xffffff,.35); g.strokeRect(laneX,laneY,laneW,laneH);
-
-    // Lane ticks
-    [30,60,90].forEach(o=>{
-      g.lineStyle(1.5,0xffffff,.35);
-      g.beginPath(); g.moveTo(laneX,laneY+o); g.lineTo(laneX-9,laneY+o); g.strokePath();
-      g.beginPath(); g.moveTo(laneX+laneW,laneY+o); g.lineTo(laneX+laneW+9,laneY+o); g.strokePath();
-    });
-
-    // Free throw circle
-    g.lineStyle(1.5,0xffffff,.22);
-    g.beginPath(); g.arc(CX,ftCY,ftR,0,Math.PI*2); g.strokePath();
-
-    // Backboard
-    g.fillStyle(0xffffff,.92); g.fillRect(CX-32,HOOP_Y-22,64,13);
-    g.lineStyle(2,0xC0272D,.95); g.strokeRect(CX-16,HOOP_Y-20,32,9);
-
-    // Spot circles (background)
-    this.spotGfx=this.add.graphics();
-    this.redrawSpots();
-
-    // Rim (own graphics object for flashing)
+    // Basket
     this.rimGfx=this.add.graphics();
-    this.drawRim(0xE05A00,4.5);
+    this.drawBasket();
 
+    // Shadow pool under hoop area
+    const shadowG=this.add.graphics();
+    shadowG.fillStyle(0x000000,.2);
+    shadowG.fillEllipse(RIM_X+RIM_W/2,FLOOR_Y+2,60,10);
+  }
+
+  drawCrowd(){
+    const g=this.add.graphics();
+    // Row 3 - furthest back (darkest)
+    for(let i=0;i<44;i++){
+      const x=i*(W/44), w=(W/44)-1;
+      const h=22+Math.sin(i*.7)*5;
+      g.fillStyle(0x0a1525,1); g.fillRect(x,8,w,h);
+      g.fillStyle(0x0c1828,1); g.fillCircle(x+w/2,8,8);
+    }
+    // Row 2
+    for(let i=0;i<36;i++){
+      const x=i*(W/36), w=(W/36)-1;
+      const h=26+Math.sin(i*.9)*6;
+      g.fillStyle(0x0e1e30,1); g.fillRect(x,32,w,h);
+      g.fillStyle(0x101f32,1); g.fillCircle(x+w/2,32,9);
+    }
+    // Row 1 - closest (lightest)
+    for(let i=0;i<28;i++){
+      const x=i*(W/28), w=(W/28)-2;
+      const h=30+Math.sin(i*1.1)*8;
+      g.fillStyle(0x122030,1); g.fillRect(x,60,w,h);
+      g.fillStyle(0x142235,1); g.fillCircle(x+w/2,60,10);
+    }
+    // Fade-to-floor gradient over crowd bottom
+    g.fillGradientStyle(0x08101f,0x08101f,0x08101f,0x08101f,0);
+    g.fillGradientStyle(0x000000,0x000000,0x000000,0x000000,0);
+    // Simple dark band between crowd and court
+    g.fillStyle(0x0a0f1a,1); g.fillRect(0,95,W,30);
+  }
+
+  drawLights(){
+    const g=this.add.graphics();
+    // Four arena lights
+    [W*.2, W*.4, W*.6, W*.8].forEach(lx=>{
+      // Outer glow
+      for(let r=40;r>0;r-=8){
+        g.fillStyle(0x1a3060, r/40*.18); g.fillCircle(lx,0,r);
+      }
+      // Light fixture
+      g.fillStyle(0x4a6080,.9); g.fillRect(lx-5,0,10,6);
+      g.fillStyle(0xffffff,.95); g.fillCircle(lx,3,4);
+
+      // Light beam going down toward court
+      g.fillGradientStyle(0xc8d8f0,0xc8d8f0,0x08101f,0x08101f,.0,.0,.06,.06);
+      g.fillTriangle(lx-1,6, lx+1,6, lx+55,FLOOR_Y);
+      g.fillGradientStyle(0xc8d8f0,0xc8d8f0,0x08101f,0x08101f,.0,.0,.06,.06);
+      g.fillTriangle(lx-1,6, lx+1,6, lx-55,FLOOR_Y);
+    });
+  }
+
+  drawFloor(){
+    const g=this.add.graphics();
+    // Main floor
+    g.fillGradientStyle(0xa0541e,0xa0541e,0x7a3800,0x7a3800,1);
+    g.fillRect(0,FLOOR_Y,W,H-FLOOR_Y);
+    // Wood grain lines
+    for(let x=5;x<W;x+=12){
+      g.lineStyle(.8,0x8b4313,.55);
+      g.beginPath(); g.moveTo(x,FLOOR_Y); g.lineTo(x,H); g.strokePath();
+    }
+    // Floor highlight (light reflection from above)
+    g.fillGradientStyle(0xffffff,0xffffff,0xa0541e,0xa0541e,.06,.06,0,0);
+    g.fillRect(0,FLOOR_Y,W,30);
+    // Baseline
+    g.lineStyle(2,0xffffff,.55);
+    g.beginPath(); g.moveTo(0,FLOOR_Y); g.lineTo(W,FLOOR_Y); g.strokePath();
+    // Lane on floor (lighter patch under basket)
+    g.fillStyle(0x8b3f10,.4);
+    g.fillRect(RIM_X-80,FLOOR_Y,RIM_W+170,H-FLOOR_Y);
+    g.lineStyle(1.5,0xffffff,.3);
+    g.beginPath(); g.moveTo(RIM_X-80,FLOOR_Y); g.lineTo(RIM_X-80,H); g.strokePath();
+  }
+
+  draw3ptMark(){
+    // In side view the 3-pt line shows as a stripe on the floor
+    const g=this.add.graphics();
+    // Arc indicator line on floor (simplified to a mark where players stand)
+    g.lineStyle(2,0xffffff,.35);
+    g.beginPath(); g.moveTo(SPOT_X[0]-8,FLOOR_Y); g.lineTo(SPOT_X[4]+8,FLOOR_Y); g.strokePath();
+    // Small tick marks at each spot
+    SPOT_X.forEach(x=>{
+      g.lineStyle(2,0xffffff,.5);
+      g.beginPath(); g.moveTo(x,FLOOR_Y); g.lineTo(x,FLOOR_Y+8); g.strokePath();
+    });
+    // Label
+    const g2=this.add.graphics();
+    this.add.text(SPOT_X[2],FLOOR_Y+14,'— 3-POINT LINE —',{
+      fontSize:'9px',fontFamily:'system-ui',color:'rgba(255,255,255,0.3)',letterSpacing:2
+    }).setOrigin(.5,0);
+  }
+
+  drawBasket(){
+    const g=this.rimGfx; g.clear();
+    // Backboard
+    const bg2=this.add.graphics();
+    bg2.fillStyle(0xffffff,.88); bg2.fillRect(BB_X,BB_TOP,8,BB_BOT-BB_TOP);
+    bg2.lineStyle(1,0xaaaaaa,.5); bg2.strokeRect(BB_X,BB_TOP,8,BB_BOT-BB_TOP);
+    // Backboard square
+    bg2.lineStyle(2,0xC0272D,.9);
+    bg2.strokeRect(BB_X,RIM_Y-22,8,36);
+    // Support pole
+    bg2.fillStyle(0x555566,1); bg2.fillRect(BB_X+1,BB_BOT,6,H-BB_BOT);
+    // Rim
+    g.fillStyle(0xE05A00,1); g.fillRect(RIM_X,RIM_Y-4,RIM_W,7);
+    g.lineStyle(3,0xC04500,1);
+    g.beginPath(); g.moveTo(RIM_X,RIM_Y); g.lineTo(RIM_X+RIM_W,RIM_Y); g.strokePath();
+    // Rim front lip (3d effect)
+    g.fillStyle(0xd04800,1); g.fillRect(RIM_X,RIM_Y+3,5,3);
     // Net
     const ng=this.add.graphics();
-    ng.lineStyle(1.3,0xffffff,.65);
-    [[-13,2,-9,22],[-6,1,-4,22],[0,1,0,22],[6,1,4,22],[13,2,9,22]].forEach(([x1,y1,x2,y2])=>{
-      ng.beginPath(); ng.moveTo(CX+x1,HOOP_Y+y1); ng.lineTo(CX+x2,HOOP_Y+y2); ng.strokePath();
+    ng.lineStyle(1.2,0xffffff,.7);
+    const netTop=RIM_Y+3, netBot=RIM_Y+32;
+    const netLines=[0,.18,.36,.54,.72,.88,1];
+    netLines.forEach(t=>{
+      const x=RIM_X+t*RIM_W;
+      const dx=(t-.5)*8;
+      ng.beginPath(); ng.moveTo(x,netTop); ng.lineTo(RIM_X+RIM_W/2+dx,netBot); ng.strokePath();
     });
-    ng.lineStyle(1,0xffffff,.2);
-    ng.beginPath(); ng.moveTo(CX-12,HOOP_Y+11); ng.lineTo(CX+12,HOOP_Y+11); ng.strokePath();
-    ng.beginPath(); ng.moveTo(CX-9,HOOP_Y+19); ng.lineTo(CX+9,HOOP_Y+19); ng.strokePath();
+    // Horizontal net bands
+    [.3,.6,1].forEach(t=>{
+      const y=netTop+(netBot-netTop)*t;
+      const xshrink=(1-t)*RIM_W*.3;
+      ng.lineStyle(1,0xffffff,.4);
+      ng.beginPath(); ng.moveTo(RIM_X+xshrink,y); ng.lineTo(RIM_X+RIM_W-xshrink,y); ng.strokePath();
+    });
   }
 
-  drawRim(color=0xE05A00,lw=4.5){
+  flashRim(make){
     this.rimGfx.clear();
-    this.rimGfx.lineStyle(lw,color,1);
-    this.rimGfx.beginPath(); this.rimGfx.arc(CX,HOOP_Y,14,0,Math.PI*2); this.rimGfx.strokePath();
+    const g=this.rimGfx;
+    const col=make?0x22c55e:0xE24B4A;
+    g.fillStyle(col,1); g.fillRect(RIM_X,RIM_Y-4,RIM_W,7);
+    g.lineStyle(4,make?0x16a34a:0xcc2222,1);
+    g.beginPath(); g.moveTo(RIM_X,RIM_Y); g.lineTo(RIM_X+RIM_W,RIM_Y); g.strokePath();
+    if(make){
+      // Glow
+      for(let r=18;r>0;r-=4){
+        g.fillStyle(0x22c55e,r/18*.2);
+        g.fillCircle(RIM_X+RIM_W/2,RIM_Y,r);
+      }
+    }
+    this.time.delayedCall(400,()=>this.drawBasket());
   }
 
-  redrawSpots(){
-    this.spotGfx.clear();
-    SPOT_POS.forEach((p,i)=>{
-      const active=i===state.spotIdx&&state.gameActive;
-      this.spotGfx.fillStyle(0xffffff,active?.18:.05);
-      this.spotGfx.lineStyle(1.5,0xffffff,active?.55:.15);
-      this.spotGfx.fillCircle(p.x,p.y,9);
-      this.spotGfx.strokeCircle(p.x,p.y,9);
+  // ── Player character ────────────────────────────────────────────────────────
+  createPlayer(){
+    this.playerGfx=this.add.graphics().setDepth(8);
+    this.playerX=SPOT_X[0]; this.playerAnim='idle';
+    this.drawPlayer();
+  }
+
+  drawPlayer(anim='idle'){
+    const g=this.playerGfx; g.clear();
+    const x=this.playerX, y=FLOOR_Y;
+    const jersey=this.ballIdx===4?0xF4C430:0xC0272D; // gold on money ball!
+
+    if(anim==='shoot'){
+      // Shooting pose — arms up
+      // Body
+      g.fillStyle(jersey,1); g.fillRect(x-9,y-52,18,26);
+      // Shorts
+      g.fillStyle(0x1a237e,1); g.fillRect(x-9,y-26,18,14);
+      // Head
+      g.fillStyle(0xc8956c,1); g.fillCircle(x,y-60,10);
+      // Shooting arm (raised toward basket)
+      g.lineStyle(5,0xc8956c,1);
+      g.beginPath(); g.moveTo(x+8,y-48); g.lineTo(x+22,y-68); g.strokePath();
+      g.fillStyle(0xc8956c,1); g.fillCircle(x+22,y-68,4);
+      // Off arm
+      g.lineStyle(5,0xc8956c,1);
+      g.beginPath(); g.moveTo(x-8,y-48); g.lineTo(x-16,y-38); g.strokePath();
+      // Legs (slight jump)
+      g.lineStyle(6,0x1a237e,1);
+      g.beginPath(); g.moveTo(x-5,y-12); g.lineTo(x-7,y-2); g.strokePath();
+      g.beginPath(); g.moveTo(x+5,y-12); g.lineTo(x+8,y-2); g.strokePath();
+      // Shoes
+      g.fillStyle(0xffffff,1); g.fillEllipse(x-8,y,16,6); g.fillEllipse(x+9,y,16,6);
+      // Jersey number
+      g.fillStyle(0xffffff,.9); this.add.text&&null; // number drawn via text elsewhere
+    } else if(anim==='celebrate'){
+      // Arms raised
+      g.fillStyle(jersey,1); g.fillRect(x-9,y-52,18,26);
+      g.fillStyle(0x1a237e,1); g.fillRect(x-9,y-26,18,14);
+      g.fillStyle(0xc8956c,1); g.fillCircle(x,y-60,10);
+      g.lineStyle(5,0xc8956c,1);
+      g.beginPath(); g.moveTo(x-8,y-48); g.lineTo(x-24,y-68); g.strokePath();
+      g.beginPath(); g.moveTo(x+8,y-48); g.lineTo(x+24,y-68); g.strokePath();
+      g.fillStyle(0xc8956c,1); g.fillCircle(x-24,y-68,4); g.fillCircle(x+24,y-68,4);
+      g.lineStyle(6,0x1a237e,1);
+      g.beginPath(); g.moveTo(x-5,y-12); g.lineTo(x-8,y); g.strokePath();
+      g.beginPath(); g.moveTo(x+5,y-12); g.lineTo(x+9,y); g.strokePath();
+      g.fillStyle(0xffffff,1); g.fillEllipse(x-9,y+2,16,6); g.fillEllipse(x+10,y+2,16,6);
+    } else {
+      // Idle — ball in hands
+      g.fillStyle(jersey,1); g.fillRect(x-9,y-52,18,26);
+      g.fillStyle(0x1a237e,1); g.fillRect(x-9,y-26,18,14);
+      g.fillStyle(0xc8956c,1); g.fillCircle(x,y-60,10);
+      // Arms out holding ball
+      g.lineStyle(5,0xc8956c,1);
+      g.beginPath(); g.moveTo(x+8,y-42); g.lineTo(x+20,y-34); g.strokePath();
+      g.beginPath(); g.moveTo(x-8,y-42); g.lineTo(x-14,y-32); g.strokePath();
+      g.lineStyle(6,0x1a237e,1);
+      g.beginPath(); g.moveTo(x-5,y-12); g.lineTo(x-8,y); g.strokePath();
+      g.beginPath(); g.moveTo(x+5,y-12); g.lineTo(x+9,y); g.strokePath();
+      g.fillStyle(0xffffff,1); g.fillEllipse(x-9,y+2,16,6); g.fillEllipse(x+10,y+2,16,6);
+      // Ball in hands
+      g.fillStyle(this.ballIdx===4?0xF4C430:0xE85D04,1); g.fillCircle(x+14,y-30,8);
+      g.lineStyle(1.5,0x000000,.2);
+      g.beginPath(); g.moveTo(x+7,y-30); g.lineTo(x+21,y-30); g.strokePath();
+      g.beginPath(); g.moveTo(x+14,y-37); g.lineTo(x+14,y-23); g.strokePath();
+    }
+    // Shadow
+    g.fillStyle(0x000000,.2); g.fillEllipse(x,FLOOR_Y+3,28,7);
+  }
+
+  // ── Ball ────────────────────────────────────────────────────────────────────
+  createBall(){
+    this.ballGfx=this.add.graphics().setDepth(12);
+    this.trailGfx=this.add.graphics().setDepth(11);
+    this.bx=SPOT_X[0]+14; this.by=FLOOR_Y-30;
+    this.br=9; this.bAlpha=0; // hidden at start (player holds it)
+    this.bColor=0xE85D04; this.bStroke=0xA04800;
+    this.bAngle=0;
+  }
+
+  drawBall(){
+    const g=this.ballGfx; g.clear(); g.setAlpha(this.bAlpha);
+    const {bx:x,by:y,br:r,bColor:fc,bStroke:sc,bAngle:ang}=this;
+    // Shadow
+    g.fillStyle(0x000000,.25); g.fillEllipse(x+2,FLOOR_Y+2,r*1.6,r*.5);
+    // Ball
+    g.fillStyle(fc,1); g.fillCircle(x,y,r);
+    g.lineStyle(2,sc,1); g.strokeCircle(x,y,r);
+    // Seams (rotated with ball)
+    g.lineStyle(1.5,0x000000,.25);
+    const ca=Math.cos(ang),sa=Math.sin(ang);
+    const r2=r*.85;
+    g.beginPath(); g.moveTo(x+ca*(-r2),y+sa*(-r2)); g.lineTo(x+ca*r2,y+sa*r2); g.strokePath();
+    g.beginPath(); g.moveTo(x+(-sa)*(-r2),y+ca*(-r2)); g.lineTo(x+(-sa)*r2,y+ca*r2); g.strokePath();
+    // Shine
+    g.fillStyle(0xffffff,.3); g.fillCircle(x-r*.28,y-r*.3,r*.3);
+  }
+
+  drawTrail(){
+    const g=this.trailGfx; g.clear();
+    this.ballTrail.forEach((pt,i)=>{
+      const a=(i/this.ballTrail.length)*.35;
+      g.fillStyle(this.bColor,a);
+      g.fillCircle(pt.x,pt.y,this.br*(i/this.ballTrail.length)*.8);
     });
   }
 
-  flashRim(isMake){
-    this.drawRim(isMake?0x22c55e:0xE24B4A,6);
-    this.time.delayedCall(420,()=>this.drawRim(0xE05A00,4.5));
-  }
-
-  // ── HUD (top strip) ─────────────────────────────────────────
+  // ── HUD ─────────────────────────────────────────────────────────────────────
   createHUD(){
-    const g=this.add.graphics();
-    g.fillStyle(0x0a0f1e,1); g.fillRect(0,0,W,20);
+    // Top bar background
+    const hg=this.add.graphics();
+    hg.fillStyle(0x000000,.7); hg.fillRect(0,0,W,46);
+    hg.lineStyle(1,0xffffff,.08); hg.beginPath(); hg.moveTo(0,46); hg.lineTo(W,46); hg.strokePath();
 
-    this.nameTxt=this.add.text(10,10,'🏀 '+playerName,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'}).setOrigin(0,.5);
-    this.bestTxt=this.add.text(W-10,10,'🏆 '+bestScore,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#F4C430'}).setOrigin(1,.5);
-  }
+    // Score box
+    this.makeBox(hg,8,4,80,38);
+    this.scoreLbl=this.add.text(48,12,'SCORE',{fontSize:'8px',fontFamily:'system-ui',color:'#475569',letterSpacing:1}).setOrigin(.5,0);
+    this.scoreTxt=this.add.text(48,20,'0',{fontSize:'20px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,0);
 
-  // ── Score boxes + timer ──────────────────────────────────────
-  createScoreBoxes(){
-    // Timer bar
-    const tbg=this.add.graphics();
-    tbg.fillStyle(0xffffff,.04); tbg.lineStyle(1,0xffffff,.08);
-    tbg.fillRoundedRect(10,TIMER_Y,W-20,44,8);
-    tbg.strokeRoundedRect(10,TIMER_Y,W-20,44,8);
+    // Timer box (center)
+    this.makeBox(hg,W/2-50,4,100,38);
+    this.add.text(W/2,12,'TIME',{fontSize:'8px',fontFamily:'system-ui',color:'#475569',letterSpacing:1}).setOrigin(.5,0);
+    this.timerTxt=this.add.text(W/2,20,'60',{fontSize:'20px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,0);
 
-    this.timerNumTxt=this.add.text(W/2-18,TIMER_Y+10,'60',{fontSize:'30px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,0);
-    this.add.text(W/2+22,TIMER_Y+22,'sec',{fontSize:'11px',fontFamily:'system-ui',color:'#64748b'}).setOrigin(0,.5);
+    // FG% box
+    this.makeBox(hg,W/2+60,4,80,38);
+    this.add.text(W/2+100,12,'FG %',{fontSize:'8px',fontFamily:'system-ui',color:'#475569',letterSpacing:1}).setOrigin(.5,0);
+    this.pctTxt=this.add.text(W/2+100,20,'—',{fontSize:'20px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,0);
 
-    this.timerFill=this.add.graphics();
-    this.redrawTimerFill(60);
+    // Player name left
+    this.add.text(10,50,'🏀 '+playerName,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'});
+    // Best score right
+    this.bestTxt=this.add.text(W-10,50,'🏆 BEST: '+bestScore,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#F4C430'}).setOrigin(1,0);
 
-    // Score boxes
-    const bw=(W-30)/3, bh=52;
-    const sbg=this.add.graphics();
-    [0,1,2].forEach(i=>{
-      const x=10+i*(bw+5);
-      sbg.fillStyle(0xffffff,.04); sbg.lineStyle(1,0xffffff,.08);
-      sbg.fillRoundedRect(x,BOXES_Y,bw,bh,8);
-      sbg.strokeRoundedRect(x,BOXES_Y,bw,bh,8);
-    });
-    const cx1=10+bw*.5, cx2=10+bw+5+bw*.5, cx3=10+(bw+5)*2+bw*.5;
-    this.scoreTxt=this.add.text(cx1,BOXES_Y+18,'0',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
-    this.add.text(cx1,BOXES_Y+40,'SCORE',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
-    this.possTxt=this.add.text(cx2,BOXES_Y+18,'30',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
-    this.add.text(cx2,BOXES_Y+40,'POSSIBLE',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
-    this.pctTxt=this.add.text(cx3,BOXES_Y+18,'—',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
-    this.add.text(cx3,BOXES_Y+40,'FG %',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+    // Timer fill bar
+    this.timerBar=this.add.graphics();
+    this.redrawTimerBar(60);
 
-    // Spot indicator
-    this.indicatorTxt=this.add.text(W/2,INDICATOR_Y,'',{fontSize:'12px',fontFamily:'system-ui',color:'#94a3b8'}).setOrigin(.5,0);
-  }
+    // Mini court map (top right)
+    this.createMiniMap();
 
-  redrawTimerFill(sec){
-    this.timerFill.clear();
-    const pct=sec/60, fw=Math.max(0,(W-22)*pct);
-    const col=sec<=10?0xef4444:sec<=20?0xf87171:0x22c55e;
-    this.timerFill.fillStyle(col,.85);
-    this.timerFill.fillRoundedRect(11,TIMER_Y+36,fw,6,3);
-  }
+    // Streak badge
+    this.streakBg=this.add.graphics().setDepth(15);
+    this.streakTxt=this.add.text(W/2,68,'',{
+      fontSize:'13px',fontFamily:'system-ui',fontStyle:'bold',color:'#fb923c',
+      shadow:{offsetX:0,offsetY:0,color:'#fb923c',blur:8,fill:true}
+    }).setOrigin(.5,.5).setAlpha(0).setDepth(15);
 
-  // ── Ball dot tracker ─────────────────────────────────────────
-  createDotTracker(){
-    this.dotGfx=this.add.graphics();
+    // Spot label
+    this.spotLbl=this.add.text(W/2,FLOOR_Y+10,'',{fontSize:'11px',fontFamily:'system-ui',color:'rgba(255,255,255,0.45)'}).setOrigin(.5,0);
+
+    // Dot tracker
+    this.dotGfx=this.add.graphics().setDepth(5);
     this.redrawDots();
   }
 
+  makeBox(g,x,y,w,h){
+    g.fillStyle(0xffffff,.04); g.fillRoundedRect(x,y,w,h,4);
+    g.lineStyle(1,0xffffff,.1); g.strokeRoundedRect(x,y,w,h,4);
+  }
+
+  redrawTimerBar(sec){
+    this.timerBar.clear();
+    const pct=sec/60, fw=(W-4)*pct;
+    const col=sec<=10?0xef4444:sec<=20?0xf87171:0x22c55e;
+    this.timerBar.fillStyle(col,.9);
+    this.timerBar.fillRect(2,43,fw,3);
+  }
+
+  createMiniMap(){
+    // Small top-down court diagram in top-right
+    const mx=W-90, my=52, mw=80, mh=46;
+    const mg=this.add.graphics().setDepth(4);
+    mg.fillStyle(0x000000,.6); mg.fillRoundedRect(mx,my,mw,mh,4);
+    mg.lineStyle(1,0xffffff,.15); mg.strokeRoundedRect(mx,my,mw,mh,4);
+
+    // Mini arc
+    const mcx=mx+mw-16, mhooY=my+10, mR=32;
+    mg.lineStyle(1,0xffffff,.35);
+    mg.beginPath(); mg.arc(mcx,mhooY,mR,0,Math.PI,false); mg.strokePath();
+    // Mini baseline
+    mg.lineStyle(1,0xffffff,.35);
+    mg.beginPath(); mg.moveTo(mcx-mR,mhooY); mg.lineTo(mcx-mR,my+mh-4); mg.strokePath();
+    mg.beginPath(); mg.moveTo(mcx+mR,mhooY); mg.lineTo(mcx+mR,my+mh-4); mg.strokePath();
+    // Mini basket
+    mg.fillStyle(0xE05A00,.9); mg.fillCircle(mcx,mhooY,3);
+
+    // Spot dots on mini map
+    this.miniDotGfx=this.add.graphics().setDepth(5);
+    this.redrawMiniMap(mx,my,mw,mh,mcx,mhooY,mR);
+    this.miniMapX=mx; this.miniMapY=my; this.miniMapW=mw; this.miniMapH=mh;
+    this.miniCX=mcx; this.miniHY=mhooY; this.miniR=mR;
+  }
+
+  redrawMiniMap(mx,my,mw,mh,mcx,mhooY,mR){
+    this.miniDotGfx.clear();
+    const g=this.miniDotGfx;
+    const degs=[180,145,90,35,0];
+    degs.forEach((deg,i)=>{
+      const a=deg*Math.PI/180;
+      const sx=mcx+mR*Math.cos(a), sy=mhooY+mR*Math.sin(a);
+      const active=i===S.spotIdx;
+      g.fillStyle(active?0xffffff:0x334455, active?1:.6);
+      g.lineStyle(1,active?0xF4C430:0x445566,active?1:.5);
+      g.fillCircle(sx,sy,active?4:2.5);
+      if(active){ g.strokeCircle(sx,sy,5); }
+    });
+  }
+
   redrawDots(){
-    this.dotGfx.clear();
-    const DR=4, GAP=7, GRP=10;
+    const g=this.dotGfx; g.clear();
+    // Position: just above floor on the left side
+    const DR=4.5, GAP=12, GRP=8;
     const totalW=5*(5*GAP+GRP)-GRP;
     let sx=(W-totalW)/2;
-    const cy=DOTS_Y+DR;
+    const cy=FLOOR_Y+24;
     for(let s=0;s<5;s++){
       for(let b=0;b<5;b++){
-        const isMoney=b===4;
-        const r=state.ballResults[s][b];
-        const isCurrent=s===state.spotIdx&&b===state.ballIdx&&state.gameActive;
-        let fill, stroke, alpha;
-        if(r===true){ fill=isMoney?0xF4C430:0x22c55e; stroke=isMoney?0xB8860B:0x16a34a; alpha=1; }
-        else if(r===false){ fill=0xffffff; stroke=0xffffff; alpha=.12; }
-        else if(isCurrent){ fill=0x60a5fa; stroke=isMoney?0xF4C430:0x60a5fa; alpha=.9; }
-        else { fill=0xffffff; stroke=isMoney?0xF4C430:0xffffff; alpha=isMoney?.35:.12; }
-        this.dotGfx.fillStyle(fill,alpha);
-        this.dotGfx.lineStyle(1.5,stroke,isMoney?Math.max(.35,alpha):.2);
-        this.dotGfx.fillCircle(sx+b*GAP,cy,DR);
-        this.dotGfx.strokeCircle(sx+b*GAP,cy,DR);
+        const money=b===4;
+        const r=S.results[s]?S.results[s][b]:null;
+        const cur=s===S.spotIdx&&b===S.ballIdx&&S.active;
+        let fill,stroke,alpha;
+        if(r===true){ fill=money?0xF4C430:0x22c55e; stroke=money?0xB8860B:0x16a34a; alpha=1; }
+        else if(r===false){ fill=0x334455; stroke=0x334455; alpha=.7; }
+        else if(cur){ fill=0x7dd3fc; stroke=money?0xF4C430:0x7dd3fc; alpha=1; }
+        else { fill=0x1e2d40; stroke=money?0xF4C430:0x2a3d55; alpha=money?.8:.6; }
+        g.fillStyle(fill,alpha); g.lineStyle(1.5,stroke,alpha);
+        g.fillCircle(sx+b*GAP,cy,DR); g.strokeCircle(sx+b*GAP,cy,DR);
       }
       sx+=5*GAP+GRP;
     }
+    // Labels under each group
+    // (skipped for space — dots speak for themselves)
   }
 
-  // ── Ball ─────────────────────────────────────────────────────
-  createBall(){
-    this.ballGfx=this.add.graphics();
-    this.ballX=SPOT_POS[0].x; this.ballY=SPOT_POS[0].y; this.ballR=11; this.ballAlpha=1;
-    this.ballColor=0xE85D04; this.ballStroke=0xA04800;
-    this.ballGfx.setDepth(10);
-    this.redrawBall();
-  }
-
-  redrawBall(){
-    const g=this.ballGfx; g.clear(); g.setAlpha(this.ballAlpha);
-    const {ballX:x,ballY:y,ballR:r,ballColor:fc,ballStroke:sc}=this;
-    // shadow
-    g.fillStyle(0x000000,.3); g.fillEllipse(x+2,y+5,r*1.8,r*.7);
-    // ball
-    g.fillStyle(fc,1); g.fillCircle(x,y,r);
-    g.lineStyle(2,sc,1); g.strokeCircle(x,y,r);
-    // seams
-    g.lineStyle(1.5,0x000000,.22);
-    g.beginPath(); g.moveTo(x-r*.85,y); g.lineTo(x+r*.85,y); g.strokePath();
-    g.beginPath(); g.moveTo(x,y-r*.85); g.lineTo(x,y+r*.85); g.strokePath();
-    // shine
-    g.fillStyle(0xffffff,.28); g.fillCircle(x-r*.3,y-r*.35,r*.32);
-  }
-
-  placeBallAtSpot(){
-    const p=SPOT_POS[state.spotIdx];
-    const isMoney=state.ballIdx===4;
-    this.ballX=p.x; this.ballY=p.y; this.ballR=11; this.ballAlpha=1;
-    this.ballColor=isMoney?0xF4C430:0xE85D04;
-    this.ballStroke=isMoney?0xB8860B:0xA04800;
-    this.redrawBall();
-  }
-
-  // ── Power meter ──────────────────────────────────────────────
+  // ── Power meter ─────────────────────────────────────────────────────────────
   createPowerMeter(){
-    const px=10,pw=W-20,ph=28;
-    this.pmX=px; this.pmW=pw; this.pmH=ph;
+    const px=8, py=FLOOR_Y+40, pw=W-16, ph=22;
+    this.pmX=px; this.pmY=py; this.pmW=pw; this.pmH=ph;
 
-    this.add.text(px,PM_Y-16,'Shot Power',{fontSize:'11px',fontFamily:'system-ui',color:'#475569'});
-    this.barValTxt=this.add.text(W-px,PM_Y-16,'0%',{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'}).setOrigin(1,0);
+    const pmBg=this.add.graphics();
+    pmBg.fillStyle(0x000000,.5); pmBg.fillRoundedRect(px-4,py-18,pw+8,ph+30,6);
 
+    // Labels
+    this.add.text(px,py-14,'SHOT POWER',{fontSize:'9px',fontFamily:'system-ui',color:'#475569',letterSpacing:2});
+    this.pmValTxt=this.add.text(px+pw,py-14,'0%',{fontSize:'9px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'}).setOrigin(1,0);
+
+    // Track
     const track=this.add.graphics();
-    track.fillStyle(0xffffff,.05); track.lineStyle(1,0xffffff,.08);
-    track.fillRoundedRect(px,PM_Y,pw,ph,12);
-    track.strokeRoundedRect(px,PM_Y,pw,ph,12);
+    track.fillStyle(0xffffff,.05); track.lineStyle(1,0xffffff,.1);
+    track.fillRoundedRect(px,py,pw,ph,10); track.strokeRoundedRect(px,py,pw,ph,10);
 
     // Sweet spot zone
     const zx=px+((this.PS-this.PH)/100)*pw, zw=(this.PH*2/100)*pw;
     const zone=this.add.graphics();
-    zone.fillStyle(0x22c55e,.18); zone.fillRect(zx,PM_Y,zw,ph);
-    zone.lineStyle(1,0x22c55e,.45);
-    zone.beginPath(); zone.moveTo(zx,PM_Y); zone.lineTo(zx,PM_Y+ph); zone.strokePath();
-    zone.beginPath(); zone.moveTo(zx+zw,PM_Y); zone.lineTo(zx+zw,PM_Y+ph); zone.strokePath();
+    zone.fillStyle(0x22c55e,.22); zone.fillRect(zx,py,zw,ph);
+    zone.lineStyle(1,0x22c55e,.5);
+    zone.beginPath(); zone.moveTo(zx,py); zone.lineTo(zx,py+ph); zone.strokePath();
+    zone.beginPath(); zone.moveTo(zx+zw,py); zone.lineTo(zx+zw,py+ph); zone.strokePath();
+    // Sweet spot label
+    this.add.text(zx+zw/2,py+ph/2,'★',{fontSize:'10px',fontFamily:'system-ui',color:'rgba(34,197,94,0.6)'}).setOrigin(.5,.5);
 
-    this.barFill=this.add.graphics();
-    this.barMarker=this.add.graphics();
+    this.pmFill=this.add.graphics();
+    this.pmMarker=this.add.graphics();
 
-    this.add.text(W/2,PM_Y+ph+7,'Release in the green zone  ·  Space bar or tap button',
-      {fontSize:'10px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,0);
+    this.add.text(px+pw/2,py+ph+4,'HOLD & release in green  ·  Space bar or tap',
+      {fontSize:'9px',fontFamily:'system-ui',color:'#334455'}).setOrigin(.5,0);
   }
 
-  redrawPowerMeter(){
-    if(!this.holding){ this.barFill.clear(); this.barMarker.clear(); return; }
+  redrawPM(){
+    if(!this.holding){ this.pmFill.clear(); this.pmMarker.clear(); return; }
     const p=this.power/100, fw=p*this.pmW;
     const inZ=this.power>=this.PS-this.PH&&this.power<=this.PS+this.PH;
     const col=inZ?0x22c55e:(this.power<12||this.power>88)?0xef4444:0xC0272D;
-    this.barFill.clear();
-    this.barFill.fillStyle(col,.9);
-    this.barFill.fillRoundedRect(this.pmX,PM_Y,fw,this.pmH,12);
-    this.barMarker.clear();
-    this.barMarker.fillStyle(0xffffff,.95);
-    this.barMarker.fillRoundedRect(this.pmX+fw-2,PM_Y,4,this.pmH,2);
-    this.barValTxt.setText(Math.round(this.power)+'%');
+    this.pmFill.clear();
+    this.pmFill.fillStyle(col,.95); this.pmFill.fillRoundedRect(this.pmX,this.pmY,fw,this.pmH,10);
+    this.pmMarker.clear();
+    this.pmMarker.fillStyle(0xffffff,1); this.pmMarker.fillRect(this.pmX+fw-2,this.pmY,4,this.pmH);
+    this.pmValTxt.setText(Math.round(this.power)+'%');
   }
 
-  // ── Shoot button ─────────────────────────────────────────────
-  createShootButton(){
+  // ── Shoot button ─────────────────────────────────────────────────────────────
+  createShootBtn(){
+    const bx=8, by=FLOOR_Y+96, bw=W-16, bh=50;
     this.btnBg=this.add.graphics();
-    this.btnTxt=this.add.text(W/2,BTN_Y+28,'HOLD TO SHOOT',
-      {fontSize:'15px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D',letterSpacing:1}).setOrigin(.5,.5);
-    this.btnTxt.setDepth(5);
+    this.btnTxt=this.add.text(W/2,by+bh/2,'HOLD TO SHOOT',{
+      fontSize:'16px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D',letterSpacing:2
+    }).setOrigin(.5,.5).setDepth(6);
     this.redrawBtn(false);
-
-    const hit=this.add.rectangle(W/2,BTN_Y+28,W-20,56,0xffffff,0).setInteractive();
-    hit.setDepth(6);
+    const hit=this.add.rectangle(W/2,by+bh/2,bw,bh,0,0).setInteractive().setDepth(7);
     hit.on('pointerdown',()=>this.startHold());
     hit.on('pointerup',()=>this.endHold());
     hit.on('pointerout',()=>{ if(this.holding) this.endHold(); });
+    this.btnY=by; this.btnX=bx; this.btnW=bw; this.btnH=bh;
   }
 
-  redrawBtn(holding){
+  redrawBtn(h){
     this.btnBg.clear();
-    if(holding){
-      this.btnBg.fillStyle(0xC0272D,1);
-      this.btnBg.fillRoundedRect(10,BTN_Y,W-20,56,12);
+    if(h){
+      this.btnBg.fillGradientStyle(0xC0272D,0xC0272D,0x8B1A1E,0x8B1A1E,1);
+      this.btnBg.fillRoundedRect(this.btnX,this.btnY,this.btnW,this.btnH,10);
       this.btnTxt.setColor('#ffffff');
+      this.btnTxt.setShadow(0,0,'#ff6666',12,false,true);
     } else {
-      this.btnBg.lineStyle(1.5,0xC0272D,.55);
-      this.btnBg.strokeRoundedRect(10,BTN_Y,W-20,56,12);
-      this.btnTxt.setColor('#C0272D');
+      this.btnBg.lineStyle(1.5,0xC0272D,.5);
+      this.btnBg.strokeRoundedRect(this.btnX,this.btnY,this.btnW,this.btnH,10);
+      this.btnTxt.setColor('#C0272D').setShadow(0,0,'transparent',0);
     }
   }
 
-  // ── Feedback + streak ────────────────────────────────────────
-  createFeedbackArea(){
-    this.streakBg=this.add.graphics();
-    this.streakTxt=this.add.text(W/2,FEEDBACK_Y,'',
-      {fontSize:'13px',fontFamily:'system-ui',fontStyle:'bold',color:'#fb923c'}).setOrigin(.5,.5).setAlpha(0);
-    this.resultTxt=this.add.text(W/2,FEEDBACK_Y+28,'Hold and release in the green zone!',
-      {fontSize:'13px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+  // ── Floating score popup ─────────────────────────────────────────────────────
+  createFloatingScore(){
+    this.floatTxt=this.add.text(RIM_X+RIM_W/2,RIM_Y-30,'',{
+      fontSize:'32px',fontFamily:'system-ui',fontStyle:'bold',color:'#22c55e',
+      shadow:{offsetX:0,offsetY:0,color:'#22c55e',blur:12,fill:true}
+    }).setOrigin(.5,.5).setAlpha(0).setDepth(30);
   }
 
+  showFloatScore(pts,money){
+    const lbl=money?`+2 💰`:'+1';
+    this.floatTxt.setText(lbl).setAlpha(1)
+      .setColor(money?'#F4C430':'#22c55e')
+      .setShadow(0,0,money?'#F4C430':'#22c55e',16,false,true)
+      .setY(RIM_Y-20).setScale(1.4);
+    this.tweens.add({targets:this.floatTxt,y:RIM_Y-70,alpha:0,scaleX:1,scaleY:1,duration:900,ease:'Power2'});
+  }
+
+  // ── Streak / feedback ────────────────────────────────────────────────────────
   redrawStreak(){
     this.streakBg.clear();
-    const cs=state.currentStreak;
-    if(cs>=3){
-      const label=cs>=5?`${cs} IN A ROW 🔥🔥`:`${cs} IN A ROW 🔥`;
+    if(S.streak>=3){
+      const label=S.streak>=5?`${S.streak} IN A ROW 🔥🔥`:`${S.streak} IN A ROW 🔥`;
       this.streakTxt.setText(label).setAlpha(1);
-      const tw=this.streakTxt.width+28;
-      this.streakBg.fillStyle(0xfb923c,.15);
-      this.streakBg.lineStyle(1,0xfb923c,.4);
-      this.streakBg.fillRoundedRect(W/2-tw/2,FEEDBACK_Y-14,tw,26,13);
-      this.streakBg.strokeRoundedRect(W/2-tw/2,FEEDBACK_Y-14,tw,26,13);
-    } else {
-      this.streakTxt.setAlpha(0);
-    }
+      const tw=this.streakTxt.width+24;
+      this.streakBg.fillStyle(0xfb923c,.15); this.streakBg.lineStyle(1,0xfb923c,.5);
+      this.streakBg.fillRoundedRect(W/2-tw/2,60,tw,22,11);
+      this.streakBg.strokeRoundedRect(W/2-tw/2,60,tw,22,11);
+    } else { this.streakTxt.setAlpha(0); }
   }
 
-  // ── Input ────────────────────────────────────────────────────
+  // ── Input ────────────────────────────────────────────────────────────────────
   setupInput(){
     this.input.keyboard.on('keydown-SPACE',e=>{ e.preventDefault(); this.startHold(); });
     this.input.keyboard.on('keyup-SPACE',e=>{ e.preventDefault(); this.endHold(); });
   }
 
-  // ── Timer ────────────────────────────────────────────────────
+  // ── Timer ─────────────────────────────────────────────────────────────────────
   startTimer(){
-    this.timerEvent=this.time.addEvent({
-      delay:1000, repeat:59,
-      callback:()=>{
-        state.timerSec--;
-        this.timerNumTxt.setText(state.timerSec);
-        this.redrawTimerFill(state.timerSec);
-        if(state.timerSec<=10&&state.timerSec>0){
-          playBeep(660,.06);
-          this.cameras.main.shake(50,.004);
-          this.timerNumTxt.setColor('#f87171');
-        } else if(state.timerSec<=20){
-          this.timerNumTxt.setColor('#fbbf24');
-        }
-        if(state.timerSec<=0) this.endGame();
-      }
-    });
+    this.timerEvt=this.time.addEvent({ delay:1000,repeat:59,callback:()=>{
+      S.timerSec--;
+      this.timerTxt.setText(S.timerSec);
+      this.redrawTimerBar(S.timerSec);
+      if(S.timerSec<=10&&S.timerSec>0){
+        beep(660,.06); this.cameras.main.shake(40,.005);
+        this.timerTxt.setColor('#f87171');
+        this.timerTxt.setShadow(0,0,'#f87171',10,false,true);
+      } else if(S.timerSec<=20){ this.timerTxt.setColor('#fbbf24'); }
+      if(S.timerSec<=0) this.endGame();
+    }});
   }
 
-  // ── Hold/shoot ───────────────────────────────────────────────
+  // ── Hold / shoot ─────────────────────────────────────────────────────────────
   startHold(){
-    if(!state.gameActive||this.shooting) return;
-    this.holding=true; this.power=0; this.powerDir=1;
+    if(!S.active||this.shooting) return;
+    this.holding=true; this.power=0; this.pDir=1;
     this.redrawBtn(true);
   }
   endHold(){
@@ -583,218 +775,214 @@ class GameScene extends Phaser.Scene {
   }
 
   shoot(){
-    if(!state.gameActive) return;
+    if(!S.active) return;
     this.shooting=true;
-    const isMoney=state.ballIdx===4;
+    const money=S.ballIdx===4;
     const dist=Math.abs(this.power-this.PS);
     const luck=Math.random()*6;
-    const isMake=dist<this.PH+luck;
-    const pts=isMake?(isMoney?2:1):0;
-    const sp=SPOT_POS[state.spotIdx];
+    const make=dist<this.PH+luck;
+    const pts=make?(money?2:1):0;
 
-    state.shotsAttempted++;
-    if(isMake){
-      state.shotsMade++; state.currentStreak++;
-      if(state.currentStreak>state.maxStreak) state.maxStreak=state.currentStreak;
-      if(state.currentStreak===3) playFireSound();
-    } else { state.currentStreak=0; }
+    S.attempted++;
+    if(make){ S.made++; S.streak++; if(S.streak>S.maxStreak)S.maxStreak=S.streak; if(S.streak===3)playFire(); }
+    else { S.streak=0; }
 
-    this.animateBall(sp.x,sp.y,isMake,isMoney,()=>{
-      if(isMake){ playSwish(isMoney); this.spawnParticles(CX,HOOP_Y+10,isMoney); this.flashRim(true); }
-      else { playClank(); this.flashRim(false); }
+    // Show shoot animation
+    this.drawPlayer('shoot');
+    this.bAlpha=1;
+    this.bColor=money?0xF4C430:0xE85D04;
+    this.bStroke=money?0xB8860B:0xA04800;
+    this.ballTrail=[];
 
-      state.ballResults[state.spotIdx][state.ballIdx]=isMake;
-      state.score+=pts; state.spotScores[state.spotIdx]+=pts;
+    this.animBall(this.playerX, FLOOR_Y-40, make, money, ()=>{
+      S.results[S.spotIdx][S.ballIdx]=make;
+      S.score+=pts; S.spotScores[S.spotIdx]+=pts;
+      this.scoreTxt.setText(S.score);
+      this.pctTxt.setText(S.attempted?Math.round(S.made/S.attempted*100)+'%':'—');
 
-      this.scoreTxt.setText(state.score);
-      this.pctTxt.setText(state.shotsAttempted?Math.round(state.shotsMade/state.shotsAttempted*100)+'%':'—');
+      if(make){ playSwish(money); this.flashRim(true); this.spawnParticles(RIM_X+RIM_W/2,RIM_Y,money); if(pts)this.showFloatScore(pts,money); this.cameras.main.flash(60,make&&money?255:34,money?200:197,money?0:94,.4); }
+      else { playClank(); this.flashRim(false); this.cameras.main.shake(80,.006); }
 
-      const msg=isMake?(isMoney?`💰 +2 — ${rnd(MAKES)}`:`✓ +1 — ${rnd(MAKES)}`):(`✗ ${rnd(MISSES)}`);
-      this.resultTxt.setText(msg).setColor(isMake?(isMoney?'#F4C430':'#22c55e'):'#64748b');
+      this.redrawStreak(); this.redrawDots();
+      this.redrawMiniMap(this.miniMapX,this.miniMapY,this.miniMapW,this.miniMapH,this.miniCX,this.miniHY,this.miniR);
 
-      this.redrawStreak();
-      this.redrawDots();
+      if(make) this.time.delayedCall(200,()=>this.drawPlayer('celebrate'));
 
-      state.ballIdx++;
-      if(state.ballIdx>=5){ state.ballIdx=0; state.spotIdx++; }
-      if(state.spotIdx>=5){ this.endGame(); return; }
+      S.ballIdx++;
+      if(S.ballIdx>=5){ S.ballIdx=0; S.spotIdx++; }
+      if(S.spotIdx>=5){ this.endGame(); return; }
 
-      this.updatePossible();
-      this.updateIndicator();
-      this.redrawSpots();
-
-      this.time.delayedCall(280,()=>{
-        this.placeBallAtSpot();
+      this.updatePossible(); this.updateSpotLabel();
+      this.time.delayedCall(350,()=>{
+        this.bAlpha=0; this.ballTrail=[]; this.trailGfx.clear(); this.ballGfx.clear();
+        this.playerX=SPOT_X[S.spotIdx];
+        this.drawPlayer('idle'); this.redrawDots();
         this.shooting=false;
       });
     });
   }
 
-  // ── Ball animation ────────────────────────────────────────────
-  animateBall(fromX,fromY,isMake,isMoney,onDone){
-    const toX=CX+(isMake?0:(fromX<CX?24:-24));
-    const toY=isMake?HOOP_Y+12:HOOP_Y-8;
-    const peakX=(fromX+toX)/2;
-    const peakY=Math.min(fromY,toY)-90;
+  // ── Ball arc animation ────────────────────────────────────────────────────────
+  animBall(fromX,fromY,make,money,done){
+    const toX=RIM_X+RIM_W*.4+(make?0:(Math.random()<.5?-8:RIM_W+8));
+    const toY=RIM_Y+(make?0:-6);
+    const peakX=(fromX+toX)/2, peakY=Math.min(fromY,toY)-110;
 
-    this.tweens.addCounter({
-      from:0,to:1,duration:520,ease:'Linear',
+    this.tweens.addCounter({from:0,to:1,duration:480,ease:'Linear',
       onUpdate:t=>{
         const v=t.getValue();
-        const x=(1-v)*(1-v)*fromX+2*(1-v)*v*peakX+v*v*toX;
-        const y=(1-v)*(1-v)*fromY+2*(1-v)*v*peakY+v*v*toY;
-        const scale=1-0.48*Math.sin(Math.PI*v);
-        this.ballX=x; this.ballY=y; this.ballR=11*scale;
-        this.redrawBall();
+        this.bx=(1-v)*(1-v)*fromX+2*(1-v)*v*peakX+v*v*toX;
+        this.by=(1-v)*(1-v)*fromY+2*(1-v)*v*peakY+v*v*toY;
+        this.br=9*(1-0.38*Math.sin(Math.PI*v));
+        this.bAngle+=0.18;
+        // Trail
+        if(v>.05){ this.ballTrail.push({x:this.bx,y:this.by}); if(this.ballTrail.length>14)this.ballTrail.shift(); }
+        this.drawTrail(); this.drawBall();
       },
       onComplete:()=>{
-        if(!isMake){
-          // bounce away from rim
-          const bx2=toX+(fromX<CX?-38:38), by2=toY+38;
-          this.tweens.addCounter({
-            from:0,to:1,duration:320,ease:'Power2',
+        if(!make){
+          // Bounce off rim
+          const bx2=toX+(toX<RIM_X+RIM_W/2?-40:40), by2=FLOOR_Y-10;
+          this.tweens.addCounter({from:0,to:1,duration:380,ease:'Power2',
             onUpdate:t=>{
               const v=t.getValue();
-              this.ballX=toX+(bx2-toX)*v;
-              this.ballY=toY+(by2-toY)*v-22*Math.sin(Math.PI*v);
-              this.ballR=Math.max(4,9*(1-v*.3));
-              this.redrawBall();
+              this.bx=toX+(bx2-toX)*v; this.by=toY+(by2-toY)*v-50*Math.sin(Math.PI*v);
+              this.br=Math.max(4,8*(1-v*.2)); this.bAngle+=.12;
+              this.ballTrail=[];this.drawTrail(); this.drawBall();
             },
-            onComplete:onDone
+            onComplete:done
           });
         } else {
-          // drop through net
-          this.tweens.addCounter({
-            from:0,to:1,duration:220,ease:'Linear',
+          // Drop through net
+          this.tweens.addCounter({from:0,to:1,duration:200,ease:'Linear',
             onUpdate:t=>{
               const v=t.getValue();
-              this.ballX=CX; this.ballY=toY+20*v;
-              this.ballAlpha=1-v; this.ballR=Math.max(2,9*(1-v*.5));
-              this.redrawBall();
+              this.bx=toX; this.by=toY+24*v; this.bAlpha=1-v; this.br=Math.max(2,8*(1-v*.4));
+              this.ballTrail=[];this.drawTrail(); this.drawBall();
             },
-            onComplete:onDone
+            onComplete:done
           });
         }
       }
     });
   }
 
-  // ── Particles ─────────────────────────────────────────────────
-  spawnParticles(x,y,isMoney){
-    const cols=isMoney?[0xF4C430,0xFFD700,0xFFA500,0xffffff]:[0x22c55e,0x4ade80,0x86efac,0xffffff,0x60a5fa];
-    for(let i=0;i<22;i++){
-      const angle=Math.random()*Math.PI*2;
-      const speed=1.8+Math.random()*4.5;
+  // ── Particles ─────────────────────────────────────────────────────────────────
+  spawnParticles(x,y,money){
+    const cols=money?[0xF4C430,0xFFD700,0xFFA500,0xfffde7]:[0x22c55e,0x4ade80,0x86efac,0xffffff,0x7dd3fc];
+    for(let i=0;i<28;i++){
+      const angle=Math.random()*Math.PI*2, speed=2+Math.random()*5;
       const color=cols[Math.floor(Math.random()*cols.length)];
-      const size=2+Math.random()*4;
-      const dot=this.add.circle(x,y,size,color).setDepth(20);
-      this.tweens.add({
-        targets:dot,
-        x:x+Math.cos(angle)*speed*28,
-        y:y+Math.sin(angle)*speed*28-55,
-        alpha:0, scaleX:.1, scaleY:.1,
-        duration:550+Math.random()*400, ease:'Power2',
+      const size=2+Math.random()*5;
+      const dot=this.add.circle(x,y,size,color).setDepth(25);
+      this.tweens.add({targets:dot,
+        x:x+Math.cos(angle)*speed*30, y:y+Math.sin(angle)*speed*30-70,
+        alpha:0,scaleX:.05,scaleY:.05,
+        duration:600+Math.random()*500, ease:'Power2',
         onComplete:()=>dot.destroy()
       });
     }
+    // If money ball, extra big burst
+    if(money){
+      for(let i=0;i<8;i++){
+        const star=this.add.text(x+(-30+Math.random()*60),y+(-20+Math.random()*20),'⭐',{fontSize:'16px'}).setDepth(26).setAlpha(.9);
+        this.tweens.add({targets:star,y:star.y-80,alpha:0,duration:800,ease:'Power2',onComplete:()=>star.destroy()});
+      }
+    }
   }
 
-  // ── Helpers ──────────────────────────────────────────────────
+  // ── Helpers ──────────────────────────────────────────────────────────────────
+  refresh(){
+    this.playerX=SPOT_X[S.spotIdx];
+    this.drawPlayer('idle');
+    this.updateSpotLabel();
+    this.updatePossible();
+    this.redrawDots();
+    this.redrawMiniMap(this.miniMapX,this.miniMapY,this.miniMapW,this.miniMapH,this.miniCX,this.miniHY,this.miniR);
+  }
+
+  updateSpotLabel(){
+    const money=S.ballIdx===4;
+    this.spotLbl.setText(`📍 ${SPOT_NAMES[S.spotIdx]}  ·  Ball ${S.ballIdx+1}/5${money?' · 💰 MONEY BALL':''}`)
+      .setColor(money?'#F4C430':'rgba(255,255,255,0.45)');
+  }
+
   updatePossible(){
     let rem=0;
-    for(let s=state.spotIdx;s<5;s++){
-      const st=s===state.spotIdx?state.ballIdx:0;
+    for(let s=S.spotIdx;s<5;s++){
+      const st=s===S.spotIdx?S.ballIdx:0;
       for(let b=st;b<5;b++) rem+=(b===4?2:1);
     }
-    this.possTxt.setText(state.score+rem);
+    // Show possible in score box label
+    this.scoreLbl.setText('SCORE  /  '+(S.score+rem));
   }
 
-  updateIndicator(){
-    const isMoney=state.ballIdx===4;
-    this.indicatorTxt.setText(
-      `${SPOTS[state.spotIdx]} — Ball ${state.ballIdx+1}/5${isMoney?' · 💰 Money ball':''}`
-    ).setColor(isMoney?'#F4C430':'#94a3b8');
-  }
-
-  refreshAll(){
-    this.updateIndicator();
-    this.updatePossible();
-    this.redrawSpots();
-    this.redrawDots();
-    this.placeBallAtSpot();
-  }
-
-  // ── End game ──────────────────────────────────────────────────
   endGame(){
-    state.gameActive=false;
-    if(this.timerEvent) this.timerEvent.remove();
-    this.shooting=false;
+    S.active=false;
+    if(this.timerEvt)this.timerEvt.remove();
+    this.shooting=false; this.holding=false;
     playBuzzer();
-    const isNew=state.score>bestScore;
-    if(isNew) bestScore=state.score;
-    state.isNew=isNew;
-    this.bestTxt.setText('🏆 '+bestScore);
-    saveToLB(playerName,state.score);
+    const isNew=S.score>bestScore; if(isNew)bestScore=S.score;
+    S.isNew=isNew; this.bestTxt.setText('🏆 BEST: '+bestScore);
+    saveLB(playerName,S.score);
     this.time.delayedCall(900,()=>{ this.scene.stop(); showResults(); });
   }
 
-  // ── Update loop ──────────────────────────────────────────────
   update(){
     if(this.holding&&!this.shooting){
-      this.power+=this.powerDir*this.BAR_SPEED;
-      if(this.power>=100){ this.power=100; this.powerDir=-1; }
-      if(this.power<=0){ this.power=0; this.powerDir=1; }
-      this.redrawPowerMeter();
+      this.power+=this.pDir*this.SPEED;
+      if(this.power>=100){this.power=100;this.pDir=-1;}
+      if(this.power<=0){this.power=0;this.pDir=1;}
+      this.redrawPM();
     }
   }
 }
 
-// ── HTML screen functions ────────────────────────────────────
+// ─── Results ─────────────────────────────────────────────────────────────────
 function showResults(){
   document.getElementById('results-screen').classList.remove('hidden');
-  const {score,shotsMade,shotsAttempted,maxStreak,spotScores,ballResults,isNew}=state;
+  const {score,made,attempted,maxStreak,spotScores,results,isNew}=S;
   document.getElementById('res-name').textContent=playerName+"'s Result";
   document.getElementById('res-score').textContent=score;
   document.getElementById('res-rating').textContent=getRating(score);
-  const fgPct=shotsAttempted?Math.round(shotsMade/shotsAttempted*100):0;
-  let moneyMade=0; for(let s=0;s<5;s++) if(ballResults[s][4]===true) moneyMade++;
+  const fgPct=attempted?Math.round(made/attempted*100):0;
+  let moneyMade=0; for(let s=0;s<5;s++) if(results[s]&&results[s][4]===true)moneyMade++;
   document.getElementById('res-stats').innerHTML=`FG: <span>${fgPct}%</span> &nbsp;·&nbsp; Money balls: <span>${moneyMade}/5</span> &nbsp;·&nbsp; Best streak: <span>${maxStreak}</span>`;
   document.getElementById('res-hs').innerHTML=isNew?'🎉 New personal best!':`🏆 Personal best: <strong>${bestScore}</strong>`;
   const bd=document.getElementById('res-breakdown'); bd.innerHTML='';
-  SPOTS.forEach((name,i)=>{ const d=document.createElement('div'); d.className='spot-score'; d.innerHTML=`<div class="sv">${spotScores[i]}</div><div class="sl">${name}</div>`; bd.appendChild(d); });
+  SPOT_NAMES.forEach((name,i)=>{ const d=document.createElement('div'); d.className='spot-score';
+    d.innerHTML=`<div class="sv">${spotScores[i]}</div><div class="sl">${name}</div>`; bd.appendChild(d); });
   const lb=loadLB(),lbRows=document.getElementById('lb-rows'); lbRows.innerHTML='';
   const medals=['🥇','🥈','🥉'];
-  lb.slice(0,7).forEach((entry,i)=>{
-    const isMe=isNew&&i===0&&entry.name===playerName&&entry.score===score;
+  lb.slice(0,7).forEach((e,i)=>{
+    const isMe=isNew&&i===0&&e.name===playerName&&e.score===score;
     const row=document.createElement('div'); row.className='lb-row'+(isMe?' me':'');
     const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
-    row.innerHTML=`<div class="lb-rank ${rc}">${i<3?medals[i]:i+1}</div><div class="lb-name">${entry.name}</div><div class="lb-score">${entry.score}</div><div class="lb-date">${entry.date}</div>`;
+    row.innerHTML=`<div class="lb-rank ${rc}">${i<3?medals[i]:i+1}</div><div class="lb-name">${e.name}</div><div class="lb-score">${e.score}</div><div class="lb-date">${e.date}</div>`;
     lbRows.appendChild(row);
   });
 }
 
-// ── Phaser init ──────────────────────────────────────────────
-const phaserConfig={
+// ─── Phaser boot ─────────────────────────────────────────────────────────────
+const cfg={
   type:Phaser.AUTO, width:W, height:H,
-  parent:'phaser-container',
-  backgroundColor:'#080d18',
+  parent:'phaser-container', backgroundColor:'#050810',
   scene:[CountdownScene,GameScene],
   scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH,width:W,height:H},
   input:{keyboard:true}
 };
 
 let game=null;
-
 function startGame(){
   const v=document.getElementById('name-input').value.trim();
   playerName=v||'Player';
   document.getElementById('setup-screen').classList.add('hidden');
-  if(!game){ game=new Phaser.Game(phaserConfig); }
-  else { game.scene.start('CountdownScene'); }
+  if(!game) game=new Phaser.Game(cfg);
+  else game.scene.start('CountdownScene');
 }
 
 document.getElementById('start-btn').addEventListener('click',startGame);
-document.getElementById('name-input').addEventListener('keydown',e=>{ if(e.key==='Enter') startGame(); });
+document.getElementById('name-input').addEventListener('keydown',e=>{ if(e.key==='Enter')startGame(); });
 document.getElementById('mute-btn').addEventListener('click',toggleMute);
 document.getElementById('play-again-btn').addEventListener('click',()=>{
   document.getElementById('results-screen').classList.add('hidden');
