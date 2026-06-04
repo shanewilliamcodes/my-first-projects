@@ -47,6 +47,35 @@ export async function fetchStandings() {
   return { east: mapStandingsNode(east), west: mapStandingsNode(west) };
 }
 
+// All 30 teams' season stats, keyed by ESPN team id (matches the baked team
+// ids). Used by the Compare tab's team mode.
+export async function fetchTeamStats() {
+  const r = await fetch(`${SITE2}/standings`);
+  if (!r.ok) throw new Error(`standings ${r.status}`);
+  const d = await r.json();
+  const out = {};
+  (d.children || []).forEach((conf) => {
+    (conf.standings?.entries || []).forEach((e) => {
+      const stat = (n) => (e.stats.find((s) => s.name === n) || {}).displayValue;
+      out[e.team.id] = {
+        id: e.team.id,
+        name: e.team.displayName,
+        logo: (e.team.logos || [])[0]?.href || null,
+        conference: conf.name,
+        record: stat('overall'),
+        winPercent: stat('winPercent'),
+        ppg: stat('avgPointsFor'),
+        oppPpg: stat('avgPointsAgainst'),
+        diff: stat('differential'),
+        seed: stat('playoffSeed'),
+        streak: stat('streak'),
+        lastTen: stat('Last Ten Games'),
+      };
+    });
+  });
+  return out;
+}
+
 export async function fetchGames() {
   const r = await fetch(`${SITE}/scoreboard`);
   if (!r.ok) throw new Error(`scoreboard ${r.status}`);

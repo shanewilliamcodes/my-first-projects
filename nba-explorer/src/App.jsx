@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, getPlayerById, PLAYER_COUNT } from './api';
-import { fetchNews, fetchStandings, fetchGames } from './live';
+import { fetchNews, fetchStandings, fetchGames, fetchTeamStats } from './live';
 import awardsData from './data/awards.json';
 
 /* ---------------- helpers ---------------- */
@@ -344,44 +344,163 @@ function PlayerPicker({ picked, onPick, onClear }) {
   );
 }
 
+function TeamPicker({ picked, onPick, onClear }) {
+  const [q, setQ] = useState('');
+  const teams = getNbaTeams();
+  const matches = q.trim()
+    ? teams.filter((t) => t.name.toLowerCase().includes(q.toLowerCase())).slice(0, 8)
+    : [];
+
+  if (picked) {
+    return (
+      <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-slate-800/60 p-3">
+        {picked.logo && <img src={picked.logo} alt="" className="h-10 w-10 shrink-0 object-contain" />}
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-bold leading-tight text-white">{picked.name}</div>
+        </div>
+        <button onClick={onClear} className="shrink-0 text-slate-400 transition hover:text-white">✕</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search a team…"
+        className="w-full rounded-xl border border-white/10 bg-slate-800/70 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-orange-400/60"
+      />
+      {matches.length > 0 && (
+        <div className="absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-xl border border-white/10 bg-slate-800 shadow-2xl">
+          {matches.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => { onPick(t); setQ(''); }}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left transition hover:bg-white/10"
+            >
+              {t.logo && <img src={t.logo} alt="" className="h-8 w-8 shrink-0 object-contain" />}
+              <span className="truncate text-sm text-white">{t.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// One comparison row. `better` = 'high' | 'low' | null (null = no winner).
+function StatRow({ label, aVal, bVal, better }) {
+  const an = parseFloat(aVal);
+  const bn = parseFloat(bVal);
+  const valid = better && !isNaN(an) && !isNaN(bn) && an !== bn;
+  const aWin = valid && (better === 'high' ? an > bn : an < bn);
+  const bWin = valid && (better === 'high' ? bn > an : bn < an);
+  return (
+    <div className="grid grid-cols-3 items-center border-b border-white/5 last:border-0">
+      <div className={`px-3 py-3 text-right text-lg font-bold tabular-nums ${aWin ? 'text-emerald-400' : 'text-white'}`}>
+        {aVal ?? '—'}
+      </div>
+      <div className="px-1 py-3 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+        {label}
+      </div>
+      <div className={`px-3 py-3 text-left text-lg font-bold tabular-nums ${bWin ? 'text-emerald-400' : 'text-white'}`}>
+        {bVal ?? '—'}
+      </div>
+    </div>
+  );
+}
+
 const COMPARE_ROWS = [
   ['pts', 'Points'], ['reb', 'Rebounds'], ['ast', 'Assists'], ['stl', 'Steals'],
   ['blk', 'Blocks'], ['min', 'Minutes'], ['fgPct', 'FG%'], ['tpPct', '3P%'], ['ftPct', 'FT%'],
 ];
 
-function CompareView({ a, b, setA, setB }) {
+const TEAM_ROWS = [
+  { key: 'record', label: 'Record', better: null },
+  { key: 'winPercent', label: 'Win %', better: 'high' },
+  { key: 'ppg', label: 'Points / G', better: 'high' },
+  { key: 'oppPpg', label: 'Opp Pts / G', better: 'low' },
+  { key: 'diff', label: 'Point Diff', better: 'high' },
+  { key: 'seed', label: 'Conf. Seed', better: 'low' },
+  { key: 'streak', label: 'Streak', better: null },
+  { key: 'lastTen', label: 'Last 10', better: null },
+];
+
+function ComparePanel({ children }) {
+  return <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-slate-800/40">{children}</div>;
+}
+
+function CompareView() {
+  const [mode, setMode] = useState('players');
+  const [pa, setPa] = useState(null);
+  const [pb, setPb] = useState(null);
+  const [ta, setTa] = useState(null);
+  const [tb, setTb] = useState(null);
+  const teamStats = useLive(fetchTeamStats, mode === 'teams');
+
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="grid grid-cols-2 gap-3">
-        <PlayerPicker picked={a} onPick={setA} onClear={() => setA(null)} />
-        <PlayerPicker picked={b} onPick={setB} onClear={() => setB(null)} />
+      {/* mode toggle */}
+      <div className="mb-6 flex justify-center">
+        <div className="flex gap-1 rounded-full border border-white/10 bg-slate-800/60 p-1">
+          {[['players', 'Players'], ['teams', 'Teams']].map(([k, l]) => (
+            <button
+              key={k}
+              onClick={() => setMode(k)}
+              className={`rounded-full px-5 py-1.5 text-sm font-semibold transition ${
+                mode === k ? 'bg-orange-500 text-white' : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {a && b ? (
-        <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-slate-800/40">
-          {COMPARE_ROWS.map(([k, label]) => {
-            const av = parseFloat(a.stats?.[k]);
-            const bv = parseFloat(b.stats?.[k]);
-            const valid = !isNaN(av) && !isNaN(bv);
-            const aWin = valid && av > bv;
-            const bWin = valid && bv > av;
-            return (
-              <div key={k} className="grid grid-cols-3 items-center border-b border-white/5 last:border-0">
-                <div className={`px-4 py-3 text-right text-lg font-bold tabular-nums ${aWin ? 'text-emerald-400' : 'text-white'}`}>
-                  {a.stats?.[k] ?? '—'}
-                </div>
-                <div className="px-2 py-3 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-                  {label}
-                </div>
-                <div className={`px-4 py-3 text-left text-lg font-bold tabular-nums ${bWin ? 'text-emerald-400' : 'text-white'}`}>
-                  {b.stats?.[k] ?? '—'}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      {mode === 'players' ? (
+        <>
+          <div className="grid grid-cols-2 gap-3">
+            <PlayerPicker picked={pa} onPick={setPa} onClear={() => setPa(null)} />
+            <PlayerPicker picked={pb} onPick={setPb} onClear={() => setPb(null)} />
+          </div>
+          {pa && pb ? (
+            <ComparePanel>
+              {COMPARE_ROWS.map(([k, label]) => (
+                <StatRow key={k} label={label} aVal={pa.stats?.[k]} bVal={pb.stats?.[k]} better="high" />
+              ))}
+            </ComparePanel>
+          ) : (
+            <p className="mt-10 text-center text-slate-500">Pick two players to compare their season stats.</p>
+          )}
+        </>
       ) : (
-        <p className="mt-10 text-center text-slate-500">Pick two players to compare their season stats side by side.</p>
+        <>
+          <div className="grid grid-cols-2 gap-3">
+            <TeamPicker picked={ta} onPick={setTa} onClear={() => setTa(null)} />
+            <TeamPicker picked={tb} onPick={setTb} onClear={() => setTb(null)} />
+          </div>
+          {ta && tb ? (
+            teamStats.loading ? (
+              <Spinner label="Loading team stats…" />
+            ) : teamStats.error ? (
+              <p className="mt-10 text-center text-slate-400">Couldn’t load team stats right now.</p>
+            ) : (() => {
+              const sa = teamStats.data?.[ta.id];
+              const sb = teamStats.data?.[tb.id];
+              if (!sa || !sb) return <p className="mt-10 text-center text-slate-400">Stats unavailable for these teams.</p>;
+              return (
+                <ComparePanel>
+                  {TEAM_ROWS.map((r) => (
+                    <StatRow key={r.key} label={r.label} aVal={sa[r.key]} bVal={sb[r.key]} better={r.better} />
+                  ))}
+                </ComparePanel>
+              );
+            })()
+          ) : (
+            <p className="mt-10 text-center text-slate-500">Pick two teams to compare their season stats.</p>
+          )}
+        </>
       )}
     </div>
   );
@@ -608,8 +727,6 @@ export default function App() {
   const [leaderStat, setLeaderStat] = useState('pts');
   const [viewTeam, setViewTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [compareA, setCompareA] = useState(null);
-  const [compareB, setCompareB] = useState(null);
 
   const teams = getNbaTeams();
   const results = useMemo(() => searchPlayers(query).slice(0, 60), [query]);
@@ -729,9 +846,7 @@ export default function App() {
             </div>
           )}
 
-          {tab === 'compare' && (
-            <CompareView a={compareA} b={compareB} setA={setCompareA} setB={setCompareB} />
-          )}
+          {tab === 'compare' && <CompareView />}
 
           {tab === 'playoffs' && <PlayoffsTab active={tab === 'playoffs'} />}
 
