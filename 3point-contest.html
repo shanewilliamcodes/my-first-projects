@@ -2,619 +2,804 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>🏀 3-Point Contest</title>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
-    body{background:#080d18;background-image:radial-gradient(ellipse at 50% 0%,#1a2744 0%,#080d18 70%);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f1f5f9;display:flex;justify-content:center;padding:1rem;}
-    .app{max-width:440px;width:100%;}
-
-    /* SETUP */
-    .setup{text-align:center;padding:3rem 1.5rem;display:flex;flex-direction:column;align-items:center;min-height:100vh;justify-content:center;}
-    .setup-logo{font-size:64px;margin-bottom:.5rem;filter:drop-shadow(0 0 20px rgba(192,39,45,.5));}
-    .setup h1{font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px;background:linear-gradient(135deg,#fff 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-    .setup-rules{font-size:13px;color:#64748b;margin-bottom:2rem;line-height:1.7;}
-    .setup-rules span{color:#F4C430;font-weight:600;}
-    .setup input{width:100%;padding:12px 16px;font-size:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:12px;color:#f1f5f9;outline:none;transition:border-color .2s;}
-    .setup input:focus{border-color:rgba(192,39,45,.6);}
-    .setup input::placeholder{color:#475569;}
-    .start-btn{width:100%;padding:14px;font-size:15px;font-weight:700;border:none;border-radius:10px;background:linear-gradient(135deg,#C0272D 0%,#8B1A1E 100%);color:white;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 20px rgba(192,39,45,.4);transition:transform .1s,box-shadow .1s;}
-    .start-btn:active{transform:translateY(1px);box-shadow:0 2px 10px rgba(192,39,45,.3);}
-    .setup-mute{margin-top:1rem;background:none;border:1px solid rgba(255,255,255,.1);color:#64748b;font-size:12px;padding:6px 14px;border-radius:20px;cursor:pointer;}
-
-    /* COUNTDOWN */
-    .countdown-screen{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}
-    .cd-num{font-size:120px;font-weight:800;color:#C0272D;line-height:1;margin-bottom:16px;text-shadow:0 0 40px rgba(192,39,45,.5);transition:transform .12s ease-out;}
-    .cd-go{font-size:80px;font-weight:800;color:#22c55e;text-shadow:0 0 40px rgba(34,197,94,.5);}
-    .cd-sub{font-size:16px;color:#64748b;letter-spacing:.1em;text-transform:uppercase;}
-
-    /* GAME */
-    #main{padding:.75rem 0;}
-    .game-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-    .player-name{font-size:14px;font-weight:600;color:#94a3b8;}
-    .header-right{display:flex;align-items:center;gap:10px;}
-    .best-badge{font-size:12px;color:#F4C430;font-weight:600;}
-    .mute-btn{background:none;border:none;font-size:16px;cursor:pointer;opacity:.7;padding:2px;}
-
-    /* Timer */
-    .timer-banner{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;margin-bottom:10px;transition:border-color .3s,background .3s;}
-    .timer-banner.warn{background:rgba(226,75,74,.12);border-color:rgba(226,75,74,.4);}
-    .timer-banner.critical{background:rgba(226,75,74,.2);border-color:rgba(226,75,74,.7);animation:pulse-border .5s ease-in-out infinite alternate;}
-    @keyframes pulse-border{from{border-color:rgba(226,75,74,.5);}to{border-color:rgba(226,75,74,1);}}
-    .timer-icon{font-size:18px;}
-    .timer-center{flex:1;display:flex;flex-direction:column;gap:4px;}
-    .timer-row{display:flex;align-items:baseline;gap:6px;}
-    .timer-num{font-size:32px;font-weight:700;color:#f1f5f9;line-height:1;font-variant-numeric:tabular-nums;}
-    .timer-banner.warn .timer-num,.timer-banner.critical .timer-num{color:#f87171;}
-    .timer-label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;}
-    .timer-track{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-    .timer-fill{height:100%;background:#22c55e;border-radius:2px;transition:width 1s linear,background .3s;}
-    .timer-banner.warn .timer-fill{background:#f87171;}
-    .timer-banner.critical .timer-fill{background:#ef4444;}
-
-    /* Score bar */
-    .scorebar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
-    .sbox{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px 6px;text-align:center;}
-    .sbox .val{font-size:22px;font-weight:700;color:#f1f5f9;font-variant-numeric:tabular-nums;}
-    .sbox .lbl{font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
-
-    /* Streak */
-    .streak-wrap{min-height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
-    .streak-badge{display:none;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(251,146,60,.2),rgba(239,68,68,.2));border:1px solid rgba(251,146,60,.4);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:700;color:#fb923c;animation:streak-pulse .8s ease-in-out infinite alternate;}
-    .streak-badge.active{display:flex;}
-    @keyframes streak-pulse{from{box-shadow:0 0 8px rgba(251,146,60,.3);}to{box-shadow:0 0 20px rgba(251,146,60,.6);}}
-
-    /* Dots */
-    .spots-row{display:flex;justify-content:center;gap:5px;margin-bottom:8px;}
-    .spot{display:flex;flex-direction:column;align-items:center;gap:3px;}
-    .spot-label{font-size:8px;color:#475569;text-transform:uppercase;letter-spacing:.04em;}
-    .balls-row{display:flex;gap:3px;}
-    .bdot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);transition:background .2s,border-color .2s;}
-    .bdot.money{border-color:rgba(244,196,48,.5);}
-    .bdot.made{background:#22c55e;border-color:#16a34a;}
-    .bdot.made.money{background:#F4C430;border-color:#B8860B;}
-    .bdot.missed{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.06);opacity:.4;}
-    .bdot.current{border-color:#60a5fa;box-shadow:0 0 6px rgba(96,165,250,.5);}
-    .bdot.current.money{border-color:#F4C430;box-shadow:0 0 6px rgba(244,196,48,.6);}
-
-    /* Court */
-    .court-container{position:relative;margin-bottom:8px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(255,255,255,.1);box-shadow:0 8px 32px rgba(0,0,0,.5);}
-    #particle-canvas{position:absolute;top:0;left:0;pointer-events:none;}
-
-    /* Indicator */
-    .spot-indicator{text-align:center;font-size:12px;color:#64748b;margin-bottom:8px;min-height:18px;}
-    .spot-indicator strong{color:#e2e8f0;}
-    .money-tag{display:inline-block;font-size:10px;background:rgba(244,196,48,.15);color:#F4C430;border:1px solid rgba(244,196,48,.3);border-radius:4px;padding:1px 7px;margin-left:5px;font-weight:600;}
-
-    /* Power bar */
-    .bar-wrap{margin-bottom:10px;}
-    .bar-top{display:flex;justify-content:space-between;font-size:11px;color:#475569;margin-bottom:5px;}
-    #bar-val{color:#94a3b8;font-weight:600;}
-    .bar-track{height:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;position:relative;}
-    .bar-green{position:absolute;top:0;height:100%;background:rgba(34,197,94,.18);border-left:1px solid rgba(34,197,94,.4);border-right:1px solid rgba(34,197,94,.4);}
-    .bar-fill{position:absolute;top:0;left:0;height:100%;width:0%;border-radius:12px;}
-    .bar-marker{position:absolute;top:0;height:100%;width:3px;background:white;border-radius:1.5px;transform:translateX(-50%);pointer-events:none;box-shadow:0 0 6px rgba(255,255,255,.8);}
-    .bar-hint{font-size:11px;color:#475569;text-align:center;margin-top:4px;}
-
-    /* Shoot button */
-    .shoot-btn{width:100%;padding:16px;font-size:15px;font-weight:700;border:1.5px solid rgba(192,39,45,.5);border-radius:12px;background:transparent;color:#C0272D;cursor:pointer;touch-action:none;letter-spacing:.5px;transition:background .1s,color .1s,border-color .1s,box-shadow .1s;margin-bottom:8px;}
-    .shoot-btn.holding{background:linear-gradient(135deg,#C0272D,#8B1A1E);color:white;border-color:transparent;box-shadow:0 4px 20px rgba(192,39,45,.4);}
-    .shoot-btn:disabled{opacity:.3;cursor:default;}
-
-    /* Result */
-    .result{min-height:38px;text-align:center;font-size:13px;font-weight:600;padding:8px 14px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
-    .result.idle{color:#475569;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);}
-    .result.make{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
-    .result.make.money{background:rgba(244,196,48,.12);color:#F4C430;border:1px solid rgba(244,196,48,.3);}
-    .result.miss{background:rgba(255,255,255,.04);color:#64748b;border:1px solid rgba(255,255,255,.07);}
-
-    /* RESULTS */
-    .results-screen{padding:1.5rem 0;text-align:center;}
-    .results-screen h2{font-size:14px;font-weight:500;color:#64748b;margin-bottom:4px;letter-spacing:.08em;text-transform:uppercase;}
-    .big-score{font-size:80px;font-weight:800;color:#C0272D;line-height:1;margin:.5rem 0 0;text-shadow:0 0 40px rgba(192,39,45,.4);}
+    body{background:#080d18;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f1f5f9;overflow:hidden;}
+    canvas{display:block;}
+    .screen{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#080d18;background-image:radial-gradient(ellipse at 50% 0%,#1a2744 0%,#080d18 70%);z-index:100;padding:2rem;overflow-y:auto;}
+    .screen.hidden{display:none;}
+    .logo{font-size:72px;margin-bottom:.5rem;filter:drop-shadow(0 0 20px rgba(192,39,45,.5));}
+    h1{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;background:linear-gradient(135deg,#fff 0%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .subtitle{font-size:13px;color:#64748b;margin-bottom:2rem;line-height:1.9;text-align:center;}
+    .subtitle em{color:#F4C430;font-style:normal;font-weight:600;}
+    input[type=text]{width:100%;max-width:340px;padding:14px 18px;font-size:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#f1f5f9;outline:none;margin-bottom:12px;transition:border-color .2s;}
+    input[type=text]:focus{border-color:rgba(192,39,45,.6);}
+    input[type=text]::placeholder{color:#475569;}
+    .btn-primary{width:100%;max-width:340px;padding:16px;font-size:16px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(135deg,#C0272D 0%,#8B1A1E 100%);color:white;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 24px rgba(192,39,45,.4);transition:transform .1s,box-shadow .1s;margin-bottom:12px;}
+    .btn-primary:active{transform:translateY(1px);box-shadow:0 2px 12px rgba(192,39,45,.3);}
+    .btn-secondary{background:none;border:1px solid rgba(255,255,255,.1);color:#64748b;font-size:12px;padding:8px 18px;border-radius:20px;cursor:pointer;}
+    .res-header{font-size:13px;font-weight:500;color:#64748b;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+    .big-score{font-size:88px;font-weight:800;color:#C0272D;line-height:1;text-shadow:0 0 40px rgba(192,39,45,.4);margin:.5rem 0;}
     .out-of{font-size:14px;color:#475569;margin-bottom:.5rem;}
-    .rating{font-size:15px;color:#94a3b8;margin-bottom:.25rem;}
-    .res-stats{display:flex;justify-content:center;gap:16px;font-size:13px;color:#64748b;margin-bottom:1rem;flex-wrap:wrap;}
+    .rating{font-size:15px;color:#94a3b8;margin-bottom:1rem;}
+    .res-stats{display:flex;gap:16px;font-size:13px;color:#64748b;margin-bottom:1rem;flex-wrap:wrap;justify-content:center;}
     .res-stats span{color:#94a3b8;font-weight:600;}
     .hs-line{font-size:13px;color:#475569;margin-bottom:1.25rem;}
     .hs-line strong{color:#F4C430;}
-    .spot-breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:1.25rem;}
+    .spot-breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:1.25rem;width:100%;max-width:340px;}
     .spot-score{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px 4px;text-align:center;}
     .spot-score .sv{font-size:20px;font-weight:700;color:#f1f5f9;}
     .spot-score .sl{font-size:9px;color:#475569;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
-
-    /* Leaderboard */
+    .lb-section{width:100%;max-width:340px;margin-bottom:1.25rem;}
     .lb-title{font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;text-align:center;}
-    .lb-section{margin-bottom:1.25rem;}
     .lb-row{display:flex;align-items:center;padding:8px 12px;border-radius:8px;margin-bottom:4px;font-size:13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);}
     .lb-row.me{background:rgba(192,39,45,.12);border-color:rgba(192,39,45,.3);}
     .lb-rank{width:28px;font-size:12px;color:#475569;font-weight:600;}
-    .lb-rank.gold{color:#F4C430;}
-    .lb-rank.silver{color:#94a3b8;}
-    .lb-rank.bronze{color:#c2885a;}
+    .lb-rank.gold{color:#F4C430;} .lb-rank.silver{color:#94a3b8;} .lb-rank.bronze{color:#c2885a;}
     .lb-name{flex:1;color:#e2e8f0;font-weight:500;text-align:left;}
     .lb-score{font-weight:700;color:#f1f5f9;}
     .lb-date{font-size:11px;color:#475569;margin-left:10px;}
-    .play-again-btn{width:100%;padding:14px;font-size:15px;font-weight:700;border:none;border-radius:12px;background:linear-gradient(135deg,#C0272D 0%,#8B1A1E 100%);color:white;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 20px rgba(192,39,45,.4);}
+    #phaser-wrap{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;z-index:1;}
   </style>
 </head>
 <body>
-<div class="app">
 
-  <div class="setup" id="setup">
-    <div class="setup-logo">🏀</div>
-    <h1>3-Point Contest</h1>
-    <p class="setup-rules">60 seconds · 5 racks · 25 balls<br>Regular ball = 1 pt · <span>Money ball = 2 pts</span><br>Max score: 30</p>
-    <input type="text" id="name-input" placeholder="Enter your name..." maxlength="20"/>
-    <button class="start-btn" onclick="goToCountdown()">Let's Go</button>
-    <button class="setup-mute" id="setup-mute-btn" onclick="toggleMute()">🔊 Sound on</button>
-  </div>
-
-  <div class="countdown-screen" id="countdown" style="display:none">
-    <div class="cd-num" id="cd-num">3</div>
-    <div class="cd-sub" id="cd-sub">Get ready…</div>
-  </div>
-
-  <div id="main" style="display:none">
-    <div class="game-header">
-      <div class="player-name" id="player-name"></div>
-      <div class="header-right">
-        <div class="best-badge">🏆 <span id="best-score">0</span></div>
-        <button class="mute-btn" id="game-mute-btn" onclick="toggleMute()">🔊</button>
-      </div>
-    </div>
-    <div class="timer-banner" id="timer-banner">
-      <span class="timer-icon">⏱</span>
-      <div class="timer-center">
-        <div class="timer-row">
-          <span class="timer-num" id="timer-val">60</span>
-          <span class="timer-label">sec left</span>
-        </div>
-        <div class="timer-track"><div class="timer-fill" id="timer-fill" style="width:100%"></div></div>
-      </div>
-    </div>
-    <div class="scorebar">
-      <div class="sbox"><div class="val" id="score-val">0</div><div class="lbl">Score</div></div>
-      <div class="sbox"><div class="val" id="max-val">30</div><div class="lbl">Possible</div></div>
-      <div class="sbox"><div class="val" id="pct-val">—</div><div class="lbl">FG%</div></div>
-    </div>
-    <div class="streak-wrap">
-      <div class="streak-badge" id="streak-badge">🔥 <span id="streak-text">ON FIRE</span></div>
-    </div>
-    <div class="spots-row" id="spots-row"></div>
-    <div class="court-container" id="court-container">
-      <svg id="court-svg" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;"></svg>
-      <canvas id="particle-canvas"></canvas>
-    </div>
-    <div class="spot-indicator" id="spot-indicator"></div>
-    <div class="bar-wrap">
-      <div class="bar-top"><span>Shot power</span><span id="bar-val">0%</span></div>
-      <div class="bar-track">
-        <div class="bar-green" id="bg"></div>
-        <div class="bar-fill" id="bf"></div>
-        <div class="bar-marker" id="bm"></div>
-      </div>
-      <div class="bar-hint">Release in the green zone · Space bar or hold button</div>
-    </div>
-    <button class="shoot-btn" id="shoot-btn">Hold to Shoot</button>
-    <div class="result idle" id="result">Hold the button and release in the green zone!</div>
-  </div>
-
-  <div class="results-screen" id="results" style="display:none">
-    <h2 id="res-name"></h2>
-    <div class="big-score" id="res-score"></div>
-    <div class="out-of">out of 30</div>
-    <div class="rating" id="res-rating"></div>
-    <div class="res-stats" id="res-stats"></div>
-    <div class="hs-line" id="res-hs"></div>
-    <div class="spot-breakdown" id="res-breakdown"></div>
-    <div class="lb-section" id="lb-section">
-      <div class="lb-title">🏆 Leaderboard</div>
-      <div id="lb-rows"></div>
-    </div>
-    <button class="play-again-btn" onclick="playAgain()">Shoot Again</button>
-  </div>
-
+<div class="screen" id="setup-screen">
+  <div class="logo">🏀</div>
+  <h1>3-Point Contest</h1>
+  <p class="subtitle">60 seconds · 5 racks · 25 balls<br>Regular ball = 1 pt · <em>Money ball = 2 pts</em><br>Max score: 30</p>
+  <input type="text" id="name-input" placeholder="Enter your name..." maxlength="20"/>
+  <button class="btn-primary" id="start-btn">Let's Go</button>
+  <button class="btn-secondary" id="mute-btn">🔊 Sound on</button>
 </div>
+
+<div class="screen hidden" id="results-screen">
+  <p class="res-header" id="res-name"></p>
+  <div class="big-score" id="res-score"></div>
+  <div class="out-of">out of 30</div>
+  <div class="rating" id="res-rating"></div>
+  <div class="res-stats" id="res-stats"></div>
+  <div class="hs-line" id="res-hs"></div>
+  <div class="spot-breakdown" id="res-breakdown"></div>
+  <div class="lb-section">
+    <div class="lb-title">🏆 Leaderboard</div>
+    <div id="lb-rows"></div>
+  </div>
+  <button class="btn-primary" id="play-again-btn">Shoot Again</button>
+</div>
+
+<div id="phaser-wrap"><div id="phaser-container"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 <script>
-const SPOTS=['L Corner','L Wing','Top Key','R Wing','R Corner'];
-const PS=55,PH=4,BAR_SPEED=4.5,CX=150,HOOPY=30,ARC_R=118;
-const MAKES=['Splash!','Pure.','Nothing but net.','Automatic.','Money.','Clean.','Butter.','Ice cold.'];
-const MISSES=['Off the back.','Brick.','Too flat.','Too strong.','Clank.','Just missed.'];
-const rnd=a=>a[Math.floor(Math.random()*a.length)];
+// ── Constants ────────────────────────────────────────────────
+const SPOTS = ['L Corner','L Wing','Top Key','R Wing','R Corner'];
+const MAKES = ['Splash!','Pure.','Nothing but net.','Automatic.','Money.','Clean.','Butter.','Ice cold.'];
+const MISSES = ['Off the back.','Brick.','Too flat.','Clank.','Just missed.','Rattled out.'];
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+const W = 420, H = 700;
 
-let playerName='',bestScore=0,score=0,spotIdx=0,ballIdx=0,gameActive=false;
-let timerSec=60,timerInterval=null,power=0,pvd=1,holding=false,shooting=false,animInterval=null;
-let spotScores=[0,0,0,0,0],ballResults=[],shotsMade=0,shotsAttempted=0;
-let currentStreak=0,maxStreak=0,muted=false,particles=[],particleRaf=null,audioCtx=null;
+// Court geometry
+const CX = W / 2;
+const HOOP_Y = 108;
+const ARC_R = 148;
+function arcPt(deg){ const a=deg*Math.PI/180; return {x:Math.round(CX+ARC_R*Math.cos(a)),y:Math.round(HOOP_Y+ARC_R*Math.sin(a))}; }
+const SPOT_POS = [arcPt(180),arcPt(145),arcPt(90),arcPt(35),arcPt(0)];
+const BASELINE_Y = HOOP_Y + ARC_R + 48;
 
-// AUDIO
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function toggleMute(){
-  muted=!muted;
-  document.getElementById('game-mute-btn').textContent=muted?'🔇':'🔊';
-  document.getElementById('setup-mute-btn').textContent=muted?'🔇 Sound off':'🔊 Sound on';
-}
+// Layout Y positions (below court)
+const INDICATOR_Y = BASELINE_Y + 14;
+const TIMER_Y     = INDICATOR_Y + 22;
+const BOXES_Y     = TIMER_Y + 52;
+const DOTS_Y      = BOXES_Y + 62;
+const PM_Y        = DOTS_Y + 32;
+const BTN_Y       = PM_Y + 52;
+const FEEDBACK_Y  = BTN_Y + 62;
+
+// ── Global state ─────────────────────────────────────────────
+let playerName = '', bestScore = 0, muted = false, audioCtx = null;
+const state = {
+  score:0, spotIdx:0, ballIdx:0, timerSec:60, gameActive:false,
+  spotScores:[0,0,0,0,0],
+  ballResults:[], // [spot][ball] = true/false/null
+  shotsMade:0, shotsAttempted:0, currentStreak:0, maxStreak:0, isNew:false
+};
+
+// ── Audio ────────────────────────────────────────────────────
+function getCtx(){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
+function toggleMute(){ muted=!muted; document.getElementById('mute-btn').textContent=muted?'🔇 Sound off':'🔊 Sound on'; }
 function playBeep(freq=880,dur=0.08){
-  if(muted)return;const ctx=getCtx();
+  if(muted)return; const ctx=getCtx();
   const o=ctx.createOscillator(),g=ctx.createGain();
-  o.frequency.value=freq;o.type='sine';
-  g.gain.setValueAtTime(.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);
-  o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur);
+  o.frequency.value=freq; o.type='sine';
+  g.gain.setValueAtTime(.3,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);
+  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+dur);
 }
 function playSwish(isMoney){
-  if(muted)return;const ctx=getCtx();
+  if(muted)return; const ctx=getCtx();
   const buf=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.25),ctx.sampleRate);
-  const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
-  const src=ctx.createBufferSource();src.buffer=buf;
-  const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=isMoney?3500:2800;f.Q.value=.8;
-  const g=ctx.createGain();g.gain.setValueAtTime(.4,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
-  src.connect(f);f.connect(g);g.connect(ctx.destination);src.start();src.stop(ctx.currentTime+.25);
+  const d=buf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+  const src=ctx.createBufferSource(); src.buffer=buf;
+  const f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=isMoney?3500:2800; f.Q.value=.8;
+  const g=ctx.createGain(); g.gain.setValueAtTime(.4,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
+  src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(); src.stop(ctx.currentTime+.25);
   if(isMoney){
-    const o=ctx.createOscillator(),g2=ctx.createGain();
-    o.type='sine';o.frequency.setValueAtTime(880,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(1320,ctx.currentTime+.15);
-    g2.gain.setValueAtTime(.3,ctx.currentTime);g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.35);
-    o.connect(g2);g2.connect(ctx.destination);o.start(ctx.currentTime+.05);o.stop(ctx.currentTime+.35);
+    const o=ctx.createOscillator(),g2=ctx.createGain(); o.type='sine';
+    o.frequency.setValueAtTime(880,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(1320,ctx.currentTime+.15);
+    g2.gain.setValueAtTime(.3,ctx.currentTime); g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.35);
+    o.connect(g2); g2.connect(ctx.destination); o.start(ctx.currentTime+.05); o.stop(ctx.currentTime+.35);
   }
 }
 function playClank(){
-  if(muted)return;const ctx=getCtx();
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.type='sawtooth';o.frequency.setValueAtTime(180,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(60,ctx.currentTime+.15);
-  g.gain.setValueAtTime(.5,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.2);
-  o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.2);
+  if(muted)return; const ctx=getCtx();
+  const o=ctx.createOscillator(),g=ctx.createGain(); o.type='sawtooth';
+  o.frequency.setValueAtTime(180,ctx.currentTime); o.frequency.exponentialRampToValueAtTime(60,ctx.currentTime+.15);
+  g.gain.setValueAtTime(.5,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.2);
+  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+.2);
 }
 function playBuzzer(){
-  if(muted)return;const ctx=getCtx();
-  const o=ctx.createOscillator(),g=ctx.createGain();
-  o.type='square';o.frequency.setValueAtTime(120,ctx.currentTime);o.frequency.setValueAtTime(90,ctx.currentTime+.15);o.frequency.setValueAtTime(120,ctx.currentTime+.3);
-  g.gain.setValueAtTime(.5,ctx.currentTime);g.gain.setValueAtTime(.5,ctx.currentTime+.4);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.6);
-  o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.6);
+  if(muted)return; const ctx=getCtx();
+  const o=ctx.createOscillator(),g=ctx.createGain(); o.type='square';
+  o.frequency.setValueAtTime(120,ctx.currentTime); o.frequency.setValueAtTime(90,ctx.currentTime+.15); o.frequency.setValueAtTime(120,ctx.currentTime+.3);
+  g.gain.setValueAtTime(.5,ctx.currentTime); g.gain.setValueAtTime(.5,ctx.currentTime+.4); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.6);
+  o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime+.6);
 }
 function playFireSound(){
-  if(muted)return;const ctx=getCtx();
+  if(muted)return; const ctx=getCtx();
   [440,554,659,880].forEach((freq,i)=>{
-    const o=ctx.createOscillator(),g=ctx.createGain();
-    o.type='sine';o.frequency.value=freq;
+    const o=ctx.createOscillator(),g=ctx.createGain(); o.type='sine'; o.frequency.value=freq;
     const t=ctx.currentTime+i*.07;
-    g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);
-    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.2);
+    g.gain.setValueAtTime(.25,t); g.gain.exponentialRampToValueAtTime(.001,t+.2);
+    o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t+.2);
   });
 }
 
-// PARTICLES
-function initCanvas(){
-  const canvas=document.getElementById('particle-canvas');
-  const svg=document.getElementById('court-svg');
-  const r=svg.getBoundingClientRect();
-  canvas.width=r.width;canvas.height=r.height;
-  canvas.style.width=r.width+'px';canvas.style.height=r.height+'px';
-}
-function spawnParticles(svgX,svgY,isMoney){
-  const canvas=document.getElementById('particle-canvas');
-  const sx=canvas.width/300,sy=canvas.height/240;
-  const cx=svgX*sx,cy=svgY*sy;
-  const colors=isMoney?['#F4C430','#FFD700','#FFA500','#fff']:['#22c55e','#4ade80','#86efac','#fff','#60a5fa'];
-  for(let i=0;i<22;i++){
-    const angle=Math.random()*Math.PI*2,speed=1.5+Math.random()*4;
-    particles.push({x:cx,y:cy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-2,life:1,decay:.025+Math.random()*.02,size:2+Math.random()*4,color:colors[Math.floor(Math.random()*colors.length)]});
-  }
-  if(!particleRaf)tickParticles();
-}
-function tickParticles(){
-  const canvas=document.getElementById('particle-canvas');
-  const ctx=canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles=particles.filter(p=>p.life>0);
-  for(const p of particles){
-    p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.vx*=.97;p.life-=p.decay;
-    ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.color;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
-  }
-  ctx.globalAlpha=1;
-  particleRaf=particles.length>0?requestAnimationFrame(tickParticles):null;
-}
-
-// COURT
-function arcPt(deg){const a=deg*Math.PI/180;return{x:Math.round(CX+ARC_R*Math.cos(a)),y:Math.round(HOOPY+ARC_R*Math.sin(a))};}
-const SPOT_POS=[arcPt(180),arcPt(145),arcPt(90),arcPt(35),arcPt(0)];
-
-function drawCourt(){
-  const svg=document.getElementById('court-svg');
-  const laneW=70,laneH=110,laneX=CX-35,laneY=HOOPY,ftCY=HOOPY+laneH,ftR=38;
-  const lcX=CX-ARC_R,rcX=CX+ARC_R,baseline=238;
-  svg.innerHTML=`
-    <defs>
-      <pattern id="wood" width="14" height="240" patternUnits="userSpaceOnUse"><line x1="7" y1="0" x2="7" y2="240" stroke="#7a3d15" stroke-width=".5" opacity=".5"/></pattern>
-      <radialGradient id="cg" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#b8622a"/><stop offset="100%" stop-color="#7a3800"/></radialGradient>
-    </defs>
-    <rect width="300" height="240" fill="url(#cg)"/>
-    <rect width="300" height="240" fill="url(#wood)"/>
-    <rect x="0" y="0" width="12" height="240" fill="rgba(0,0,0,.15)"/>
-    <rect x="288" y="0" width="12" height="240" fill="rgba(0,0,0,.15)"/>
-    <line x1="0" y1="${baseline}" x2="300" y2="${baseline}" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
-    <line x1="${lcX}" y1="${HOOPY}" x2="${lcX}" y2="${baseline}" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
-    <line x1="${rcX}" y1="${HOOPY}" x2="${rcX}" y2="${baseline}" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
-    <path d="M ${lcX} ${HOOPY} A ${ARC_R} ${ARC_R} 0 0 0 ${rcX} ${HOOPY}" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2.5"/>
-    <rect x="${laneX}" y="${laneY}" width="${laneW}" height="${laneH}" fill="rgba(100,40,10,.3)" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
-    <circle cx="${CX}" cy="${ftCY}" r="${ftR}" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
-    ${[28,56,84].map(o=>`<line x1="${laneX}" y1="${laneY+o}" x2="${laneX-8}" y2="${laneY+o}" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/><line x1="${laneX+laneW}" y1="${laneY+o}" x2="${laneX+laneW+8}" y2="${laneY+o}" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>`).join('')}
-    ${SPOT_POS.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="7" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.2)" stroke-width="1" id="rack-${i}"/>`).join('')}
-    <rect x="${CX-28}" y="${HOOPY-18}" width="56" height="11" rx="1" fill="rgba(255,255,255,.9)" stroke="#bbb" stroke-width="1"/>
-    <rect x="${CX-14}" y="${HOOPY-16}" width="28" height="7" rx="1" fill="none" stroke="#C0272D" stroke-width="1.5"/>
-    <ellipse cx="${CX}" cy="${HOOPY}" rx="14" ry="4" fill="none" stroke="#E05A00" stroke-width="3.5" id="rim-svg"/>
-    <line x1="${CX-12}" y1="${HOOPY+2}" x2="${CX-8}" y2="${HOOPY+18}" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
-    <line x1="${CX-6}" y1="${HOOPY+1}" x2="${CX-4}" y2="${HOOPY+18}" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
-    <line x1="${CX}" y1="${HOOPY+1}" x2="${CX}" y2="${HOOPY+18}" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
-    <line x1="${CX+6}" y1="${HOOPY+1}" x2="${CX+4}" y2="${HOOPY+18}" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
-    <line x1="${CX+12}" y1="${HOOPY+2}" x2="${CX+8}" y2="${HOOPY+18}" stroke="rgba(255,255,255,.6)" stroke-width="1.3"/>
-    <line x1="${CX-11}" y1="${HOOPY+9}" x2="${CX+11}" y2="${HOOPY+9}" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
-    <line x1="${CX-9}" y1="${HOOPY+16}" x2="${CX+9}" y2="${HOOPY+16}" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-    <g id="ball-g">
-      <circle id="bball" cx="${SPOT_POS[0].x}" cy="${SPOT_POS[0].y}" r="11" fill="#E85D04" stroke="#A04800" stroke-width="2"/>
-      <line id="bl-h" x1="${SPOT_POS[0].x-9}" y1="${SPOT_POS[0].y}" x2="${SPOT_POS[0].x+9}" y2="${SPOT_POS[0].y}" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
-      <line id="bl-v" x1="${SPOT_POS[0].x}" y1="${SPOT_POS[0].y-9}" x2="${SPOT_POS[0].x}" y2="${SPOT_POS[0].y+9}" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
-      <circle id="bshine" cx="${SPOT_POS[0].x-3}" cy="${SPOT_POS[0].y-4}" r="3.5" fill="rgba(255,255,255,.3)"/>
-    </g>`;
-}
-
-function setBallPos(x,y,r,fill,stroke){
-  const b=document.getElementById('bball'),lh=document.getElementById('bl-h'),lv=document.getElementById('bl-v'),sh=document.getElementById('bshine');
-  if(!b)return;
-  b.setAttribute('cx',x);b.setAttribute('cy',y);
-  if(r!=null)b.setAttribute('r',r);if(fill)b.setAttribute('fill',fill);if(stroke)b.setAttribute('stroke',stroke);
-  const rr=r||11;
-  lh.setAttribute('x1',x-rr*.85);lh.setAttribute('y1',y);lh.setAttribute('x2',x+rr*.85);lh.setAttribute('y2',y);
-  lv.setAttribute('x1',x);lv.setAttribute('y1',y-rr*.85);lv.setAttribute('x2',x);lv.setAttribute('y2',y+rr*.85);
-  sh.setAttribute('cx',x-3);sh.setAttribute('cy',y-4);
-}
-
-function moveBallToSpot(idx,isMoney){
-  const p=SPOT_POS[idx];
-  setBallPos(p.x,p.y,11,isMoney?'#F4C430':'#E85D04',isMoney?'#B8860B':'#A04800');
-  ['bball','bl-h','bl-v','bshine'].forEach(id=>{const el=document.getElementById(id);if(el)el.setAttribute('opacity','1');});
-  for(let i=0;i<5;i++){const r=document.getElementById('rack-'+i);if(r)r.setAttribute('fill',i===idx?'rgba(255,255,255,.22)':'rgba(255,255,255,.04)');}
-}
-
-function animateShot(isMake,startX,startY,cb){
-  const frames=30,peakX=CX,peakY=HOOPY-60;
-  const landX=isMake?CX:(startX<CX?CX+20:CX-20),landY=isMake?HOOPY+16:HOOPY-4;
-  const bounceX=isMake?CX:(startX<CX?CX+40:CX-40),bounceY=isMake?HOOPY+32:HOOPY+22;
-  let f=0;const rim=document.getElementById('rim-svg');
-  const si=setInterval(()=>{
-    const t=f/frames;
-    const x=Math.round((1-t)*(1-t)*startX+2*(1-t)*t*peakX+t*t*landX);
-    const y=Math.round((1-t)*(1-t)*startY+2*(1-t)*t*peakY+t*t*landY);
-    setBallPos(x,y,Math.max(3,Math.round(11*(1-.55*Math.sin(Math.PI*t)))),null,null);
-    if(f===frames-2){
-      if(isMake){rim.setAttribute('stroke','#22c55e');rim.setAttribute('stroke-width','5');setTimeout(()=>{rim.setAttribute('stroke','#E05A00');rim.setAttribute('stroke-width','3.5');},420);}
-      else{rim.setAttribute('stroke','#E24B4A');rim.setAttribute('stroke-width','5');setTimeout(()=>{rim.setAttribute('stroke','#E05A00');rim.setAttribute('stroke-width','3.5');},380);}
-    }
-    f++;
-    if(f>frames){
-      clearInterval(si);
-      if(!isMake){let bf=0;const bi=setInterval(()=>{const bt=bf/12;setBallPos(Math.round(landX+(bounceX-landX)*bt),Math.round(landY+(bounceY-landY)*bt-20*Math.sin(Math.PI*bt)),Math.max(4,Math.round(9*(1-bt*.35))),null,null);bf++;if(bf>12){clearInterval(bi);cb();}},28);}
-      else{let df=0;const di=setInterval(()=>{const dt=df/8;setBallPos(CX,Math.round(landY+(bounceY-landY)*dt),Math.max(2,Math.round(8*(1-dt*.6))),null,null);document.getElementById('bball').setAttribute('opacity',1-dt*.85);df++;if(df>8){clearInterval(di);cb();}},28);}
-    }
-  },20);
-}
-
-// UI
-function buildSpots(){
-  ballResults=[];const row=document.getElementById('spots-row');row.innerHTML='';
-  for(let s=0;s<5;s++){
-    ballResults.push([null,null,null,null,null]);
-    const div=document.createElement('div');div.className='spot';
-    const lbl=document.createElement('div');lbl.className='spot-label';lbl.textContent=SPOTS[s];
-    const br=document.createElement('div');br.className='balls-row';
-    for(let b=0;b<5;b++){const d=document.createElement('div');d.className='bdot'+(b===4?' money':'');d.id='dot-'+s+'-'+b;br.appendChild(d);}
-    div.appendChild(lbl);div.appendChild(br);row.appendChild(div);
-  }
-}
-function updateDots(){
-  for(let s=0;s<5;s++)for(let b=0;b<5;b++){
-    const d=document.getElementById('dot-'+s+'-'+b);
-    d.className='bdot'+(b===4?' money':'');
-    const r=ballResults[s][b];
-    if(r===true)d.classList.add('made');
-    else if(r===false)d.classList.add('missed');
-    else if(s===spotIdx&&b===ballIdx&&gameActive)d.classList.add('current');
-  }
-}
-function updateIndicator(){
-  const isMoney=ballIdx===4;
-  document.getElementById('spot-indicator').innerHTML='<strong>'+SPOTS[spotIdx]+'</strong> — Ball '+(ballIdx+1)+' of 5'+(isMoney?'<span class="money-tag">💰 Money ball — 2 pts</span>':'');
-}
-function updatePossible(){
-  let rem=0;
-  for(let s=spotIdx;s<5;s++){const st=s===spotIdx?ballIdx:0;for(let b=st;b<5;b++)rem+=(b===4?2:1);}
-  document.getElementById('max-val').textContent=score+rem;
-}
-function updateFGPct(){
-  document.getElementById('pct-val').textContent=shotsAttempted===0?'—':Math.round((shotsMade/shotsAttempted)*100)+'%';
-}
-function updateStreak(){
-  const badge=document.getElementById('streak-badge'),text=document.getElementById('streak-text');
-  if(currentStreak>=5){badge.classList.add('active');text.textContent=currentStreak+' IN A ROW 🔥🔥';}
-  else if(currentStreak>=3){badge.classList.add('active');text.textContent=currentStreak+' IN A ROW 🔥';}
-  else{badge.classList.remove('active');}
-}
-
-// GAME FLOW
-function goToCountdown(){
-  const v=document.getElementById('name-input').value.trim();
-  playerName=v||'Player';
-  document.getElementById('player-name').textContent='🏀 '+playerName;
-  document.getElementById('setup').style.display='none';
-  document.getElementById('countdown').style.display='flex';
-  runCountdown();
-}
-function runCountdown(){
-  const nums=['3','2','1','GO!'],subs=['Get ready…','Almost…','Here we go…','SHOOT!'];
-  let i=0;
-  const cdNum=document.getElementById('cd-num'),cdSub=document.getElementById('cd-sub');
-  function showNext(){
-    if(i>=nums.length){document.getElementById('countdown').style.display='none';launchGame();return;}
-    const isGo=i===3;
-    cdNum.className=isGo?'cd-go':'cd-num';
-    cdNum.textContent=nums[i];cdSub.textContent=subs[i];
-    cdNum.style.transform='scale(1.3)';
-    setTimeout(()=>{cdNum.style.transform='scale(1)';},130);
-    if(i<3)playBeep(i===2?1100:880,.1);else playBeep(1320,.18);
-    i++;setTimeout(showNext,i<=3?900:700);
-  }
-  showNext();
-}
-function launchGame(){
-  document.getElementById('main').style.display='block';
-  resetGameState();buildSpots();drawCourt();initCanvas();
-  moveBallToSpot(0,false);
-  updateDots();updateIndicator();updatePossible();
-  document.getElementById('bg').style.cssText=`left:${PS-PH}%;width:${PH*2}%;`;
-  startTimer();
-}
-function resetGameState(){
-  score=0;spotIdx=0;ballIdx=0;gameActive=true;timerSec=60;
-  spotScores=[0,0,0,0,0];power=0;pvd=1;holding=false;shooting=false;
-  shotsMade=0;shotsAttempted=0;currentStreak=0;maxStreak=0;particles=[];
-  document.getElementById('score-val').textContent='0';
-  document.getElementById('result').className='result idle';
-  document.getElementById('result').textContent='Hold the button and release in the green zone!';
-  document.getElementById('shoot-btn').disabled=false;
-  document.getElementById('shoot-btn').classList.remove('holding');
-  document.getElementById('timer-banner').className='timer-banner';
-  document.getElementById('timer-val').textContent='60';
-  document.getElementById('timer-fill').style.cssText='width:100%;background:#22c55e;';
-  document.getElementById('streak-badge').classList.remove('active');
-  updateFGPct();resetBar();
-}
-function startTimer(){
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    timerSec--;
-    const pct=Math.round((timerSec/60)*100);
-    document.getElementById('timer-val').textContent=timerSec;
-    document.getElementById('timer-fill').style.width=pct+'%';
-    const tb=document.getElementById('timer-banner');
-    if(timerSec<=10){tb.className='timer-banner critical';if(timerSec>0)playBeep(660,.06);}
-    else if(timerSec<=20){tb.className='timer-banner warn';}
-    if(timerSec<=0){clearInterval(timerInterval);endGame();}
-  },1000);
-}
-function startHold(){
-  if(!gameActive||shooting)return;
-  holding=true;power=0;pvd=1;
-  document.getElementById('shoot-btn').classList.add('holding');
-  animInterval=setInterval(()=>{
-    power+=pvd*BAR_SPEED;
-    if(power>=100){power=100;pvd=-1;}if(power<=0){power=0;pvd=1;}
-    const p=Math.round(power),inZ=power>=PS-PH&&power<=PS+PH;
-    const f=document.getElementById('bf');
-    f.style.width=p+'%';f.style.background=inZ?'#22c55e':(p<15||p>85)?'#ef4444':'#C0272D';
-    document.getElementById('bm').style.left=p+'%';
-    document.getElementById('bar-val').textContent=p+'%';
-  },28);
-}
-function endHold(){
-  if(!holding||shooting)return;
-  holding=false;clearInterval(animInterval);
-  document.getElementById('shoot-btn').classList.remove('holding');
-  shoot();
-}
-function shoot(){
-  if(!gameActive)return;
-  shooting=true;document.getElementById('shoot-btn').disabled=true;
-  const isMoney=ballIdx===4,dist=Math.abs(power-PS),luck=Math.random()*6,isMake=dist<PH+luck;
-  const pts=isMake?(isMoney?2:1):0,sp=SPOT_POS[spotIdx];
-  shotsAttempted++;
-  if(isMake){shotsMade++;currentStreak++;if(currentStreak>maxStreak)maxStreak=currentStreak;if(currentStreak===3)playFireSound();}
-  else{currentStreak=0;}
-  animateShot(isMake,sp.x,sp.y,()=>{
-    if(isMake){playSwish(isMoney);spawnParticles(CX,HOOPY+10,isMoney);}else{playClank();}
-    ballResults[spotIdx][ballIdx]=isMake;score+=pts;spotScores[spotIdx]+=pts;
-    document.getElementById('score-val').textContent=score;
-    updateFGPct();updateStreak();
-    const r=document.getElementById('result');
-    if(isMake){r.className='result make'+(isMoney?' money':'');r.textContent=isMoney?'💰 Money ball! +2 — '+rnd(MAKES):'✓ +1 pt — '+rnd(MAKES);}
-    else{r.className='result miss';r.textContent='✗ Miss — '+rnd(MISSES);}
-    ballIdx++;if(ballIdx>=5){ballIdx=0;spotIdx++;}
-    if(spotIdx>=5){clearInterval(timerInterval);endGame();return;}
-    updateDots();updatePossible();updateIndicator();resetBar();
-    setTimeout(()=>{moveBallToSpot(spotIdx,ballIdx===4);shooting=false;document.getElementById('shoot-btn').disabled=false;},300);
-  });
-}
-function resetBar(){
-  const f=document.getElementById('bf');f.style.width='0%';f.style.background='#C0272D';
-  document.getElementById('bm').style.left='0%';document.getElementById('bar-val').textContent='0%';
-}
-function endGame(){
-  gameActive=false;clearInterval(timerInterval);clearInterval(animInterval);
-  document.getElementById('shoot-btn').disabled=true;
-  playBuzzer();
-  const isNew=score>bestScore;if(isNew)bestScore=score;
-  document.getElementById('best-score').textContent=bestScore;
-  saveToLeaderboard(playerName,score);
-  setTimeout(()=>showResults(isNew),800);
-}
-
-// LEADERBOARD
-function loadLB(){try{return JSON.parse(localStorage.getItem('3pt_lb')||'[]');}catch{return[];}}
-function saveToLeaderboard(name,score){
-  const lb=loadLB();
-  lb.push({name,score,date:new Date().toLocaleDateString()});
-  lb.sort((a,b)=>b.score-a.score);
-  localStorage.setItem('3pt_lb',JSON.stringify(lb.slice(0,10)));
-}
-function showResults(isNew){
-  document.getElementById('main').style.display='none';
-  document.getElementById('results').style.display='block';
-  document.getElementById('res-name').textContent=playerName+"'s Result";
-  document.getElementById('res-score').textContent=score;
-  document.getElementById('res-rating').textContent=getRating(score);
-  const fgPct=shotsAttempted?Math.round((shotsMade/shotsAttempted)*100):0;
-  let moneyMade=0;for(let s=0;s<5;s++)if(ballResults[s][4]===true)moneyMade++;
-  document.getElementById('res-stats').innerHTML=`FG: <span>${fgPct}%</span> &nbsp;·&nbsp; Money balls: <span>${moneyMade}/5</span> &nbsp;·&nbsp; Best streak: <span>${maxStreak}</span>`;
-  document.getElementById('res-hs').innerHTML=isNew?'🎉 New personal best!':'🏆 Personal best: <strong>'+bestScore+'</strong>';
-  const bd=document.getElementById('res-breakdown');bd.innerHTML='';
-  SPOTS.forEach((name,i)=>{const d=document.createElement('div');d.className='spot-score';d.innerHTML='<div class="sv">'+spotScores[i]+'</div><div class="sl">'+name+'</div>';bd.appendChild(d);});
-  const lb=loadLB(),lbRows=document.getElementById('lb-rows');lbRows.innerHTML='';
-  const medals=['🥇','🥈','🥉'];
-  lb.slice(0,7).forEach((entry,i)=>{
-    const isMe=isNew&&i===0&&entry.name===playerName&&entry.score===score;
-    const row=document.createElement('div');row.className='lb-row'+(isMe?' me':'');
-    const rankCls=i===0?'gold':i===1?'silver':i===2?'bronze':'';
-    row.innerHTML=`<div class="lb-rank ${rankCls}">${i<3?medals[i]:i+1}</div><div class="lb-name">${entry.name}</div><div class="lb-score">${entry.score}</div><div class="lb-date">${entry.date}</div>`;
-    lbRows.appendChild(row);
-  });
+// ── Leaderboard ──────────────────────────────────────────────
+function loadLB(){ try{return JSON.parse(localStorage.getItem('3pt_lb')||'[]');}catch{return[];} }
+function saveToLB(name,score){
+  const lb=loadLB(); lb.push({name,score,date:new Date().toLocaleDateString()});
+  lb.sort((a,b)=>b.score-a.score); localStorage.setItem('3pt_lb',JSON.stringify(lb.slice(0,10)));
 }
 function getRating(s){
   if(s>=27)return'🏆 Legend — Hall of Fame level';
   if(s>=23)return'🔥 Elite — Stephen Curry territory';
   if(s>=18)return'⭐ Great — you can ball';
   if(s>=12)return'👍 Solid — keep shooting';
-  if(s>=7)return'😅 Decent — needs work';
+  if(s>=7) return'😅 Decent — needs work';
   return'💪 Keep practicing';
 }
-function playAgain(){
-  document.getElementById('results').style.display='none';
-  document.getElementById('countdown').style.display='flex';
-  runCountdown();
+
+// ── Phaser Scenes ────────────────────────────────────────────
+
+class CountdownScene extends Phaser.Scene {
+  constructor(){ super({key:'CountdownScene'}); }
+  create(){
+    this.add.rectangle(W/2,H/2,W,H,0x080d18);
+    // subtle gradient via two rects
+    const g=this.add.graphics();
+    g.fillGradientStyle(0x1a2744,0x1a2744,0x080d18,0x080d18,1);
+    g.fillRect(0,0,W,H/2);
+
+    this.numText=this.add.text(W/2,H/2-40,'',{fontSize:'128px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D'}).setOrigin(.5);
+    this.subText=this.add.text(W/2,H/2+90,'Get ready…',{fontSize:'18px',fontFamily:'system-ui',color:'#64748b',letterSpacing:3}).setOrigin(.5);
+
+    const nums=['3','2','1','GO!'], subs=['Get ready…','Almost…','Here we go…','SHOOT!'];
+    let i=0;
+    const next=()=>{
+      if(i>=nums.length){ this.scene.start('GameScene'); return; }
+      this.numText.setText(nums[i]).setColor(i===3?'#22c55e':'#C0272D').setScale(1.4);
+      this.tweens.add({targets:this.numText,scaleX:1,scaleY:1,duration:140,ease:'Back.out'});
+      this.subText.setText(subs[i]);
+      if(i<3) playBeep(i===2?1100:880,.1); else playBeep(1320,.18);
+      i++; this.time.delayedCall(i<=3?900:700,next);
+    };
+    next();
+  }
 }
 
-// INPUT
-document.addEventListener('keydown',e=>{
-  if(e.code==='Space'&&!e.repeat){e.preventDefault();startHold();}
-  if(e.key==='Enter'&&document.getElementById('setup').style.display!=='none')goToCountdown();
+class GameScene extends Phaser.Scene {
+  constructor(){ super({key:'GameScene'}); }
+
+  create(){
+    // Reset state
+    Object.assign(state,{
+      score:0,spotIdx:0,ballIdx:0,timerSec:60,gameActive:true,
+      spotScores:[0,0,0,0,0],
+      ballResults:Array.from({length:5},()=>Array(5).fill(null)),
+      shotsMade:0,shotsAttempted:0,currentStreak:0,maxStreak:0
+    });
+    this.power=0; this.powerDir=1; this.holding=false; this.shooting=false;
+    this.PS=55; this.PH=4.5; this.BAR_SPEED=1.7;
+
+    this.drawBackground();
+    this.drawCourt();
+    this.createHUD();
+    this.createBall();
+    this.createScoreBoxes();
+    this.createDotTracker();
+    this.createPowerMeter();
+    this.createShootButton();
+    this.createFeedbackArea();
+    this.setupInput();
+    this.startTimer();
+    this.refreshAll();
+  }
+
+  // ── Background ──────────────────────────────────────────────
+  drawBackground(){
+    const g=this.add.graphics();
+    g.fillStyle(0x080d18); g.fillRect(0,0,W,H);
+    g.fillGradientStyle(0x1a2744,0x1a2744,0x080d18,0x080d18,.6);
+    g.fillRect(0,0,W,H*0.5);
+  }
+
+  // ── Court ───────────────────────────────────────────────────
+  drawCourt(){
+    const g=this.add.graphics();
+    const laneW=74,laneH=116,laneX=CX-37,laneY=HOOP_Y;
+    const ftCY=HOOP_Y+laneH, ftR=42;
+    const lcX=CX-ARC_R, rcX=CX+ARC_R;
+    const courtTop=20;
+
+    // Wood floor
+    g.fillStyle(0x8B4513); g.fillRect(lcX,courtTop,W-2*lcX,BASELINE_Y-courtTop);
+    // Extend full width below arc ends
+    g.fillStyle(0x8B4513); g.fillRect(0,courtTop,W,BASELINE_Y-courtTop);
+
+    // Wood grain
+    for(let x=6;x<W;x+=13){
+      g.lineStyle(.7,0x7a3d15,.45);
+      g.beginPath(); g.moveTo(x,courtTop); g.lineTo(x,BASELINE_Y); g.strokePath();
+    }
+    // Floor tint
+    g.fillStyle(0x000000,.18); g.fillRect(0,courtTop,W,BASELINE_Y-courtTop);
+    // Edge shadows
+    g.fillStyle(0x000000,.25); g.fillRect(0,courtTop,14,BASELINE_Y-courtTop);
+    g.fillStyle(0x000000,.25); g.fillRect(W-14,courtTop,14,BASELINE_Y-courtTop);
+
+    // Baseline
+    g.lineStyle(2.5,0xffffff,.6);
+    g.beginPath(); g.moveTo(0,BASELINE_Y); g.lineTo(W,BASELINE_Y); g.strokePath();
+
+    // Sidelines
+    g.lineStyle(2,0xffffff,.5);
+    g.beginPath(); g.moveTo(lcX,HOOP_Y); g.lineTo(lcX,BASELINE_Y); g.strokePath();
+    g.beginPath(); g.moveTo(rcX,HOOP_Y); g.lineTo(rcX,BASELINE_Y); g.strokePath();
+
+    // 3-point arc
+    g.lineStyle(2.5,0xffffff,.7);
+    g.beginPath(); g.arc(CX,HOOP_Y,ARC_R,0,Math.PI,false); g.strokePath();
+
+    // Paint (lane)
+    g.fillStyle(0x642808,.3); g.fillRect(laneX,laneY,laneW,laneH);
+    g.lineStyle(1.5,0xffffff,.35); g.strokeRect(laneX,laneY,laneW,laneH);
+
+    // Lane ticks
+    [30,60,90].forEach(o=>{
+      g.lineStyle(1.5,0xffffff,.35);
+      g.beginPath(); g.moveTo(laneX,laneY+o); g.lineTo(laneX-9,laneY+o); g.strokePath();
+      g.beginPath(); g.moveTo(laneX+laneW,laneY+o); g.lineTo(laneX+laneW+9,laneY+o); g.strokePath();
+    });
+
+    // Free throw circle
+    g.lineStyle(1.5,0xffffff,.22);
+    g.beginPath(); g.arc(CX,ftCY,ftR,0,Math.PI*2); g.strokePath();
+
+    // Backboard
+    g.fillStyle(0xffffff,.92); g.fillRect(CX-32,HOOP_Y-22,64,13);
+    g.lineStyle(2,0xC0272D,.95); g.strokeRect(CX-16,HOOP_Y-20,32,9);
+
+    // Spot circles (background)
+    this.spotGfx=this.add.graphics();
+    this.redrawSpots();
+
+    // Rim (own graphics object for flashing)
+    this.rimGfx=this.add.graphics();
+    this.drawRim(0xE05A00,4.5);
+
+    // Net
+    const ng=this.add.graphics();
+    ng.lineStyle(1.3,0xffffff,.65);
+    [[-13,2,-9,22],[-6,1,-4,22],[0,1,0,22],[6,1,4,22],[13,2,9,22]].forEach(([x1,y1,x2,y2])=>{
+      ng.beginPath(); ng.moveTo(CX+x1,HOOP_Y+y1); ng.lineTo(CX+x2,HOOP_Y+y2); ng.strokePath();
+    });
+    ng.lineStyle(1,0xffffff,.2);
+    ng.beginPath(); ng.moveTo(CX-12,HOOP_Y+11); ng.lineTo(CX+12,HOOP_Y+11); ng.strokePath();
+    ng.beginPath(); ng.moveTo(CX-9,HOOP_Y+19); ng.lineTo(CX+9,HOOP_Y+19); ng.strokePath();
+  }
+
+  drawRim(color=0xE05A00,lw=4.5){
+    this.rimGfx.clear();
+    this.rimGfx.lineStyle(lw,color,1);
+    this.rimGfx.beginPath(); this.rimGfx.arc(CX,HOOP_Y,14,0,Math.PI*2); this.rimGfx.strokePath();
+  }
+
+  redrawSpots(){
+    this.spotGfx.clear();
+    SPOT_POS.forEach((p,i)=>{
+      const active=i===state.spotIdx&&state.gameActive;
+      this.spotGfx.fillStyle(0xffffff,active?.18:.05);
+      this.spotGfx.lineStyle(1.5,0xffffff,active?.55:.15);
+      this.spotGfx.fillCircle(p.x,p.y,9);
+      this.spotGfx.strokeCircle(p.x,p.y,9);
+    });
+  }
+
+  flashRim(isMake){
+    this.drawRim(isMake?0x22c55e:0xE24B4A,6);
+    this.time.delayedCall(420,()=>this.drawRim(0xE05A00,4.5));
+  }
+
+  // ── HUD (top strip) ─────────────────────────────────────────
+  createHUD(){
+    const g=this.add.graphics();
+    g.fillStyle(0x0a0f1e,1); g.fillRect(0,0,W,20);
+
+    this.nameTxt=this.add.text(10,10,'🏀 '+playerName,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'}).setOrigin(0,.5);
+    this.bestTxt=this.add.text(W-10,10,'🏆 '+bestScore,{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#F4C430'}).setOrigin(1,.5);
+  }
+
+  // ── Score boxes + timer ──────────────────────────────────────
+  createScoreBoxes(){
+    // Timer bar
+    const tbg=this.add.graphics();
+    tbg.fillStyle(0xffffff,.04); tbg.lineStyle(1,0xffffff,.08);
+    tbg.fillRoundedRect(10,TIMER_Y,W-20,44,8);
+    tbg.strokeRoundedRect(10,TIMER_Y,W-20,44,8);
+
+    this.timerNumTxt=this.add.text(W/2-18,TIMER_Y+10,'60',{fontSize:'30px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,0);
+    this.add.text(W/2+22,TIMER_Y+22,'sec',{fontSize:'11px',fontFamily:'system-ui',color:'#64748b'}).setOrigin(0,.5);
+
+    this.timerFill=this.add.graphics();
+    this.redrawTimerFill(60);
+
+    // Score boxes
+    const bw=(W-30)/3, bh=52;
+    const sbg=this.add.graphics();
+    [0,1,2].forEach(i=>{
+      const x=10+i*(bw+5);
+      sbg.fillStyle(0xffffff,.04); sbg.lineStyle(1,0xffffff,.08);
+      sbg.fillRoundedRect(x,BOXES_Y,bw,bh,8);
+      sbg.strokeRoundedRect(x,BOXES_Y,bw,bh,8);
+    });
+    const cx1=10+bw*.5, cx2=10+bw+5+bw*.5, cx3=10+(bw+5)*2+bw*.5;
+    this.scoreTxt=this.add.text(cx1,BOXES_Y+18,'0',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
+    this.add.text(cx1,BOXES_Y+40,'SCORE',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+    this.possTxt=this.add.text(cx2,BOXES_Y+18,'30',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
+    this.add.text(cx2,BOXES_Y+40,'POSSIBLE',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+    this.pctTxt=this.add.text(cx3,BOXES_Y+18,'—',{fontSize:'26px',fontFamily:'system-ui',fontStyle:'bold',color:'#f1f5f9'}).setOrigin(.5,.5);
+    this.add.text(cx3,BOXES_Y+40,'FG %',{fontSize:'9px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+
+    // Spot indicator
+    this.indicatorTxt=this.add.text(W/2,INDICATOR_Y,'',{fontSize:'12px',fontFamily:'system-ui',color:'#94a3b8'}).setOrigin(.5,0);
+  }
+
+  redrawTimerFill(sec){
+    this.timerFill.clear();
+    const pct=sec/60, fw=Math.max(0,(W-22)*pct);
+    const col=sec<=10?0xef4444:sec<=20?0xf87171:0x22c55e;
+    this.timerFill.fillStyle(col,.85);
+    this.timerFill.fillRoundedRect(11,TIMER_Y+36,fw,6,3);
+  }
+
+  // ── Ball dot tracker ─────────────────────────────────────────
+  createDotTracker(){
+    this.dotGfx=this.add.graphics();
+    this.redrawDots();
+  }
+
+  redrawDots(){
+    this.dotGfx.clear();
+    const DR=4, GAP=7, GRP=10;
+    const totalW=5*(5*GAP+GRP)-GRP;
+    let sx=(W-totalW)/2;
+    const cy=DOTS_Y+DR;
+    for(let s=0;s<5;s++){
+      for(let b=0;b<5;b++){
+        const isMoney=b===4;
+        const r=state.ballResults[s][b];
+        const isCurrent=s===state.spotIdx&&b===state.ballIdx&&state.gameActive;
+        let fill, stroke, alpha;
+        if(r===true){ fill=isMoney?0xF4C430:0x22c55e; stroke=isMoney?0xB8860B:0x16a34a; alpha=1; }
+        else if(r===false){ fill=0xffffff; stroke=0xffffff; alpha=.12; }
+        else if(isCurrent){ fill=0x60a5fa; stroke=isMoney?0xF4C430:0x60a5fa; alpha=.9; }
+        else { fill=0xffffff; stroke=isMoney?0xF4C430:0xffffff; alpha=isMoney?.35:.12; }
+        this.dotGfx.fillStyle(fill,alpha);
+        this.dotGfx.lineStyle(1.5,stroke,isMoney?Math.max(.35,alpha):.2);
+        this.dotGfx.fillCircle(sx+b*GAP,cy,DR);
+        this.dotGfx.strokeCircle(sx+b*GAP,cy,DR);
+      }
+      sx+=5*GAP+GRP;
+    }
+  }
+
+  // ── Ball ─────────────────────────────────────────────────────
+  createBall(){
+    this.ballGfx=this.add.graphics();
+    this.ballX=SPOT_POS[0].x; this.ballY=SPOT_POS[0].y; this.ballR=11; this.ballAlpha=1;
+    this.ballColor=0xE85D04; this.ballStroke=0xA04800;
+    this.ballGfx.setDepth(10);
+    this.redrawBall();
+  }
+
+  redrawBall(){
+    const g=this.ballGfx; g.clear(); g.setAlpha(this.ballAlpha);
+    const {ballX:x,ballY:y,ballR:r,ballColor:fc,ballStroke:sc}=this;
+    // shadow
+    g.fillStyle(0x000000,.3); g.fillEllipse(x+2,y+5,r*1.8,r*.7);
+    // ball
+    g.fillStyle(fc,1); g.fillCircle(x,y,r);
+    g.lineStyle(2,sc,1); g.strokeCircle(x,y,r);
+    // seams
+    g.lineStyle(1.5,0x000000,.22);
+    g.beginPath(); g.moveTo(x-r*.85,y); g.lineTo(x+r*.85,y); g.strokePath();
+    g.beginPath(); g.moveTo(x,y-r*.85); g.lineTo(x,y+r*.85); g.strokePath();
+    // shine
+    g.fillStyle(0xffffff,.28); g.fillCircle(x-r*.3,y-r*.35,r*.32);
+  }
+
+  placeBallAtSpot(){
+    const p=SPOT_POS[state.spotIdx];
+    const isMoney=state.ballIdx===4;
+    this.ballX=p.x; this.ballY=p.y; this.ballR=11; this.ballAlpha=1;
+    this.ballColor=isMoney?0xF4C430:0xE85D04;
+    this.ballStroke=isMoney?0xB8860B:0xA04800;
+    this.redrawBall();
+  }
+
+  // ── Power meter ──────────────────────────────────────────────
+  createPowerMeter(){
+    const px=10,pw=W-20,ph=28;
+    this.pmX=px; this.pmW=pw; this.pmH=ph;
+
+    this.add.text(px,PM_Y-16,'Shot Power',{fontSize:'11px',fontFamily:'system-ui',color:'#475569'});
+    this.barValTxt=this.add.text(W-px,PM_Y-16,'0%',{fontSize:'11px',fontFamily:'system-ui',fontStyle:'bold',color:'#94a3b8'}).setOrigin(1,0);
+
+    const track=this.add.graphics();
+    track.fillStyle(0xffffff,.05); track.lineStyle(1,0xffffff,.08);
+    track.fillRoundedRect(px,PM_Y,pw,ph,12);
+    track.strokeRoundedRect(px,PM_Y,pw,ph,12);
+
+    // Sweet spot zone
+    const zx=px+((this.PS-this.PH)/100)*pw, zw=(this.PH*2/100)*pw;
+    const zone=this.add.graphics();
+    zone.fillStyle(0x22c55e,.18); zone.fillRect(zx,PM_Y,zw,ph);
+    zone.lineStyle(1,0x22c55e,.45);
+    zone.beginPath(); zone.moveTo(zx,PM_Y); zone.lineTo(zx,PM_Y+ph); zone.strokePath();
+    zone.beginPath(); zone.moveTo(zx+zw,PM_Y); zone.lineTo(zx+zw,PM_Y+ph); zone.strokePath();
+
+    this.barFill=this.add.graphics();
+    this.barMarker=this.add.graphics();
+
+    this.add.text(W/2,PM_Y+ph+7,'Release in the green zone  ·  Space bar or tap button',
+      {fontSize:'10px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,0);
+  }
+
+  redrawPowerMeter(){
+    if(!this.holding){ this.barFill.clear(); this.barMarker.clear(); return; }
+    const p=this.power/100, fw=p*this.pmW;
+    const inZ=this.power>=this.PS-this.PH&&this.power<=this.PS+this.PH;
+    const col=inZ?0x22c55e:(this.power<12||this.power>88)?0xef4444:0xC0272D;
+    this.barFill.clear();
+    this.barFill.fillStyle(col,.9);
+    this.barFill.fillRoundedRect(this.pmX,PM_Y,fw,this.pmH,12);
+    this.barMarker.clear();
+    this.barMarker.fillStyle(0xffffff,.95);
+    this.barMarker.fillRoundedRect(this.pmX+fw-2,PM_Y,4,this.pmH,2);
+    this.barValTxt.setText(Math.round(this.power)+'%');
+  }
+
+  // ── Shoot button ─────────────────────────────────────────────
+  createShootButton(){
+    this.btnBg=this.add.graphics();
+    this.btnTxt=this.add.text(W/2,BTN_Y+28,'HOLD TO SHOOT',
+      {fontSize:'15px',fontFamily:'system-ui',fontStyle:'bold',color:'#C0272D',letterSpacing:1}).setOrigin(.5,.5);
+    this.btnTxt.setDepth(5);
+    this.redrawBtn(false);
+
+    const hit=this.add.rectangle(W/2,BTN_Y+28,W-20,56,0xffffff,0).setInteractive();
+    hit.setDepth(6);
+    hit.on('pointerdown',()=>this.startHold());
+    hit.on('pointerup',()=>this.endHold());
+    hit.on('pointerout',()=>{ if(this.holding) this.endHold(); });
+  }
+
+  redrawBtn(holding){
+    this.btnBg.clear();
+    if(holding){
+      this.btnBg.fillStyle(0xC0272D,1);
+      this.btnBg.fillRoundedRect(10,BTN_Y,W-20,56,12);
+      this.btnTxt.setColor('#ffffff');
+    } else {
+      this.btnBg.lineStyle(1.5,0xC0272D,.55);
+      this.btnBg.strokeRoundedRect(10,BTN_Y,W-20,56,12);
+      this.btnTxt.setColor('#C0272D');
+    }
+  }
+
+  // ── Feedback + streak ────────────────────────────────────────
+  createFeedbackArea(){
+    this.streakBg=this.add.graphics();
+    this.streakTxt=this.add.text(W/2,FEEDBACK_Y,'',
+      {fontSize:'13px',fontFamily:'system-ui',fontStyle:'bold',color:'#fb923c'}).setOrigin(.5,.5).setAlpha(0);
+    this.resultTxt=this.add.text(W/2,FEEDBACK_Y+28,'Hold and release in the green zone!',
+      {fontSize:'13px',fontFamily:'system-ui',color:'#475569'}).setOrigin(.5,.5);
+  }
+
+  redrawStreak(){
+    this.streakBg.clear();
+    const cs=state.currentStreak;
+    if(cs>=3){
+      const label=cs>=5?`${cs} IN A ROW 🔥🔥`:`${cs} IN A ROW 🔥`;
+      this.streakTxt.setText(label).setAlpha(1);
+      const tw=this.streakTxt.width+28;
+      this.streakBg.fillStyle(0xfb923c,.15);
+      this.streakBg.lineStyle(1,0xfb923c,.4);
+      this.streakBg.fillRoundedRect(W/2-tw/2,FEEDBACK_Y-14,tw,26,13);
+      this.streakBg.strokeRoundedRect(W/2-tw/2,FEEDBACK_Y-14,tw,26,13);
+    } else {
+      this.streakTxt.setAlpha(0);
+    }
+  }
+
+  // ── Input ────────────────────────────────────────────────────
+  setupInput(){
+    this.input.keyboard.on('keydown-SPACE',e=>{ e.preventDefault(); this.startHold(); });
+    this.input.keyboard.on('keyup-SPACE',e=>{ e.preventDefault(); this.endHold(); });
+  }
+
+  // ── Timer ────────────────────────────────────────────────────
+  startTimer(){
+    this.timerEvent=this.time.addEvent({
+      delay:1000, repeat:59,
+      callback:()=>{
+        state.timerSec--;
+        this.timerNumTxt.setText(state.timerSec);
+        this.redrawTimerFill(state.timerSec);
+        if(state.timerSec<=10&&state.timerSec>0){
+          playBeep(660,.06);
+          this.cameras.main.shake(50,.004);
+          this.timerNumTxt.setColor('#f87171');
+        } else if(state.timerSec<=20){
+          this.timerNumTxt.setColor('#fbbf24');
+        }
+        if(state.timerSec<=0) this.endGame();
+      }
+    });
+  }
+
+  // ── Hold/shoot ───────────────────────────────────────────────
+  startHold(){
+    if(!state.gameActive||this.shooting) return;
+    this.holding=true; this.power=0; this.powerDir=1;
+    this.redrawBtn(true);
+  }
+  endHold(){
+    if(!this.holding||this.shooting) return;
+    this.holding=false; this.redrawBtn(false);
+    this.shoot();
+  }
+
+  shoot(){
+    if(!state.gameActive) return;
+    this.shooting=true;
+    const isMoney=state.ballIdx===4;
+    const dist=Math.abs(this.power-this.PS);
+    const luck=Math.random()*6;
+    const isMake=dist<this.PH+luck;
+    const pts=isMake?(isMoney?2:1):0;
+    const sp=SPOT_POS[state.spotIdx];
+
+    state.shotsAttempted++;
+    if(isMake){
+      state.shotsMade++; state.currentStreak++;
+      if(state.currentStreak>state.maxStreak) state.maxStreak=state.currentStreak;
+      if(state.currentStreak===3) playFireSound();
+    } else { state.currentStreak=0; }
+
+    this.animateBall(sp.x,sp.y,isMake,isMoney,()=>{
+      if(isMake){ playSwish(isMoney); this.spawnParticles(CX,HOOP_Y+10,isMoney); this.flashRim(true); }
+      else { playClank(); this.flashRim(false); }
+
+      state.ballResults[state.spotIdx][state.ballIdx]=isMake;
+      state.score+=pts; state.spotScores[state.spotIdx]+=pts;
+
+      this.scoreTxt.setText(state.score);
+      this.pctTxt.setText(state.shotsAttempted?Math.round(state.shotsMade/state.shotsAttempted*100)+'%':'—');
+
+      const msg=isMake?(isMoney?`💰 +2 — ${rnd(MAKES)}`:`✓ +1 — ${rnd(MAKES)}`):(`✗ ${rnd(MISSES)}`);
+      this.resultTxt.setText(msg).setColor(isMake?(isMoney?'#F4C430':'#22c55e'):'#64748b');
+
+      this.redrawStreak();
+      this.redrawDots();
+
+      state.ballIdx++;
+      if(state.ballIdx>=5){ state.ballIdx=0; state.spotIdx++; }
+      if(state.spotIdx>=5){ this.endGame(); return; }
+
+      this.updatePossible();
+      this.updateIndicator();
+      this.redrawSpots();
+
+      this.time.delayedCall(280,()=>{
+        this.placeBallAtSpot();
+        this.shooting=false;
+      });
+    });
+  }
+
+  // ── Ball animation ────────────────────────────────────────────
+  animateBall(fromX,fromY,isMake,isMoney,onDone){
+    const toX=CX+(isMake?0:(fromX<CX?24:-24));
+    const toY=isMake?HOOP_Y+12:HOOP_Y-8;
+    const peakX=(fromX+toX)/2;
+    const peakY=Math.min(fromY,toY)-90;
+
+    this.tweens.addCounter({
+      from:0,to:1,duration:520,ease:'Linear',
+      onUpdate:t=>{
+        const v=t.getValue();
+        const x=(1-v)*(1-v)*fromX+2*(1-v)*v*peakX+v*v*toX;
+        const y=(1-v)*(1-v)*fromY+2*(1-v)*v*peakY+v*v*toY;
+        const scale=1-0.48*Math.sin(Math.PI*v);
+        this.ballX=x; this.ballY=y; this.ballR=11*scale;
+        this.redrawBall();
+      },
+      onComplete:()=>{
+        if(!isMake){
+          // bounce away from rim
+          const bx2=toX+(fromX<CX?-38:38), by2=toY+38;
+          this.tweens.addCounter({
+            from:0,to:1,duration:320,ease:'Power2',
+            onUpdate:t=>{
+              const v=t.getValue();
+              this.ballX=toX+(bx2-toX)*v;
+              this.ballY=toY+(by2-toY)*v-22*Math.sin(Math.PI*v);
+              this.ballR=Math.max(4,9*(1-v*.3));
+              this.redrawBall();
+            },
+            onComplete:onDone
+          });
+        } else {
+          // drop through net
+          this.tweens.addCounter({
+            from:0,to:1,duration:220,ease:'Linear',
+            onUpdate:t=>{
+              const v=t.getValue();
+              this.ballX=CX; this.ballY=toY+20*v;
+              this.ballAlpha=1-v; this.ballR=Math.max(2,9*(1-v*.5));
+              this.redrawBall();
+            },
+            onComplete:onDone
+          });
+        }
+      }
+    });
+  }
+
+  // ── Particles ─────────────────────────────────────────────────
+  spawnParticles(x,y,isMoney){
+    const cols=isMoney?[0xF4C430,0xFFD700,0xFFA500,0xffffff]:[0x22c55e,0x4ade80,0x86efac,0xffffff,0x60a5fa];
+    for(let i=0;i<22;i++){
+      const angle=Math.random()*Math.PI*2;
+      const speed=1.8+Math.random()*4.5;
+      const color=cols[Math.floor(Math.random()*cols.length)];
+      const size=2+Math.random()*4;
+      const dot=this.add.circle(x,y,size,color).setDepth(20);
+      this.tweens.add({
+        targets:dot,
+        x:x+Math.cos(angle)*speed*28,
+        y:y+Math.sin(angle)*speed*28-55,
+        alpha:0, scaleX:.1, scaleY:.1,
+        duration:550+Math.random()*400, ease:'Power2',
+        onComplete:()=>dot.destroy()
+      });
+    }
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────
+  updatePossible(){
+    let rem=0;
+    for(let s=state.spotIdx;s<5;s++){
+      const st=s===state.spotIdx?state.ballIdx:0;
+      for(let b=st;b<5;b++) rem+=(b===4?2:1);
+    }
+    this.possTxt.setText(state.score+rem);
+  }
+
+  updateIndicator(){
+    const isMoney=state.ballIdx===4;
+    this.indicatorTxt.setText(
+      `${SPOTS[state.spotIdx]} — Ball ${state.ballIdx+1}/5${isMoney?' · 💰 Money ball':''}`
+    ).setColor(isMoney?'#F4C430':'#94a3b8');
+  }
+
+  refreshAll(){
+    this.updateIndicator();
+    this.updatePossible();
+    this.redrawSpots();
+    this.redrawDots();
+    this.placeBallAtSpot();
+  }
+
+  // ── End game ──────────────────────────────────────────────────
+  endGame(){
+    state.gameActive=false;
+    if(this.timerEvent) this.timerEvent.remove();
+    this.shooting=false;
+    playBuzzer();
+    const isNew=state.score>bestScore;
+    if(isNew) bestScore=state.score;
+    state.isNew=isNew;
+    this.bestTxt.setText('🏆 '+bestScore);
+    saveToLB(playerName,state.score);
+    this.time.delayedCall(900,()=>{ this.scene.stop(); showResults(); });
+  }
+
+  // ── Update loop ──────────────────────────────────────────────
+  update(){
+    if(this.holding&&!this.shooting){
+      this.power+=this.powerDir*this.BAR_SPEED;
+      if(this.power>=100){ this.power=100; this.powerDir=-1; }
+      if(this.power<=0){ this.power=0; this.powerDir=1; }
+      this.redrawPowerMeter();
+    }
+  }
+}
+
+// ── HTML screen functions ────────────────────────────────────
+function showResults(){
+  document.getElementById('results-screen').classList.remove('hidden');
+  const {score,shotsMade,shotsAttempted,maxStreak,spotScores,ballResults,isNew}=state;
+  document.getElementById('res-name').textContent=playerName+"'s Result";
+  document.getElementById('res-score').textContent=score;
+  document.getElementById('res-rating').textContent=getRating(score);
+  const fgPct=shotsAttempted?Math.round(shotsMade/shotsAttempted*100):0;
+  let moneyMade=0; for(let s=0;s<5;s++) if(ballResults[s][4]===true) moneyMade++;
+  document.getElementById('res-stats').innerHTML=`FG: <span>${fgPct}%</span> &nbsp;·&nbsp; Money balls: <span>${moneyMade}/5</span> &nbsp;·&nbsp; Best streak: <span>${maxStreak}</span>`;
+  document.getElementById('res-hs').innerHTML=isNew?'🎉 New personal best!':`🏆 Personal best: <strong>${bestScore}</strong>`;
+  const bd=document.getElementById('res-breakdown'); bd.innerHTML='';
+  SPOTS.forEach((name,i)=>{ const d=document.createElement('div'); d.className='spot-score'; d.innerHTML=`<div class="sv">${spotScores[i]}</div><div class="sl">${name}</div>`; bd.appendChild(d); });
+  const lb=loadLB(),lbRows=document.getElementById('lb-rows'); lbRows.innerHTML='';
+  const medals=['🥇','🥈','🥉'];
+  lb.slice(0,7).forEach((entry,i)=>{
+    const isMe=isNew&&i===0&&entry.name===playerName&&entry.score===score;
+    const row=document.createElement('div'); row.className='lb-row'+(isMe?' me':'');
+    const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    row.innerHTML=`<div class="lb-rank ${rc}">${i<3?medals[i]:i+1}</div><div class="lb-name">${entry.name}</div><div class="lb-score">${entry.score}</div><div class="lb-date">${entry.date}</div>`;
+    lbRows.appendChild(row);
+  });
+}
+
+// ── Phaser init ──────────────────────────────────────────────
+const phaserConfig={
+  type:Phaser.AUTO, width:W, height:H,
+  parent:'phaser-container',
+  backgroundColor:'#080d18',
+  scene:[CountdownScene,GameScene],
+  scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH,width:W,height:H},
+  input:{keyboard:true}
+};
+
+let game=null;
+
+function startGame(){
+  const v=document.getElementById('name-input').value.trim();
+  playerName=v||'Player';
+  document.getElementById('setup-screen').classList.add('hidden');
+  if(!game){ game=new Phaser.Game(phaserConfig); }
+  else { game.scene.start('CountdownScene'); }
+}
+
+document.getElementById('start-btn').addEventListener('click',startGame);
+document.getElementById('name-input').addEventListener('keydown',e=>{ if(e.key==='Enter') startGame(); });
+document.getElementById('mute-btn').addEventListener('click',toggleMute);
+document.getElementById('play-again-btn').addEventListener('click',()=>{
+  document.getElementById('results-screen').classList.add('hidden');
+  game.scene.start('CountdownScene');
 });
-document.addEventListener('keyup',e=>{if(e.code==='Space'){e.preventDefault();endHold();}});
-document.getElementById('name-input').addEventListener('keydown',e=>{if(e.key==='Enter')goToCountdown();});
-const btn=document.getElementById('shoot-btn');
-btn.addEventListener('mousedown',e=>{e.preventDefault();startHold();});
-btn.addEventListener('mouseup',e=>{e.preventDefault();endHold();});
-btn.addEventListener('mouseleave',()=>{if(holding)endHold();});
-btn.addEventListener('touchstart',e=>{e.preventDefault();startHold();},{passive:false});
-btn.addEventListener('touchend',e=>{e.preventDefault();endHold();},{passive:false});
-btn.addEventListener('touchcancel',e=>{e.preventDefault();endHold();},{passive:false});
 </script>
 </body>
 </html>
