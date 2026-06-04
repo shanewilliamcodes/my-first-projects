@@ -23,7 +23,7 @@ function isHurt(p) {
 
 /* ---------------- player card ---------------- */
 
-const STAT_LABEL = { pts: 'PPG', reb: 'RPG', ast: 'APG' };
+const STAT_LABEL = { pts: 'PPG', reb: 'RPG', ast: 'APG', stl: 'SPG', blk: 'BPG', min: 'MPG' };
 
 function PlayerCard({ p, onClick, statKey = 'pts' }) {
   const hurt = isHurt(p);
@@ -244,6 +244,95 @@ function PlayerDetailModal({ player: p, onClose }) {
   );
 }
 
+/* ---------------- compare ---------------- */
+
+function PlayerPicker({ picked, onPick, onClear }) {
+  const [q, setQ] = useState('');
+  const matches = useMemo(() => (q.trim() ? searchPlayers(q).slice(0, 6) : []), [q]);
+
+  if (picked) {
+    return (
+      <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-800/60 p-3">
+        {picked.headshot && <img src={picked.headshot} alt="" className="h-12 w-12 shrink-0 object-contain" />}
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-bold text-white">{picked.name}</div>
+          <div className="truncate text-xs text-orange-300">{picked.team}</div>
+        </div>
+        <button onClick={onClear} className="shrink-0 text-slate-400 transition hover:text-white">✕</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search a player…"
+        className="w-full rounded-xl border border-white/10 bg-slate-800/70 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-orange-400/60"
+      />
+      {matches.length > 0 && (
+        <div className="absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-xl border border-white/10 bg-slate-800 shadow-2xl">
+          {matches.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => { onPick(p); setQ(''); }}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left transition hover:bg-white/10"
+            >
+              {p.headshot && <img src={p.headshot} alt="" className="h-8 w-8 shrink-0 object-contain" />}
+              <span className="truncate text-sm text-white">{p.name}</span>
+              <span className="ml-auto shrink-0 text-xs text-slate-400">{p.stats?.pts} PPG</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const COMPARE_ROWS = [
+  ['pts', 'Points'], ['reb', 'Rebounds'], ['ast', 'Assists'], ['stl', 'Steals'],
+  ['blk', 'Blocks'], ['min', 'Minutes'], ['fgPct', 'FG%'], ['tpPct', '3P%'], ['ftPct', 'FT%'],
+];
+
+function CompareView({ a, b, setA, setB }) {
+  return (
+    <div className="mx-auto max-w-2xl">
+      <div className="grid grid-cols-2 gap-3">
+        <PlayerPicker picked={a} onPick={setA} onClear={() => setA(null)} />
+        <PlayerPicker picked={b} onPick={setB} onClear={() => setB(null)} />
+      </div>
+
+      {a && b ? (
+        <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-slate-800/40">
+          {COMPARE_ROWS.map(([k, label]) => {
+            const av = parseFloat(a.stats?.[k]);
+            const bv = parseFloat(b.stats?.[k]);
+            const valid = !isNaN(av) && !isNaN(bv);
+            const aWin = valid && av > bv;
+            const bWin = valid && bv > av;
+            return (
+              <div key={k} className="grid grid-cols-3 items-center border-b border-white/5 last:border-0">
+                <div className={`px-4 py-3 text-right text-lg font-bold tabular-nums ${aWin ? 'text-emerald-400' : 'text-white'}`}>
+                  {a.stats?.[k] ?? '—'}
+                </div>
+                <div className="px-2 py-3 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  {label}
+                </div>
+                <div className={`px-4 py-3 text-left text-lg font-bold tabular-nums ${bWin ? 'text-emerald-400' : 'text-white'}`}>
+                  {b.stats?.[k] ?? '—'}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <p className="mt-10 text-center text-slate-500">Pick two players to compare their season stats side by side.</p>
+      )}
+    </div>
+  );
+}
+
 /* ---------------- main app ---------------- */
 
 export default function App() {
@@ -252,6 +341,8 @@ export default function App() {
   const [leaderStat, setLeaderStat] = useState('pts');
   const [viewTeam, setViewTeam] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [compareA, setCompareA] = useState(null);
+  const [compareB, setCompareB] = useState(null);
 
   const teams = getNbaTeams();
   const results = useMemo(() => searchPlayers(query).slice(0, 60), [query]);
@@ -262,6 +353,9 @@ export default function App() {
     ['pts', 'Points'],
     ['reb', 'Rebounds'],
     ['ast', 'Assists'],
+    ['stl', 'Steals'],
+    ['blk', 'Blocks'],
+    ['min', 'Minutes'],
   ];
 
   return (
@@ -281,6 +375,7 @@ export default function App() {
             {[
               ['players', 'Players'],
               ['teams', 'Teams'],
+              ['compare', 'Compare'],
             ].map(([key, label]) => (
               <button
                 key={key}
@@ -362,6 +457,10 @@ export default function App() {
                 <TeamCard key={t.id} t={t} onClick={() => setViewTeam(t)} />
               ))}
             </div>
+          )}
+
+          {tab === 'compare' && (
+            <CompareView a={compareA} b={compareB} setA={setCompareA} setB={setCompareB} />
           )}
         </>
       )}
