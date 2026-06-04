@@ -1,9 +1,44 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, PLAYER_COUNT } from './api';
+import { fetchNews, fetchStandings, fetchGames } from './live';
 
 /* ---------------- helpers ---------------- */
 
 const enc = encodeURIComponent;
+
+// Small hook for live ESPN fetches with loading/error states.
+function useLive(fn, run) {
+  const [state, setState] = useState({ loading: true, error: null, data: null });
+  useEffect(() => {
+    if (!run) return;
+    let alive = true;
+    setState({ loading: true, error: null, data: null });
+    fn()
+      .then((d) => alive && setState({ loading: false, error: null, data: d }))
+      .catch((e) => alive && setState({ loading: false, error: e.message, data: null }));
+    return () => {
+      alive = false;
+    };
+  }, [run]);
+  return state;
+}
+
+function Spinner({ label }) {
+  return (
+    <div className="flex flex-col items-center gap-3 py-16">
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/15 border-t-orange-400" />
+      {label && <p className="text-sm text-slate-400">{label}</p>}
+    </div>
+  );
+}
+
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (diff < 3600) return `${Math.max(1, Math.floor(diff / 60))}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
 const ytUrl = (name) => `https://www.youtube.com/results?search_query=${enc(name + ' highlights')}`;
 const wikiUrl = (name) => `https://en.wikipedia.org/wiki/Special:Search?search=${enc(name)}&go=Go`;
 const espnUrl = (id) => `https://www.espn.com/nba/player/_/id/${id}`;
@@ -351,6 +386,138 @@ function CompareView({ a, b, setA, setB }) {
   );
 }
 
+/* ---------------- news ---------------- */
+
+function NewsTab({ active }) {
+  const { loading, error, data } = useLive(fetchNews, active);
+  if (loading) return <Spinner label="Loading the latest NBA news…" />;
+  if (error) return <p className="py-16 text-center text-slate-400">Couldn’t load news right now.</p>;
+
+  return (
+    <div className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
+      {(data || []).map((a) => (
+        <a
+          key={a.id}
+          href={a.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-800/50 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/40"
+        >
+          {a.image && (
+            <div className="aspect-video w-full overflow-hidden">
+              <img
+                src={a.image}
+                alt=""
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          )}
+          <div className="flex flex-1 flex-col p-4">
+            <h3 className="font-bold leading-snug text-white">{a.headline}</h3>
+            {a.description && <p className="mt-2 line-clamp-3 text-sm text-slate-400">{a.description}</p>}
+            <span className="mt-3 text-xs text-orange-300/80">{timeAgo(a.published)}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+/* ---------------- playoffs / standings ---------------- */
+
+function SeriesCard({ ev }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-orange-500/15 to-transparent p-5">
+      <div className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-orange-300">
+        {ev.seriesTitle || 'NBA Playoffs'}
+      </div>
+      <div className="flex items-center justify-center gap-4">
+        {ev.competitors.map((c, i) => (
+          <div key={i} className="flex items-center gap-3">
+            {i === 1 && <span className="text-sm text-slate-500">vs</span>}
+            <div className="flex flex-col items-center gap-1">
+              {c.logo && <img src={c.logo} alt="" className="h-12 w-12 object-contain" />}
+              <span className="text-sm font-bold text-white">{c.abbr}</span>
+              {ev.state !== 'pre' && c.score != null && c.score !== '' && (
+                <span className={`text-lg font-extrabold ${c.winner ? 'text-emerald-400' : 'text-white'}`}>{c.score}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 text-center text-sm text-slate-300">
+        {ev.series || ev.status}
+      </div>
+    </div>
+  );
+}
+
+function StandingsTable({ title, rows }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-800/40">
+      <div className="border-b border-white/10 px-4 py-3 text-sm font-bold text-white">{title}</div>
+      {rows.map((t, i) => (
+        <div
+          key={t.id}
+          className={`flex items-center gap-3 px-4 py-2 text-sm ${i < 8 ? '' : 'opacity-60'} ${
+            i === 7 ? 'border-b-2 border-orange-500/40' : 'border-b border-white/5'
+          }`}
+        >
+          <span className="w-5 text-right text-xs font-bold text-slate-400">{t.seed === 99 ? i + 1 : t.seed}</span>
+          {t.logo && <img src={t.logo} alt="" className="h-6 w-6 object-contain" />}
+          <span className="flex-1 truncate font-medium text-white">{t.name}</span>
+          <span className="tabular-nums text-slate-300">{t.wins}-{t.losses}</span>
+          <span className="w-10 text-right text-xs text-slate-500">{t.streak}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PlayoffsTab({ active }) {
+  const games = useLive(fetchGames, active);
+  const standings = useLive(fetchStandings, active);
+
+  return (
+    <div className="mx-auto max-w-4xl">
+      {/* live games / series */}
+      {games.loading ? (
+        <Spinner label="Loading playoff games…" />
+      ) : games.error ? null : (
+        <div className="mb-10">
+          <h2 className="mb-4 text-center text-lg font-bold text-white">
+            {games.data?.seasonType === 3 ? 'Playoffs — Live' : "Today's Games"}
+          </h2>
+          {games.data?.events?.length ? (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {games.data.events.map((ev) => (
+                <SeriesCard key={ev.id} ev={ev} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-slate-500">No games scheduled right now — check the standings below.</p>
+          )}
+        </div>
+      )}
+
+      {/* standings */}
+      <h2 className="mb-4 text-center text-lg font-bold text-white">Standings</h2>
+      {standings.loading ? (
+        <Spinner />
+      ) : standings.error ? (
+        <p className="py-8 text-center text-slate-400">Couldn’t load standings.</p>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <StandingsTable title="Eastern Conference" rows={standings.data.east} />
+          <StandingsTable title="Western Conference" rows={standings.data.west} />
+        </div>
+      )}
+      <p className="mt-4 text-center text-xs text-slate-600">Top 8 seeds shown bold · live from ESPN</p>
+    </div>
+  );
+}
+
 /* ---------------- main app ---------------- */
 
 export default function App() {
@@ -389,11 +556,13 @@ export default function App() {
         </p>
 
         {!viewTeam && (
-          <div className="flex gap-1 rounded-full border border-white/10 bg-slate-800/60 p-1">
+          <div className="flex flex-wrap justify-center gap-1 rounded-3xl border border-white/10 bg-slate-800/60 p-1">
             {[
               ['players', 'Players'],
               ['teams', 'Teams'],
               ['compare', 'Compare'],
+              ['playoffs', 'Playoffs'],
+              ['news', 'News'],
             ].map(([key, label]) => (
               <button
                 key={key}
@@ -480,6 +649,10 @@ export default function App() {
           {tab === 'compare' && (
             <CompareView a={compareA} b={compareB} setA={setCompareA} setB={setCompareB} />
           )}
+
+          {tab === 'playoffs' && <PlayoffsTab active={tab === 'playoffs'} />}
+
+          {tab === 'news' && <NewsTab active={tab === 'news'} />}
         </>
       )}
 
