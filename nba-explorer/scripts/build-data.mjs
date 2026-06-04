@@ -1,189 +1,167 @@
-// Build-time data fetcher.
-// Pulls all 30 NBA teams + their rosters from TheSportsDB ONCE and writes a
-// static JSON file the app reads instantly. Run locally with `npm run data`,
-// and the GitHub Action runs it before every deploy so the data stays fresh.
+// Build-time data fetcher (ESPN public API — no key, no signup).
+// Pulls all 30 teams, FULL rosters, headshots, bios, and real per-game stats,
+// then writes a static JSON the app reads instantly. Run with `npm run data`.
 //
-// Why: fetching in the browser hits CORS blocks (some endpoints) and rate
-// limits (bursts). Doing it here — server-side, sequentially — avoids both.
+// Why build-time: the app makes zero live API calls, so it loads instantly and
+// can't be rate-limited or CORS-blocked.
 
 import { writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const BASE = 'https://www.thesportsdb.com/api/v1/json/3';
+const SITE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+const WEB = 'https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba';
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../src/data/nba.json');
-
-const TEAMS = [
-  'Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte Hornets',
-  'Chicago Bulls', 'Cleveland Cavaliers', 'Dallas Mavericks', 'Denver Nuggets',
-  'Detroit Pistons', 'Golden State Warriors', 'Houston Rockets', 'Indiana Pacers',
-  'Los Angeles Clippers', 'Los Angeles Lakers', 'Memphis Grizzlies', 'Miami Heat',
-  'Milwaukee Bucks', 'Minnesota Timberwolves', 'New Orleans Pelicans', 'New York Knicks',
-  'Oklahoma City Thunder', 'Orlando Magic', 'Philadelphia 76ers', 'Phoenix Suns',
-  'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs', 'Toronto Raptors',
-  'Utah Jazz', 'Washington Wizards',
-];
-
-// The free roster endpoint caps at 10 players per team — and sorts them
-// alphabetically by first name, which cuts most superstars. So we also pull a
-// curated list of star players by name to guarantee the household names are
-// searchable. (Their current team comes from the API, not this list.)
-const STARS = [
-  'LeBron James', 'Stephen Curry', 'Kevin Durant', 'Giannis Antetokounmpo',
-  'Nikola Jokic', 'Luka Doncic', 'Jayson Tatum', 'Joel Embiid', 'Kawhi Leonard',
-  'Jimmy Butler', 'Damian Lillard', 'Anthony Davis', 'Devin Booker', 'Kyrie Irving',
-  'James Harden', 'Paul George', 'Donovan Mitchell', 'Trae Young', 'Ja Morant',
-  'Zion Williamson', 'Shai Gilgeous-Alexander', 'Jaylen Brown', 'Jalen Brunson',
-  'Tyrese Haliburton', 'Anthony Edwards', 'De\'Aaron Fox', 'Domantas Sabonis',
-  'Pascal Siakam', 'Bam Adebayo', 'Tyler Herro', 'Karl-Anthony Towns',
-  'Rudy Gobert', 'Jaren Jackson Jr', 'Klay Thompson', 'Draymond Green',
-  'Jamal Murray', 'Aaron Gordon', 'Bradley Beal', 'Kristaps Porzingis',
-  'Derrick White', 'Jrue Holiday', 'Mikal Bridges', 'OG Anunoby', 'Julius Randle',
-  'Cade Cunningham', 'Paolo Banchero', 'Franz Wagner', 'Scottie Barnes',
-  'Victor Wembanyama', 'Chet Holmgren', 'Jalen Williams', 'Alperen Sengun',
-  'Jalen Green', 'Fred VanVleet', 'Lauri Markkanen', 'Zach LaVine',
-  'Nikola Vucevic', 'DeMar DeRozan', 'Dejounte Murray', 'LaMelo Ball',
-  'Brandon Miller', 'Jakob Poeltl', 'RJ Barrett', 'Immanuel Quickley',
-  'Kyle Kuzma', 'Jordan Poole', 'Coby White', 'Josh Giddey', 'Evan Mobley',
-  'Darius Garland', 'Tyrese Maxey', 'CJ McCollum', 'Brandon Ingram',
-  'Desmond Bane', 'Jakob Poeltl', 'Myles Turner', 'Bennedict Mathurin',
-  'Austin Reaves', 'Deandre Ayton', 'Norman Powell', 'Ivica Zubac',
-];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Fetch JSON, retrying patiently with long backoff to ride out the free-tier
-// rate limit (HTTP 429). Worst case it waits several minutes on a single call.
-async function getJSON(path, label) {
-  for (let attempt = 1; attempt <= 8; attempt++) {
+async function getJSON(url, label) {
+  for (let attempt = 1; attempt <= 4; attempt++) {
     try {
-      const res = await fetch(`${BASE}${path}`);
+      const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (nba-explorer build)' } });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (err) {
-      if (attempt === 8) throw new Error(`Failed ${label}: ${err.message}`);
-      const wait = Math.min(attempt * 12000, 70000); // 12s,24s,36s,48s,60s,70s,70s
-      console.log(`   …${label} ${err.message}, waiting ${wait / 1000}s (try ${attempt})`);
-      await sleep(wait);
+      if (attempt === 4) throw new Error(`Failed ${label}: ${err.message}`);
+      await sleep(attempt * 1500);
     }
   }
 }
 
-function trim(s, n = 800) {
-  if (!s) return '';
-  return s.length > n ? s.slice(0, n).trimEnd() + '…' : s;
+// Limited-concurrency map so we never fire a giant burst.
+async function mapLimit(items, limit, worker) {
+  const results = new Array(items.length);
+  let i = 0;
+  async function run() {
+    while (i < items.length) {
+      const idx = i++;
+      results[idx] = await worker(items[idx], idx);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, run));
+  return results;
 }
 
-const teamFields = (t) => ({
-  idTeam: t.idTeam,
-  strTeam: t.strTeam,
-  strBadge: t.strBadge,
-  strStadium: t.strStadium,
-  intFormedYear: t.intFormedYear,
-  strLocation: t.strLocation,
-  intStadiumCapacity: t.intStadiumCapacity,
-  strDescriptionEN: trim(t.strDescriptionEN, 1200),
-});
+function birthPlaceStr(bp) {
+  if (!bp) return '';
+  return [bp.city, bp.state, bp.country].filter(Boolean).join(', ');
+}
 
-const playerFields = (p, badge) => ({
-  idPlayer: p.idPlayer,
-  strPlayer: p.strPlayer,
-  strTeam: p.strTeam,
-  idTeam: p.idTeam,
-  teamBadge: badge,
-  strPosition: p.strPosition,
-  strNumber: p.strNumber,
-  dateBorn: p.dateBorn,
-  strNationality: p.strNationality,
-  strHeight: p.strHeight,
-  strWeight: p.strWeight,
-  strThumb: p.strThumb,
-  strCutout: p.strCutout,
-  strStatus: p.strStatus,
-  strTwitter: p.strTwitter,
-  strInstagram: p.strInstagram,
-  strDescriptionEN: trim(p.strDescriptionEN, 800),
-});
+// Pull the current (latest) season's per-game averages out of the stats payload.
+function parseStats(statsJson) {
+  const cats = statsJson?.categories || [];
+  const avg = cats.find((c) => c.name === 'averages');
+  if (!avg) return null;
+  const labels = avg.labels || [];
+  const splits = avg.statistics || [];
+  if (!splits.length) return null;
+  // splits are oldest-first; pick the highest season year (current season)
+  let latest = splits[0];
+  for (const s of splits) {
+    if ((s.season?.year || 0) >= (latest.season?.year || 0)) latest = s;
+  }
+  const vals = latest.stats || [];
+  const m = {};
+  labels.forEach((lbl, idx) => (m[lbl] = vals[idx]));
+  const num = (v) => (v === undefined || v === '' ? null : v);
+  return {
+    season: latest.season?.displayName || null,
+    gp: num(m['GP']),
+    min: num(m['MIN']),
+    pts: num(m['PTS']),
+    reb: num(m['REB']),
+    ast: num(m['AST']),
+    stl: num(m['STL']),
+    blk: num(m['BLK']),
+    fgPct: num(m['FG%']),
+    tpPct: num(m['3P%']),
+    ftPct: num(m['FT%']),
+  };
+}
 
 async function main() {
+  console.log('Fetching teams…');
+  const teamsResp = await getJSON(`${SITE}/teams`, 'teams list');
+  const rawTeams = teamsResp.sports[0].leagues[0].teams.map((x) => x.team);
+
   const teams = [];
   const players = [];
-  const seen = new Set();
 
-  for (const name of TEAMS) {
-   try {
-    // 1) team metadata (badge, arena, etc.)
-    const td = await getJSON(`/searchteams.php?t=${encodeURIComponent(name)}`, `team ${name}`);
-    const team = (td.teams || []).find((t) => t.strLeague === 'NBA') || (td.teams || [])[0];
-    if (!team) {
-      console.warn(`!! no team data for ${name}`);
-      continue;
-    }
-    teams.push(teamFields(team));
-    await sleep(2600);
-
-    // 2) roster (full player records — height, weight, bio, photo, socials)
-    const rd = await getJSON(`/lookup_all_players.php?id=${team.idTeam}`, `roster ${name}`);
-    const roster = (rd.player || []).filter((p) => p.strSport === 'Basketball');
-    for (const p of roster) {
-      if (p.idPlayer && !seen.has(p.idPlayer)) {
-        seen.add(p.idPlayer);
-        players.push(playerFields(p, team.strBadge));
-      }
-    }
-    console.log(`✓ ${name}: ${roster.length} players`);
-    await sleep(2600);
-   } catch (err) {
-     console.warn(`!! skipping ${name}: ${err.message}`);
-   }
-  }
-
-  // 3) curated stars — one lookup each by name, mapped to their current NBA
-  // team. Lighter detail than roster players, but guarantees the household
-  // names are searchable with a photo.
-  const teamByName = new Map(teams.map((t) => [t.strTeam, t]));
-  console.log(`\nFetching ${STARS.length} star players…`);
-  for (const starName of STARS) {
+  // teams + rosters
+  await mapLimit(rawTeams, 5, async (t) => {
     try {
-      const sd = await getJSON(
-        `/searchplayers.php?p=${encodeURIComponent(starName)}`,
-        `star ${starName}`
-      );
-      // pick the basketball result that plays for one of our NBA teams
-      const hit = (sd.player || []).find(
-        (p) => p.strSport === 'Basketball' && teamByName.has(p.strTeam)
-      );
-      await sleep(2600);
-      if (!hit) {
-        console.warn(`!! ${starName}: no current NBA match`);
-        continue;
+      const roster = await getJSON(`${SITE}/teams/${t.id}/roster`, `roster ${t.displayName}`);
+      const venue = roster.team?.venue?.fullName || null;
+      teams.push({
+        id: t.id,
+        name: t.displayName,
+        abbr: t.abbreviation,
+        logo: (t.logos || [])[0]?.href || null,
+        color: t.color ? `#${t.color}` : null,
+        location: t.location || null,
+        venue,
+      });
+      for (const a of roster.athletes || []) {
+        players.push({
+          id: a.id,
+          name: a.fullName || a.displayName,
+          teamId: t.id,
+          team: t.displayName,
+          teamAbbr: t.abbreviation,
+          teamLogo: (t.logos || [])[0]?.href || null,
+          headshot: a.headshot?.href || null,
+          jersey: a.jersey || null,
+          position: a.position?.abbreviation || a.position?.name || null,
+          height: a.displayHeight || null,
+          weight: a.displayWeight || null,
+          age: a.age || null,
+          birthPlace: birthPlaceStr(a.birthPlace),
+          college: a.college?.name || null,
+          status: a.status?.name || 'Active',
+          injury: (a.injuries && a.injuries[0]?.status) || null,
+          stats: null,
+        });
       }
-      if (seen.has(hit.idPlayer)) {
-        console.log(`· ${starName}: already in a roster`);
-        continue;
-      }
-      const team = teamByName.get(hit.strTeam);
-      seen.add(hit.idPlayer);
-      players.push(playerFields(hit, team?.strBadge));
-      console.log(`★ ${starName} → ${hit.strTeam}`);
+      console.log(`✓ ${t.displayName}: ${(roster.athletes || []).length} players`);
     } catch (err) {
-      console.warn(`!! ${starName}: ${err.message}`);
+      console.warn(`!! skipping ${t.displayName}: ${err.message}`);
     }
-  }
+  });
 
-  teams.sort((a, b) => a.strTeam.localeCompare(b.strTeam));
-  players.sort((a, b) => a.strPlayer.localeCompare(b.strPlayer));
+  // per-player stats
+  console.log(`\nFetching stats for ${players.length} players…`);
+  let done = 0;
+  await mapLimit(players, 8, async (p) => {
+    try {
+      const s = await getJSON(`${WEB}/athletes/${p.id}/stats`, `stats ${p.name}`);
+      p.stats = parseStats(s);
+    } catch {
+      p.stats = null;
+    }
+    if (++done % 50 === 0) console.log(`  …${done}/${players.length} stats`);
+  });
 
-  if (teams.length < 25 || players.length < 100) {
+  teams.sort((a, b) => a.name.localeCompare(b.name));
+  players.sort((a, b) => a.name.localeCompare(b.name));
+
+  const withStats = players.filter((p) => p.stats && p.stats.pts != null).length;
+  if (teams.length < 28 || players.length < 300) {
     throw new Error(`Data looks incomplete: ${teams.length} teams, ${players.length} players`);
   }
 
   await mkdir(dirname(OUT), { recursive: true });
   await writeFile(
     OUT,
-    JSON.stringify({ generatedAt: new Date().toISOString(), teams, players }, null, 0)
+    JSON.stringify(
+      { generatedAt: new Date().toISOString(), teams, players },
+      null,
+      0
+    )
   );
-  console.log(`\n✅ Wrote ${teams.length} teams and ${players.length} players to ${OUT}`);
+  // sample for eyeballing in the log
+  const sample = players.find((p) => p.name.includes('Curry')) || players[0];
+  console.log(`\n✅ Wrote ${teams.length} teams, ${players.length} players (${withStats} with stats) to ${OUT}`);
+  console.log(`   sample: ${sample.name} — ${sample.stats ? `${sample.stats.pts} PTS, ${sample.stats.reb} REB, ${sample.stats.ast} AST` : 'no stats'}`);
 }
 
 main().catch((err) => {

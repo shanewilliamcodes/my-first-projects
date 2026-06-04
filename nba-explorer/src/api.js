@@ -1,27 +1,21 @@
-// All NBA data is fetched ONCE at build time (see scripts/build-data.mjs) and
-// baked into data/nba.json. The app reads it directly — no runtime API calls,
-// so it can never be rate-limited, CORS-blocked, or slow to load.
+// All NBA data is fetched ONCE at build time (see scripts/build-data.mjs, ESPN
+// public API) and baked into data/nba.json. The app reads it directly — no
+// runtime API calls, so it can never be rate-limited, CORS-blocked, or slow.
 import data from './data/nba.json';
 
 export const TEAMS = data.teams;
-
-// The free roster feed mixes in coaches, owners, and execs. Real players always
-// have a playing position (Guard / Forward / Center), so we filter on that to
-// drop the non-players cleanly.
-export const PLAYERS = data.players.filter((p) => /guard|forward|center/i.test(p.strPosition || ''));
+export const PLAYERS = data.players;
 export const PLAYER_COUNT = PLAYERS.length;
 export const GENERATED_AT = data.generatedAt;
 
-// All 30 teams (already sorted alphabetically in the data file).
+// All 30 teams (already sorted by name in the data file).
 export function getNbaTeams() {
   return TEAMS;
 }
 
 // One team's roster, sorted by name.
 export function getTeamRoster(teamId) {
-  return PLAYERS.filter((p) => p.idTeam === teamId).sort((a, b) =>
-    a.strPlayer.localeCompare(b.strPlayer)
-  );
+  return PLAYERS.filter((p) => p.teamId === teamId).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // Lowercase + strip accents so "jokic" matches "Jokić", "doncic" -> "Dončić".
@@ -32,11 +26,9 @@ function fold(s) {
     .toLowerCase();
 }
 
-// Pre-fold every name once so search stays instant.
-const FOLDED = PLAYERS.map((p) => fold(p.strPlayer));
+const FOLDED = PLAYERS.map((p) => fold(p.name));
 
-// Instant client-side substring search. Prefix matches rank first, so "ste"
-// surfaces "Stephen Curry" before "Kelly Oubre". Empty query returns nothing.
+// Instant client-side substring search. Prefix matches rank first.
 export function searchPlayers(query) {
   const q = fold(query.trim());
   if (!q) return [];
