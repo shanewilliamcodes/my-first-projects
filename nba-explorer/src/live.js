@@ -4,6 +4,39 @@
 
 const SITE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 const SITE2 = 'https://site.api.espn.com/apis/v2/sports/basketball/nba';
+const CORE = 'https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba';
+
+// NBA season year: Oct+ belongs to next calendar year's season.
+const SEASON = (() => {
+  const n = new Date();
+  return n.getMonth() >= 9 ? n.getFullYear() + 1 : n.getFullYear();
+})();
+
+// Full per-game team stats (rebounds, assists, FG%, etc.) for one team.
+export async function fetchTeamFullStats(teamId) {
+  const r = await fetch(`${CORE}/seasons/${SEASON}/types/2/teams/${teamId}/statistics`);
+  if (!r.ok) throw new Error(`teamstats ${r.status}`);
+  const d = await r.json();
+  const cats = d.splits?.categories || [];
+  const find = (name) => {
+    for (const c of cats) {
+      const s = (c.stats || []).find((x) => x.name === name);
+      if (s) return s.displayValue;
+    }
+    return null;
+  };
+  return {
+    ppg: find('avgPoints'),
+    rpg: find('avgRebounds'),
+    apg: find('avgAssists'),
+    spg: find('avgSteals'),
+    bpg: find('avgBlocks'),
+    tov: find('avgTurnovers'),
+    fgPct: find('fieldGoalPct'),
+    tpPct: find('threePointPct'),
+    ftPct: find('freeThrowPct'),
+  };
+}
 
 export async function fetchNews() {
   const r = await fetch(`${SITE}/news?limit=30`);

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getNbaTeams, getTeamRoster, searchPlayers, getLeaders, getPlayerById, PLAYER_COUNT } from './api';
-import { fetchNews, fetchStandings, fetchGames, fetchTeamStats } from './live';
+import { fetchNews, fetchStandings, fetchGames, fetchTeamStats, fetchTeamFullStats } from './live';
 import awardsData from './data/awards.json';
 
 /* ---------------- helpers ---------------- */
@@ -419,10 +419,18 @@ const COMPARE_ROWS = [
 const TEAM_ROWS = [
   { key: 'record', label: 'Record', better: null },
   { key: 'winPercent', label: 'Win %', better: 'high' },
+  { key: 'seed', label: 'Conf. Seed', better: 'low' },
   { key: 'ppg', label: 'Points / G', better: 'high' },
   { key: 'oppPpg', label: 'Opp Pts / G', better: 'low' },
   { key: 'diff', label: 'Point Diff', better: 'high' },
-  { key: 'seed', label: 'Conf. Seed', better: 'low' },
+  { key: 'rpg', label: 'Rebounds / G', better: 'high' },
+  { key: 'apg', label: 'Assists / G', better: 'high' },
+  { key: 'spg', label: 'Steals / G', better: 'high' },
+  { key: 'bpg', label: 'Blocks / G', better: 'high' },
+  { key: 'tov', label: 'Turnovers / G', better: 'low' },
+  { key: 'fgPct', label: 'FG %', better: 'high' },
+  { key: 'tpPct', label: '3P %', better: 'high' },
+  { key: 'ftPct', label: 'FT %', better: 'high' },
   { key: 'streak', label: 'Streak', better: null },
   { key: 'lastTen', label: 'Last 10', better: null },
 ];
@@ -438,6 +446,19 @@ function CompareView() {
   const [ta, setTa] = useState(null);
   const [tb, setTb] = useState(null);
   const teamStats = useLive(fetchTeamStats, mode === 'teams');
+  const [full, setFull] = useState({}); // teamId -> full per-game stats
+
+  // fetch the richer per-game stats for whichever teams are selected
+  useEffect(() => {
+    [ta?.id, tb?.id].filter(Boolean).forEach((id) => {
+      if (full[id]) return;
+      fetchTeamFullStats(id)
+        .then((s) => setFull((f) => ({ ...f, [id]: s })))
+        .catch(() => setFull((f) => ({ ...f, [id]: {} }))); // {} = loaded-but-empty
+    });
+  }, [ta?.id, tb?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const mergeTeam = (t) => ({ ...(teamStats.data?.[t.id] || {}), ...(full[t.id] || {}) });
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -481,14 +502,13 @@ function CompareView() {
             <TeamPicker picked={tb} onPick={setTb} onClear={() => setTb(null)} />
           </div>
           {ta && tb ? (
-            teamStats.loading ? (
+            teamStats.loading || full[ta.id] === undefined || full[tb.id] === undefined ? (
               <Spinner label="Loading team stats…" />
             ) : teamStats.error ? (
               <p className="mt-10 text-center text-slate-400">Couldn’t load team stats right now.</p>
             ) : (() => {
-              const sa = teamStats.data?.[ta.id];
-              const sb = teamStats.data?.[tb.id];
-              if (!sa || !sb) return <p className="mt-10 text-center text-slate-400">Stats unavailable for these teams.</p>;
+              const sa = mergeTeam(ta);
+              const sb = mergeTeam(tb);
               return (
                 <ComparePanel>
                   {TEAM_ROWS.map((r) => (
