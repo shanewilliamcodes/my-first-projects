@@ -29,9 +29,11 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: nba-explorer/package-lock.json
+          cache-dependency-path: |
+            nba-explorer/package-lock.json
+            health-explorer/package-lock.json
 
-      - name: Install dependencies
+      - name: Install NBA Explorer dependencies
         working-directory: nba-explorer
         run: npm ci
 
@@ -39,13 +41,22 @@ jobs:
         working-directory: nba-explorer
         run: npm run build
 
+      - name: Install Health Explorer dependencies
+        working-directory: health-explorer
+        run: npm ci
+
+      - name: Build the Health Explorer app
+        working-directory: health-explorer
+        run: npm run build
+
       - name: Assemble the site
         run: |
-          mkdir -p _site/nba
+          mkdir -p _site/nba _site/health
           # keep the existing static games at the site root
           cp ./*.html _site/ 2>/dev/null || true
-          # the built React app lives under /nba/
+          # the built React apps live under their own sub-paths
           cp -r nba-explorer/dist/* _site/nba/
+          cp -r health-explorer/dist/* _site/health/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

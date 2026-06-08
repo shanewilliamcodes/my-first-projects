@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* never allow sideways scrolling on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #07120f;
+  color: #e7f1ee;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle clinical glow background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(16,185,129,0.16), transparent 60%),
+    radial-gradient(900px 500px at 85% 110%, rgba(14,116,144,0.18), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* nicer scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #1e3a34; border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
