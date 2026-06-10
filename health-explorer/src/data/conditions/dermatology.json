@@ -1,0 +1,166 @@
+[
+  {
+    "id": "acne",
+    "name": "Acne",
+    "aka": "Acne vulgaris",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "~50 million Americans each year",
+    "overview": "Acne happens when oil and dead skin cells clog pores, letting bacteria grow and cause pimples, blackheads, and sometimes deeper painful bumps. It's the most common skin condition in the United States and is especially common during the teen years, though plenty of adults get it too. Acne isn't caused by poor hygiene, and it's very treatable — most people see real improvement with over-the-counter products or prescription medicines, which also helps prevent scarring.",
+    "symptoms": [
+      "Whiteheads and blackheads",
+      "Red, tender pimples",
+      "Deep, painful lumps (cysts or nodules)",
+      "Oily skin",
+      "Dark spots or scars after breakouts heal"
+    ],
+    "drugs": [
+      { "name": "Benzoyl peroxide", "class": "OTC antibacterial", "note": "Kills acne bacteria and unclogs pores." },
+      { "name": "Adapalene (Differin)", "class": "Topical retinoid", "note": "Once prescription-only, now available over the counter." },
+      { "name": "Salicylic acid", "class": "OTC exfoliant", "note": "Found in washes and spot treatments to clear pores." },
+      { "name": "Clindamycin (topical)", "class": "Antibiotic", "note": "Prescription gel often paired with benzoyl peroxide." },
+      { "name": "Doxycycline", "class": "Oral antibiotic", "note": "Short-term pill for moderate, inflamed acne." }
+    ],
+    "redFlags": "Severe acne that appears suddenly along with fever and joint pain is rare but serious — seek same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Acne", "url": "https://medlineplus.gov/search/?query=acne" },
+      { "label": "American Academy of Dermatology", "url": "https://www.aad.org/" }
+    ]
+  },
+  {
+    "id": "rosacea",
+    "name": "Rosacea",
+    "aka": "Acne rosacea",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "~16 million Americans",
+    "overview": "Rosacea is a long-term skin condition that causes flushing, redness, and small bumps, usually across the cheeks, nose, chin, and forehead. It's most common in adults over 30 with fair skin, and flares can be triggered by sun, heat, spicy food, alcohol, or stress. There's no cure, but creams, pills, and simple trigger-avoidance keep it well controlled for most people — and it isn't contagious or caused by anything you did wrong.",
+    "symptoms": [
+      "Easy flushing or blushing",
+      "Lasting redness across the cheeks and nose",
+      "Small red bumps that can look like acne",
+      "Visible tiny blood vessels",
+      "Burning or stinging skin",
+      "Dry, irritated eyes"
+    ],
+    "drugs": [
+      { "name": "Metronidazole (MetroGel)", "class": "Topical antibiotic", "note": "The most common first cream for bumps and redness." },
+      { "name": "Azelaic acid (Finacea)", "class": "Topical gel", "note": "Calms bumps and evens out skin tone." },
+      { "name": "Ivermectin (Soolantra)", "class": "Topical anti-inflammatory", "note": "Targets the skin mites that can worsen rosacea." },
+      { "name": "Doxycycline (Oracea)", "class": "Oral antibiotic", "note": "A pill option for flares that creams alone can't control." }
+    ],
+    "redFlags": "If your eyes become painful, very red, or your vision blurs, see a doctor promptly — untreated eye rosacea can damage sight.",
+    "resources": [
+      { "label": "MedlinePlus — Rosacea", "url": "https://medlineplus.gov/search/?query=rosacea" },
+      { "label": "National Rosacea Society", "url": "https://www.rosacea.org/" }
+    ]
+  },
+  {
+    "id": "shingles",
+    "name": "Shingles",
+    "aka": "Herpes zoster",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "~1 million U.S. cases each year",
+    "overview": "Shingles is a painful, blistering rash caused by the chickenpox virus waking up after lying quiet in your nerves for years. It usually shows up as a stripe of blisters on one side of the body. Anyone who has had chickenpox can get shingles, and the risk rises after age 50. Starting antiviral pills within 72 hours speeds healing and lowers the chance of lasting nerve pain — and a vaccine prevents most cases.",
+    "symptoms": [
+      "Burning, tingling, or stabbing pain on one side of the body",
+      "A stripe of fluid-filled blisters appearing a few days later",
+      "Itching and skin so sensitive that clothing hurts",
+      "Fever, headache, or feeling run-down"
+    ],
+    "drugs": [
+      { "name": "Valacyclovir (Valtrex)", "class": "Antiviral", "note": "Speeds healing when started within 72 hours of the rash." },
+      { "name": "Acyclovir", "class": "Antiviral", "note": "An older, lower-cost antiviral option." },
+      { "name": "Acetaminophen / Ibuprofen", "class": "OTC pain reliever", "note": "Eases rash pain while it heals." },
+      { "name": "Gabapentin", "class": "Nerve-pain medicine", "note": "Helps if nerve pain lingers after the rash clears." },
+      { "name": "Shingrix", "class": "Vaccine", "note": "Prevents most cases in adults 50 and older." }
+    ],
+    "redFlags": "A shingles rash on your face or near an eye — or any rash with confusion or severe headache — needs emergency care to protect your vision and brain, so go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Shingles", "url": "https://medlineplus.gov/search/?query=shingles" },
+      { "label": "CDC — Shingles", "url": "https://www.cdc.gov/shingles/" }
+    ]
+  },
+  {
+    "id": "hives",
+    "name": "Hives (Urticaria)",
+    "aka": "Welts",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "about 1 in 5 people at some point in life",
+    "overview": "Hives are raised, itchy welts that appear suddenly on the skin and often move around or change shape within hours. They're usually a reaction to something — a food, a medicine, an infection, or even heat or stress — though often no cause is ever found. Most cases clear on their own within a day or two, and antihistamines calm the itch. Hives that keep returning for more than six weeks are called chronic hives.",
+    "symptoms": [
+      "Raised, itchy welts that can be red or skin-colored",
+      "Welts that change shape, move around, or fade within hours",
+      "Itching that can be intense",
+      "Swelling of the lips or eyelids (angioedema)",
+      "Flares triggered by heat, stress, or pressure on the skin"
+    ],
+    "drugs": [
+      { "name": "Cetirizine (Zyrtec)", "class": "Antihistamine", "note": "A non-drowsy first choice for calming the itch." },
+      { "name": "Loratadine (Claritin)", "class": "Antihistamine", "note": "Another non-drowsy daily option." },
+      { "name": "Diphenhydramine (Benadryl)", "class": "Antihistamine", "note": "Works quickly but causes drowsiness." },
+      { "name": "Prednisone", "class": "Steroid", "note": "A short course for severe outbreaks." }
+    ],
+    "redFlags": "Hives with swelling of the tongue or throat, trouble breathing, or dizziness can be anaphylaxis — use epinephrine if you have it and call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Hives (Urticaria)", "url": "https://medlineplus.gov/search/?query=hives" },
+      { "label": "Asthma and Allergy Foundation of America", "url": "https://www.aafa.org/" }
+    ]
+  },
+  {
+    "id": "fungal-skin-infections",
+    "name": "Fungal Skin Infections (Ringworm & Athlete's Foot)",
+    "aka": "Tinea",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "about 1 in 4 people get athlete's foot at some point",
+    "overview": "Fungal skin infections like ringworm and athlete's foot are caused by tiny fungi that thrive on skin, especially in warm, damp spots like the feet, groin, and skin folds. Despite the name, no worm is involved — ringworm simply describes the ring-shaped rash it leaves. These infections are very common, mildly contagious, and usually easy to clear with over-the-counter antifungal creams. Keeping skin clean and dry goes a long way toward preventing them from coming back.",
+    "symptoms": [
+      "A ring-shaped, scaly rash with a clearer center (ringworm)",
+      "Itchy, peeling skin between the toes (athlete's foot)",
+      "Redness and cracking in the groin or skin folds",
+      "Itching or burning",
+      "Thick, discolored nails when nails are involved"
+    ],
+    "drugs": [
+      { "name": "Terbinafine (Lamisil) cream", "class": "Topical antifungal", "note": "A go-to over-the-counter cream for athlete's foot and ringworm." },
+      { "name": "Clotrimazole (Lotrimin)", "class": "Topical antifungal", "note": "A widely used cream for most fungal rashes." },
+      { "name": "Miconazole", "class": "Topical antifungal", "note": "Common in powders and sprays that help keep damp areas dry." },
+      { "name": "Terbinafine (oral)", "class": "Oral antifungal", "note": "A prescription pill for stubborn nail or scalp infections." }
+    ],
+    "redFlags": "Spreading redness, warmth, pus, fever, or red streaks can mean a bacterial infection has set in on top of the fungus — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Fungal Skin Infections (Ringworm & Athlete's Foot)", "url": "https://medlineplus.gov/search/?query=ringworm" },
+      { "label": "CDC — Fungal Diseases", "url": "https://www.cdc.gov/fungal/" }
+    ]
+  },
+  {
+    "id": "hair-loss",
+    "name": "Hair Loss",
+    "aka": "Alopecia",
+    "specialtyId": "dermatology",
+    "category": "Skin",
+    "prevalence": "~80 million Americans (hereditary type)",
+    "overview": "Hair loss is extremely common and has many causes — heredity is the biggest one, but stress, illness, thyroid problems, low iron, and certain medicines can also trigger shedding. Hereditary hair loss (male- or female-pattern) develops gradually and affects roughly 80 million Americans. While that kind doesn't reverse on its own, medicines can slow it down and regrow some hair, and shedding from stress or illness usually grows back once the trigger passes.",
+    "symptoms": [
+      "Gradual thinning on top of the head",
+      "A widening part (common in women)",
+      "A receding hairline (common in men)",
+      "Round, smooth bald patches (alopecia areata)",
+      "More hair than usual on your pillow, brush, or shower drain"
+    ],
+    "drugs": [
+      { "name": "Minoxidil (Rogaine)", "class": "Topical treatment", "note": "Over-the-counter foam or liquid used by men and women." },
+      { "name": "Finasteride (Propecia)", "class": "Hormone blocker", "note": "A prescription pill for male-pattern hair loss." },
+      { "name": "Spironolactone", "class": "Hormone blocker", "note": "Often prescribed for female-pattern hair loss." },
+      { "name": "Corticosteroid injections", "class": "Steroid", "note": "Used for patchy hair loss from alopecia areata." }
+    ],
+    "redFlags": "Sudden hair loss in clumps along with rash, scalp pain, fever, or feeling ill can signal an underlying illness — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Hair Loss", "url": "https://medlineplus.gov/search/?query=hair%20loss" },
+      { "label": "American Academy of Dermatology", "url": "https://www.aad.org/" }
+    ]
+  }
+]

@@ -1,0 +1,108 @@
+[
+  {
+    "id": "erectile-dysfunction",
+    "name": "Erectile Dysfunction",
+    "aka": "Impotence, ED",
+    "specialtyId": "urology",
+    "category": "Men's Health",
+    "prevalence": "~30 million U.S. men",
+    "overview": "Erectile dysfunction (ED) means having trouble getting or keeping an erection firm enough for sex. It becomes more common with age, but it isn't an automatic part of getting older. ED is often linked to blood-flow problems, diabetes, stress, or certain medicines — so it can also be an early clue about heart health. The good news: it's very treatable, and pills like sildenafil work for most men. Talking with a doctor is the first step.",
+    "symptoms": ["Trouble getting an erection", "Trouble keeping an erection during sex", "Erections that are softer than they used to be", "Lower interest in sex", "Stress or worry about sexual performance"],
+    "drugs": [
+      { "name": "Sildenafil (Viagra)", "class": "PDE5 inhibitor", "note": "The best-known ED pill, taken before sex." },
+      { "name": "Tadalafil (Cialis)", "class": "PDE5 inhibitor", "note": "Lasts longer and can also be taken daily." },
+      { "name": "Vardenafil (Levitra)", "class": "PDE5 inhibitor", "note": "Works much like sildenafil." },
+      { "name": "Avanafil (Stendra)", "class": "PDE5 inhibitor", "note": "A newer option that starts working quickly." }
+    ],
+    "redFlags": "An erection lasting more than four hours (priapism) can permanently damage the penis — go to the ER right away.",
+    "resources": [
+      { "label": "MedlinePlus — Erectile Dysfunction", "url": "https://medlineplus.gov/search/?query=erectile%20dysfunction" },
+      { "label": "Urology Care Foundation", "url": "https://www.urologyhealth.org/" }
+    ]
+  },
+  {
+    "id": "overactive-bladder",
+    "name": "Overactive Bladder",
+    "aka": "OAB",
+    "specialtyId": "urology",
+    "category": "Kidneys & Urinary",
+    "prevalence": "~33 million Americans",
+    "overview": "Overactive bladder (OAB) is a sudden, hard-to-control urge to urinate, often with frequent trips to the bathroom day and night. Some people also leak urine when the urge hits. OAB happens when the bladder muscle squeezes at the wrong times. It's common — especially with age — but it isn't something you just have to live with. Bladder training, pelvic floor exercises, and medicines help most people get back in control.",
+    "symptoms": ["Sudden, strong urges to urinate", "Going more than 8 times a day", "Waking up at night to urinate", "Leaking urine when the urge hits", "Planning your day around bathrooms"],
+    "drugs": [
+      { "name": "Bladder training & pelvic floor exercises", "class": "Behavioral therapy", "note": "Usually the first step, and often enough on its own." },
+      { "name": "Oxybutynin (Ditropan)", "class": "Anticholinergic", "note": "Calms bladder muscle spasms." },
+      { "name": "Mirabegron (Myrbetriq)", "class": "Beta-3 agonist", "note": "Relaxes the bladder with less dry mouth than older drugs." },
+      { "name": "Tolterodine (Detrol)", "class": "Anticholinergic", "note": "An alternative that some people tolerate better." }
+    ],
+    "redFlags": "If you suddenly can't urinate at all, or have fever, back pain, or blood in your urine, seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Overactive Bladder", "url": "https://medlineplus.gov/search/?query=overactive%20bladder" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "prostatitis",
+    "name": "Prostatitis",
+    "aka": "Prostate inflammation",
+    "specialtyId": "urology",
+    "category": "Men's Health",
+    "prevalence": "Up to ~15% of U.S. men at some point",
+    "overview": "Prostatitis is swelling or inflammation of the prostate, the small gland below a man's bladder. It can cause pelvic pain, burning with urination, and frequent urges to go. Some cases come from a bacterial infection and clear up with antibiotics; others, called chronic pelvic pain syndrome, last longer and need a mix of treatments. It's one of the most common urinary problems in men under 50, and most men improve with care.",
+    "symptoms": ["Pain in the pelvis, groin, or lower back", "Burning or pain when urinating", "Frequent or urgent need to urinate", "Pain with ejaculation", "Fever and chills (in bacterial cases)"],
+    "drugs": [
+      { "name": "Ciprofloxacin", "class": "Antibiotic", "note": "Treats bacterial prostatitis, often for several weeks." },
+      { "name": "Trimethoprim-sulfamethoxazole (Bactrim)", "class": "Antibiotic", "note": "A common alternative antibiotic." },
+      { "name": "Tamsulosin (Flomax)", "class": "Alpha-blocker", "note": "Relaxes muscles near the prostate to ease urination." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases pain and inflammation." }
+    ],
+    "redFlags": "High fever, chills, and trouble urinating can signal acute bacterial prostatitis — go to the ER or seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Prostatitis", "url": "https://medlineplus.gov/search/?query=prostatitis" },
+      { "label": "Urology Care Foundation", "url": "https://www.urologyhealth.org/" }
+    ]
+  },
+  {
+    "id": "urinary-incontinence",
+    "name": "Urinary Incontinence",
+    "aka": "Loss of bladder control",
+    "specialtyId": "urology",
+    "category": "Kidneys & Urinary",
+    "prevalence": "~25 million U.S. adults",
+    "overview": "Urinary incontinence means leaking urine when you don't intend to — from a few drops with a cough or laugh to a sudden strong urge you can't hold. It's very common, especially in women after childbirth and in older adults, but it is not a normal part of aging you have to accept. Pelvic floor exercises, bladder training, and medicines help most people, and many improve a great deal.",
+    "symptoms": ["Leaking with coughs, sneezes, or exercise", "Sudden urges followed by leaks", "Frequent bathroom trips day and night", "Dribbling after urinating", "Avoiding activities for fear of leaks"],
+    "drugs": [
+      { "name": "Pelvic floor exercises (Kegels)", "class": "Therapy", "note": "The first-line treatment for stress-type leakage." },
+      { "name": "Bladder training", "class": "Behavioral therapy", "note": "Gradually stretches the time between bathroom trips." },
+      { "name": "Oxybutynin (Ditropan)", "class": "Anticholinergic", "note": "Helps urge-type leakage by calming the bladder." },
+      { "name": "Mirabegron (Myrbetriq)", "class": "Beta-3 agonist", "note": "An alternative for urge leakage with less dry mouth." },
+      { "name": "Topical estrogen", "class": "Hormone", "note": "Low-dose cream that can help some women after menopause." }
+    ],
+    "redFlags": "Sudden leakage along with numbness in the groin or legs, or loss of bowel control, can signal a spinal emergency — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Urinary Incontinence", "url": "https://medlineplus.gov/search/?query=urinary%20incontinence" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "testicular-cancer",
+    "name": "Testicular Cancer",
+    "aka": "",
+    "specialtyId": "urology",
+    "category": "Cancer",
+    "prevalence": "~10,000 new U.S. cases a year",
+    "overview": "Testicular cancer starts in a testicle, usually showing up as a painless lump or swelling. It mainly affects younger men, between about 15 and 44. While any cancer diagnosis is scary, this is one of the most curable cancers — more than 95% of men survive it, even when it has spread. Treatment usually starts with surgery to remove the affected testicle, sometimes followed by chemotherapy or radiation.",
+    "symptoms": ["A painless lump or swelling in a testicle", "A testicle that feels heavier or firmer", "Dull ache in the lower belly or groin", "Sudden fluid buildup in the scrotum", "Breast tenderness (rare hormone effect)"],
+    "drugs": [
+      { "name": "Orchiectomy (surgery)", "class": "Procedure", "note": "Removing the affected testicle is the main first treatment." },
+      { "name": "Cisplatin", "class": "Chemotherapy", "note": "The backbone of chemo when more than surgery is needed." },
+      { "name": "Etoposide", "class": "Chemotherapy", "note": "Usually given together with cisplatin." },
+      { "name": "Bleomycin", "class": "Chemotherapy", "note": "Part of the standard 'BEP' combination." }
+    ],
+    "redFlags": "Sudden, severe testicle pain may be testicular torsion — a different emergency that can cost the testicle — go to the ER immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Testicular Cancer", "url": "https://medlineplus.gov/search/?query=testicular%20cancer" },
+      { "label": "American Cancer Society", "url": "https://www.cancer.org/" }
+    ]
+  }
+]

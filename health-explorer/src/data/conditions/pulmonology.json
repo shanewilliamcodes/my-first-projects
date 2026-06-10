@@ -1,0 +1,87 @@
+[
+  {
+    "id": "sleep-apnea",
+    "name": "Sleep Apnea",
+    "aka": "Obstructive sleep apnea (OSA)",
+    "specialtyId": "pulmonology",
+    "category": "Lungs & Breathing",
+    "prevalence": "~30 million U.S. adults, most undiagnosed",
+    "overview": "Sleep apnea is a condition where your breathing repeatedly stops and starts during sleep, often hundreds of times a night without you knowing. The most common type happens when throat muscles relax and block the airway, causing loud snoring and gasping. Left untreated, it raises the risk of high blood pressure, heart problems, and accidents from daytime sleepiness. The good news: treatment — most often a CPAP machine — works very well and can be life-changing.",
+    "symptoms": ["Loud, ongoing snoring", "Pauses in breathing noticed by a bed partner", "Waking up gasping or choking", "Morning headaches", "Daytime sleepiness even after a full night", "Trouble focusing or irritability"],
+    "drugs": [
+      { "name": "CPAP machine", "class": "Device", "note": "The first-choice treatment — gentle air pressure keeps the airway open all night." },
+      { "name": "Oral appliance", "class": "Device", "note": "A dentist-made mouthpiece that holds the jaw forward; an option for milder cases." },
+      { "name": "Weight loss & side-sleeping", "class": "Lifestyle", "note": "Even modest weight loss can noticeably reduce apnea episodes." },
+      { "name": "Tirzepatide (Zepbound)", "class": "GLP-1 medicine", "note": "A weight-loss medicine approved in 2024 for sleep apnea in adults with obesity." }
+    ],
+    "redFlags": "If you wake gasping with chest pain, or sleepiness is making you nod off behind the wheel, seek same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Sleep Apnea", "url": "https://medlineplus.gov/search/?query=sleep%20apnea" },
+      { "label": "American Lung Association", "url": "https://www.lung.org/" }
+    ]
+  },
+  {
+    "id": "pulmonary-embolism",
+    "name": "Pulmonary Embolism",
+    "aka": "PE, lung blood clot",
+    "specialtyId": "pulmonology",
+    "category": "Lungs & Breathing",
+    "prevalence": "Up to ~900,000 U.S. blood-clot events (DVT/PE) each year",
+    "overview": "A pulmonary embolism (PE) is a blood clot that blocks blood flow in the lungs, usually after forming in a leg vein and traveling upward. It can cause sudden shortness of breath and chest pain, and it is always a medical emergency. The encouraging news: with quick treatment, most people recover fully. Blood thinners stop the clot from growing while your body slowly dissolves it, and ongoing treatment helps prevent new clots from forming.",
+    "symptoms": ["Sudden shortness of breath", "Sharp chest pain that worsens with deep breaths", "Rapid heartbeat", "Coughing, sometimes with blood", "Feeling lightheaded or faint", "Swelling or pain in one leg (from the original clot)"],
+    "drugs": [
+      { "name": "Apixaban (Eliquis)", "class": "Blood thinner", "note": "A common first-choice pill that stops the clot from growing." },
+      { "name": "Rivaroxaban (Xarelto)", "class": "Blood thinner", "note": "Another widely used pill that works the same way." },
+      { "name": "Heparin / Enoxaparin (Lovenox)", "class": "Injectable blood thinner", "note": "Fast-acting; often started in the hospital." },
+      { "name": "Warfarin (Coumadin)", "class": "Blood thinner", "note": "An older option that requires regular blood tests." },
+      { "name": "Clot-busting drugs (tPA)", "class": "Thrombolytic", "note": "Reserved for severe, life-threatening clots." }
+    ],
+    "redFlags": "Sudden shortness of breath, chest pain, or coughing up blood can signal a pulmonary embolism — call 911 right away.",
+    "resources": [
+      { "label": "MedlinePlus — Pulmonary Embolism", "url": "https://medlineplus.gov/search/?query=pulmonary%20embolism" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  },
+  {
+    "id": "rsv",
+    "name": "RSV",
+    "aka": "Respiratory syncytial virus",
+    "specialtyId": "pulmonology",
+    "category": "Infections",
+    "prevalence": "Nearly all U.S. kids catch it by age 2; tens of thousands hospitalized yearly",
+    "overview": "RSV (respiratory syncytial virus) is a very common virus that infects the nose, throat, and lungs. For most people it feels like an ordinary cold, but it can be serious for babies, older adults, and people with weakened immune systems — sometimes causing breathing trouble that needs hospital care. There is no cure-all medicine; treatment is mostly rest, fluids, and fever relief. Newer vaccines and an antibody shot for infants now offer real protection.",
+    "symptoms": ["Runny nose and congestion", "Cough and sneezing", "Fever", "Wheezing", "In babies: fussiness, poor feeding, or pauses in breathing"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Fever reducer", "note": "Eases fever and aches while the virus runs its course." },
+      { "name": "Fluids & rest", "class": "Home care", "note": "The core of treatment — most cases clear up in a week or two." },
+      { "name": "Nirsevimab (Beyfortus)", "class": "Preventive antibody", "note": "A shot that protects babies during their first RSV season." },
+      { "name": "RSV vaccine (Arexvy, Abrysvo)", "class": "Vaccine", "note": "Recommended for older adults and during pregnancy to protect newborns." }
+    ],
+    "redFlags": "Call 911 or go to the ER if a child or adult is struggling to breathe, breathing very fast, has bluish lips, or a baby has long pauses in breathing.",
+    "resources": [
+      { "label": "MedlinePlus — RSV", "url": "https://medlineplus.gov/search/?query=rsv" },
+      { "label": "CDC — RSV", "url": "https://www.cdc.gov/rsv/" }
+    ]
+  },
+  {
+    "id": "chronic-cough",
+    "name": "Chronic Cough",
+    "aka": "Persistent cough",
+    "specialtyId": "pulmonology",
+    "category": "Lungs & Breathing",
+    "prevalence": "About 1 in 10 U.S. adults",
+    "overview": "A chronic cough is one that lasts eight weeks or longer in adults. It is rarely a sign of something dangerous — the usual culprits are postnasal drip, asthma, acid reflux, or a common type of blood-pressure medicine (ACE inhibitors). Still, a lingering cough can disrupt sleep, work, and daily life. The key to fixing it is finding the cause; once that is treated, the vast majority of chronic coughs improve or disappear.",
+    "symptoms": ["A cough lasting 8 weeks or more", "Frequent throat clearing or postnasal drip", "Hoarseness", "Heartburn or a sour taste", "Wheezing or shortness of breath", "Sleep disrupted by coughing"],
+    "drugs": [
+      { "name": "Fluticasone (Flonase) nasal spray", "class": "Nasal steroid", "note": "Treats postnasal drip, the most common cause." },
+      { "name": "Omeprazole (Prilosec)", "class": "Acid reducer", "note": "Helps when silent acid reflux is driving the cough." },
+      { "name": "Albuterol or inhaled steroid", "class": "Inhaler", "note": "Used when cough-variant asthma is to blame." },
+      { "name": "Dextromethorphan (Delsym)", "class": "Cough suppressant", "note": "Short-term relief while the underlying cause gets treated." }
+    ],
+    "redFlags": "Coughing up blood, chest pain, or worsening shortness of breath alongside a cough needs urgent care — go to the ER or seek same-day evaluation.",
+    "resources": [
+      { "label": "MedlinePlus — Chronic Cough", "url": "https://medlineplus.gov/search/?query=chronic%20cough" },
+      { "label": "American Lung Association", "url": "https://www.lung.org/" }
+    ]
+  }
+]

@@ -7,6 +7,10 @@
  * for ranking/scale, not precision. NOT medical advice.
  * ------------------------------------------------------------------ */
 
+// Generated condition guides (authored + verified in bulk, merged by
+// scripts/merge-conditions.mjs). Combined with the hand-curated set below.
+import GENERATED_CONDITIONS from './data/conditions.generated.json';
+
 /* ---------------- specialties ---------------- */
 // `treats` is a short plain-English list. `find` is the phrase used when
 // the user clicks "Find a provider" (fed into a maps search).
@@ -74,7 +78,7 @@ export const SPECIALTIES = [
  *    each {name, class, note}), redFlags (when to seek urgent care),
  *  resources[] {label, url}
  */
-export const CONDITIONS = [
+const CURATED_CONDITIONS = [
   {
     id: 'hypertension',
     name: 'High Blood Pressure',
@@ -972,6 +976,9 @@ export const CONDITIONS = [
   },
 ];
 
+// Full condition list: curated guides first, then the generated library.
+export const CONDITIONS = [...CURATED_CONDITIONS, ...GENERATED_CONDITIONS];
+
 /* ---------------- top prescribed drugs (U.S., ranked) ---------------- *
  * Approximate annual U.S. prescriptions, used for ranking/scale only.
  * Source basis: ClinCalc DrugStats / public prescription data.
@@ -1117,7 +1124,7 @@ export const SPECIALTY_COUNT = SPECIALTIES.length;
 const SPECIALTY_KEYWORDS = [
   ['oncology', /cancer|carcinoma|tumor|tumour|neoplasm|lymphoma|leukemia|melanoma|sarcoma/],
   ['cardiology', /heart|cardiac|coronary|arrhythmi|hypertension|blood pressure|cholesterol|aort|valve|angina/],
-  ['neurology', /brain|seizure|epилеp|epilep|migraine|headache|stroke|parkinson|alzheimer|dementia|multiple sclerosis|neuropath|nerve/],
+  ['neurology', /brain|seizure|epilep|migraine|headache|stroke|parkinson|alzheimer|dementia|multiple sclerosis|neuropath|nerve/],
   ['psychiatry', /depress|anxiety|bipolar|schizophren|adhd|ptsd|insomnia|panic|ocd|mental/],
   ['endocrinology', /diabet|thyroid|hormone|adrenal|pituitary|osteoporos|metaboli/],
   ['pulmonology', /asthma|copd|lung|pulmonary|bronch|respiratory|pneumonia|sleep apnea/],

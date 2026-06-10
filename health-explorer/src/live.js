@@ -117,7 +117,7 @@ export async function fetchPubMed(term, { retmax = 20, recentDays = 1825 } = {})
     // Search, newest first; restrict to recent entries via PubMed's reldate
     // param (number of days back) so the feed feels current.
     const base = `${EUTILS}/esearch.fcgi?db=pubmed&retmode=json&sort=date&retmax=${retmax}&term=${enc(q)}`;
-    let ids = [];
+    let ids;
     try {
       const s = await pmGetJSON(`${base}&datetype=pdat&reldate=${recentDays}`);
       ids = s?.esearchresult?.idlist || [];

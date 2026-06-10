@@ -1,0 +1,214 @@
+[
+  {
+    "id": "common-cold",
+    "name": "Common Cold",
+    "aka": "Upper respiratory infection (URI)",
+    "specialtyId": "primary-care",
+    "category": "Infections",
+    "prevalence": "About 1 billion colds in the U.S. each year",
+    "overview": "The common cold is a mild viral infection of the nose and throat, most often caused by rhinoviruses. Adults catch two to three colds a year on average, and kids get even more. There's no cure — antibiotics don't work on viruses — but rest, fluids, and over-the-counter remedies ease symptoms while your body clears the infection, usually within 7 to 10 days.",
+    "symptoms": ["Runny or stuffy nose", "Sore or scratchy throat", "Sneezing and mild cough", "Mild headache or body aches", "Low-grade fever (more common in kids)"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases aches and lowers fever." },
+      { "name": "Ibuprofen (Advil, Motrin)", "class": "NSAID", "note": "Another option for aches and fever." },
+      { "name": "Pseudoephedrine (Sudafed)", "class": "Decongestant", "note": "Helps unblock a stuffy nose for short stretches." },
+      { "name": "Dextromethorphan (Delsym, Robitussin)", "class": "Cough suppressant", "note": "Quiets a dry, nagging cough." }
+    ],
+    "redFlags": "Trouble breathing, chest pain, or a fever that lasts more than a few days means it may be more than a cold — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Common Cold", "url": "https://medlineplus.gov/search/?query=common%20cold" },
+      { "label": "American Lung Association", "url": "https://www.lung.org/" }
+    ]
+  },
+  {
+    "id": "influenza",
+    "name": "Flu (Influenza)",
+    "aka": "Seasonal influenza",
+    "specialtyId": "primary-care",
+    "category": "Infections",
+    "prevalence": "Roughly 10–40 million U.S. illnesses each flu season",
+    "overview": "Influenza is a contagious respiratory virus that hits harder and faster than a cold — fever, body aches, and exhaustion often arrive within a day. Most healthy people recover in one to two weeks, but flu can be serious for older adults, young children, pregnant women, and people with chronic health conditions. A yearly flu shot is the best protection, and antiviral pills can shorten the illness if started early.",
+    "symptoms": ["Sudden fever and chills", "Body aches and headache", "Deep tiredness", "Dry cough and sore throat", "Stuffy or runny nose"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases fever and body aches." },
+      { "name": "Ibuprofen (Advil, Motrin)", "class": "NSAID", "note": "Another option for fever and aches." },
+      { "name": "Oseltamivir (Tamiflu)", "class": "Antiviral", "note": "Can shorten the flu if started within the first 48 hours." },
+      { "name": "Baloxavir (Xofluza)", "class": "Antiviral", "note": "Single-dose alternative for early treatment." },
+      { "name": "Annual flu vaccine", "class": "Vaccine", "note": "The best way to prevent flu in the first place." }
+    ],
+    "redFlags": "Trouble breathing, chest pain, confusion, bluish lips, or signs of serious dehydration mean go to the ER or call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Flu (Influenza)", "url": "https://medlineplus.gov/search/?query=influenza" },
+      { "label": "CDC — Flu", "url": "https://www.cdc.gov/flu/" }
+    ]
+  },
+  {
+    "id": "strep-throat",
+    "name": "Strep Throat",
+    "aka": "Group A strep throat",
+    "specialtyId": "primary-care",
+    "category": "Infections",
+    "prevalence": "Several million U.S. cases each year",
+    "overview": "Strep throat is a bacterial infection of the throat and tonsils caused by group A streptococcus. Unlike most sore throats, which are viral, strep needs antibiotics — both to speed recovery and to prevent rare complications like rheumatic fever. It spreads easily through coughs and sneezes, especially among school-age kids. A quick swab test at the doctor's office confirms it, and most people feel better within a day or two of starting treatment.",
+    "symptoms": ["Sore throat that comes on fast", "Pain when swallowing", "Fever", "Red, swollen tonsils, sometimes with white patches", "Swollen, tender glands in the neck", "Usually no cough"],
+    "drugs": [
+      { "name": "Amoxicillin", "class": "Antibiotic", "note": "A common first choice, especially for kids." },
+      { "name": "Penicillin", "class": "Antibiotic", "note": "The classic, reliable first-line treatment." },
+      { "name": "Cephalexin (Keflex)", "class": "Antibiotic", "note": "An option for some people with penicillin allergy." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases throat pain and fever while antibiotics work." }
+    ],
+    "redFlags": "Trouble breathing or swallowing, drooling, or severe neck swelling needs emergency care right away.",
+    "resources": [
+      { "label": "MedlinePlus — Strep Throat", "url": "https://medlineplus.gov/search/?query=strep%20throat" },
+      { "label": "Centers for Disease Control and Prevention", "url": "https://www.cdc.gov/" }
+    ]
+  },
+  {
+    "id": "acute-bronchitis",
+    "name": "Acute Bronchitis",
+    "aka": "Chest cold",
+    "specialtyId": "primary-care",
+    "category": "Lungs & Breathing",
+    "prevalence": "About 1 in 20 U.S. adults each year",
+    "overview": "Acute bronchitis — often called a chest cold — happens when the airways in your lungs get inflamed, usually after a viral infection like a cold or the flu. The main symptom is a nagging cough that can hang around for up to three weeks, sometimes with mucus. Because viruses cause most cases, antibiotics usually don't help. Rest, fluids, honey, and over-the-counter remedies are the mainstays while your airways heal on their own.",
+    "symptoms": ["Cough lasting up to three weeks", "Mucus that may be clear, yellow, or green", "Chest soreness from coughing", "Mild tiredness or headache", "Occasional wheezing"],
+    "drugs": [
+      { "name": "Dextromethorphan (Delsym, Robitussin)", "class": "Cough suppressant", "note": "Calms the cough so you can rest." },
+      { "name": "Guaifenesin (Mucinex)", "class": "Expectorant", "note": "Thins mucus so it's easier to cough up." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases chest soreness and any fever." },
+      { "name": "Albuterol (Ventolin)", "class": "Inhaler", "note": "Sometimes prescribed when there's wheezing." }
+    ],
+    "redFlags": "Coughing up blood, a high fever, or shortness of breath at rest are reasons to seek same-day care — and severe trouble breathing means call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Acute Bronchitis", "url": "https://medlineplus.gov/search/?query=acute%20bronchitis" },
+      { "label": "American Lung Association", "url": "https://www.lung.org/" }
+    ]
+  },
+  {
+    "id": "mononucleosis",
+    "name": "Mono (Mononucleosis)",
+    "aka": "Kissing disease, EBV infection",
+    "specialtyId": "primary-care",
+    "category": "Infections",
+    "prevalence": "About 1 in 4 U.S. teens and young adults who catch EBV develop mono",
+    "overview": "Mono is a viral illness, usually caused by the Epstein-Barr virus, that spreads through saliva — which earned it the nickname 'the kissing disease.' It's most common in teens and young adults, bringing weeks of deep fatigue, sore throat, and swollen glands. There's no specific cure; rest, fluids, and time are the main treatment. Most people recover fully, though the tiredness can linger for a month or more.",
+    "symptoms": ["Extreme fatigue", "Severe sore throat", "Fever", "Swollen glands in the neck and armpits", "Headache and body aches", "Swollen spleen in some cases"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases fever and sore throat." },
+      { "name": "Ibuprofen (Advil, Motrin)", "class": "NSAID", "note": "Another option for aches and swelling." },
+      { "name": "Rest and fluids", "class": "Self-care", "note": "The real treatment — mono simply takes time." },
+      { "name": "Prednisone", "class": "Steroid", "note": "Occasionally used if throat swelling makes breathing or swallowing hard." }
+    ],
+    "redFlags": "Sudden, sharp pain in the upper-left belly could mean a ruptured spleen — go to the ER immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Mono (Mononucleosis)", "url": "https://medlineplus.gov/search/?query=mononucleosis" },
+      { "label": "Centers for Disease Control and Prevention", "url": "https://www.cdc.gov/" }
+    ]
+  },
+  {
+    "id": "gastroenteritis",
+    "name": "Stomach Flu (Gastroenteritis)",
+    "aka": "Viral gastroenteritis, stomach bug",
+    "specialtyId": "primary-care",
+    "category": "Digestive Health",
+    "prevalence": "About 20 million U.S. norovirus illnesses alone each year",
+    "overview": "Stomach flu isn't actually the flu — it's an infection of the stomach and intestines, most often caused by viruses like norovirus. It brings sudden vomiting, diarrhea, and cramps that usually clear up on their own within one to three days. The biggest risk is dehydration, so sipping fluids is the most important treatment. It spreads very easily, so good handwashing protects the rest of the household.",
+    "symptoms": ["Watery diarrhea", "Nausea and vomiting", "Stomach cramps", "Low-grade fever", "Headache and body aches"],
+    "drugs": [
+      { "name": "Oral rehydration solution (Pedialyte)", "class": "Rehydration", "note": "Replaces the fluids and salts lost to vomiting and diarrhea." },
+      { "name": "Bismuth subsalicylate (Pepto-Bismol)", "class": "Stomach soother", "note": "Can ease nausea and diarrhea in adults." },
+      { "name": "Loperamide (Imodium)", "class": "Anti-diarrheal", "note": "Slows diarrhea — skip it if there's blood or a high fever." },
+      { "name": "Ondansetron (Zofran)", "class": "Anti-nausea", "note": "Prescription option when vomiting won't let up." }
+    ],
+    "redFlags": "Signs of serious dehydration — little or no urination, dizziness, confusion — or blood in vomit or stool mean go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Stomach Flu (Gastroenteritis)", "url": "https://medlineplus.gov/search/?query=gastroenteritis" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "constipation",
+    "name": "Constipation",
+    "aka": "",
+    "specialtyId": "primary-care",
+    "category": "Digestive Health",
+    "prevalence": "About 16 in 100 U.S. adults",
+    "overview": "Constipation means bowel movements that are infrequent, hard, or difficult to pass — and nearly everyone deals with it at some point. It's usually caused by too little fiber or fluid, inactivity, certain medicines, or simply ignoring the urge to go. It's rarely a sign of something serious, and most cases improve with more fiber, more water, regular movement, and gentle over-the-counter laxatives when needed.",
+    "symptoms": ["Fewer than three bowel movements a week", "Hard, dry, or lumpy stools", "Straining or pain when going", "Feeling like you can't fully empty", "Bloating or belly discomfort"],
+    "drugs": [
+      { "name": "Polyethylene glycol (MiraLAX)", "class": "Osmotic laxative", "note": "Gentle option that draws water into the stool." },
+      { "name": "Psyllium (Metamucil)", "class": "Fiber supplement", "note": "Bulk-forming fiber that keeps things moving." },
+      { "name": "Docusate (Colace)", "class": "Stool softener", "note": "Makes stool easier to pass." },
+      { "name": "Senna (Senokot)", "class": "Stimulant laxative", "note": "For short-term use when gentler options aren't enough." }
+    ],
+    "redFlags": "Severe belly pain, vomiting, a swollen abdomen, or being unable to pass gas or stool at all could signal a blockage — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Constipation", "url": "https://medlineplus.gov/search/?query=constipation" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "hemorrhoids",
+    "name": "Hemorrhoids",
+    "aka": "Piles",
+    "specialtyId": "primary-care",
+    "category": "Digestive Health",
+    "prevalence": "About 1 in 20 Americans, and about half of adults over 50",
+    "overview": "Hemorrhoids are swollen veins in or around the anus — a very common and very treatable problem. Straining during bowel movements, chronic constipation, pregnancy, and long stretches of sitting all raise the risk. They can itch, hurt, or bleed a little during bowel movements, which is alarming but rarely dangerous. Most improve with fiber, fluids, warm sitz baths, and over-the-counter creams, and stubborn ones can be handled with simple office procedures.",
+    "symptoms": ["Itching or irritation around the anus", "Pain or discomfort, especially when sitting", "Small amounts of bright red blood with bowel movements", "Swelling or a tender lump near the anus"],
+    "drugs": [
+      { "name": "Hydrocortisone cream (Anusol-HC)", "class": "Topical steroid", "note": "Calms itching and swelling for short-term use." },
+      { "name": "Phenylephrine ointment (Preparation H)", "class": "Topical treatment", "note": "Shrinks swollen tissue and eases discomfort." },
+      { "name": "Witch hazel pads (Tucks)", "class": "Soothing wipe", "note": "Cools and gently cleans the area." },
+      { "name": "Psyllium (Metamucil)", "class": "Fiber supplement", "note": "Softens stool so there's less straining." },
+      { "name": "Warm sitz baths", "class": "Self-care", "note": "Soaking eases pain and helps healing." }
+    ],
+    "redFlags": "Heavy rectal bleeding or bleeding with dizziness or lightheadedness needs emergency care, and any new rectal bleeding deserves a doctor's check to rule out other causes.",
+    "resources": [
+      { "label": "MedlinePlus — Hemorrhoids", "url": "https://medlineplus.gov/search/?query=hemorrhoids" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "vitamin-d-deficiency",
+    "name": "Vitamin D Deficiency",
+    "aka": "Low vitamin D",
+    "specialtyId": "primary-care",
+    "category": "Hormones & Metabolism",
+    "prevalence": "Roughly 1 in 4 Americans have low levels",
+    "overview": "Vitamin D helps your body absorb calcium and keep bones strong, and your skin makes it from sunlight. Many Americans run low — especially during winter, with darker skin tones, or with limited time outdoors. Mild deficiency usually causes no symptoms and shows up only on a blood test, but over time low vitamin D can weaken bones and muscles. The fix is usually straightforward: an inexpensive daily supplement brings most people back to normal.",
+    "symptoms": ["Often no symptoms at all", "Tiredness or low energy", "Bone or back aches", "Muscle weakness or cramps", "Mood changes in some people"],
+    "drugs": [
+      { "name": "Vitamin D3 (cholecalciferol)", "class": "Supplement", "note": "The standard over-the-counter daily supplement." },
+      { "name": "Vitamin D2 (ergocalciferol)", "class": "Prescription supplement", "note": "Higher-strength option doctors prescribe for bigger shortfalls." },
+      { "name": "Calcium with vitamin D", "class": "Combination supplement", "note": "Often paired together for bone health." },
+      { "name": "Sunlight and diet", "class": "Lifestyle", "note": "Short stretches of sun plus fatty fish and fortified foods help." }
+    ],
+    "redFlags": "Low vitamin D itself is rarely an emergency, but sudden severe bone pain or a suspected fracture needs same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Vitamin D Deficiency", "url": "https://medlineplus.gov/search/?query=vitamin%20d%20deficiency" },
+      { "label": "NIH Office of Dietary Supplements", "url": "https://ods.od.nih.gov/" }
+    ]
+  },
+  {
+    "id": "b12-deficiency",
+    "name": "Vitamin B12 Deficiency",
+    "aka": "Cobalamin deficiency",
+    "specialtyId": "primary-care",
+    "category": "Blood",
+    "prevalence": "About 6 in 100 U.S. adults under 60, more with age",
+    "overview": "Vitamin B12 keeps your nerves and blood cells healthy, and your body gets it from animal foods like meat, eggs, and dairy. Deficiency creeps up slowly — causing fatigue, numbness, and memory trouble — and is more common in older adults, vegans, and people taking certain stomach-acid or diabetes medicines. Caught early, it's very treatable with supplements or shots, but long-untreated deficiency can cause lasting nerve damage.",
+    "symptoms": ["Fatigue and weakness", "Numbness or tingling in hands and feet", "Pale or yellowish skin", "Trouble with balance or walking", "Memory problems or brain fog", "A sore, smooth tongue"],
+    "drugs": [
+      { "name": "Cyanocobalamin tablets", "class": "B12 supplement", "note": "Daily over-the-counter pills work for most people." },
+      { "name": "Cyanocobalamin injections", "class": "B12 shot", "note": "Used when the body can't absorb B12 from food." },
+      { "name": "Cyanocobalamin nasal spray (Nascobal)", "class": "Nasal spray", "note": "A needle-free option once levels are stable." },
+      { "name": "B12-rich foods", "class": "Lifestyle", "note": "More meat, fish, eggs, dairy, or fortified foods." }
+    ],
+    "redFlags": "New numbness, trouble walking, or confusion needs same-day evaluation — untreated B12 deficiency can cause permanent nerve damage.",
+    "resources": [
+      { "label": "MedlinePlus — Vitamin B12 Deficiency", "url": "https://medlineplus.gov/search/?query=vitamin%20b12%20deficiency" },
+      { "label": "NIH Office of Dietary Supplements", "url": "https://ods.od.nih.gov/" }
+    ]
+  }
+]

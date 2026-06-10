@@ -1,0 +1,116 @@
+[
+  {
+    "id": "lupus",
+    "name": "Lupus",
+    "aka": "Systemic lupus erythematosus (SLE)",
+    "specialtyId": "rheumatology",
+    "category": "Bones & Joints",
+    "prevalence": "about 1.5 million Americans",
+    "overview": "Lupus is an autoimmune disease, which means the body's defense system mistakenly attacks its own healthy tissue. It can affect the skin, joints, kidneys, heart, and more, and it tends to flare up and then quiet down. Most people with lupus are women, and it often starts between ages 15 and 44. There's no cure yet, but modern medicines control the disease so well that most people with lupus live full, active lives.",
+    "symptoms": [
+      "Extreme tiredness that rest doesn't fix",
+      "Joint pain and swelling",
+      "A butterfly-shaped rash across the cheeks and nose",
+      "Fevers without an infection",
+      "Sensitivity to sunlight",
+      "Hair thinning or loss"
+    ],
+    "drugs": [
+      { "name": "Hydroxychloroquine (Plaquenil)", "class": "Antimalarial", "note": "The backbone of lupus care; gently calms the immune system." },
+      { "name": "Prednisone", "class": "Steroid", "note": "Quickly settles flares while other medicines take effect." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases joint pain and swelling." },
+      { "name": "Mycophenolate (CellCept)", "class": "Immunosuppressant", "note": "Protects organs like the kidneys in more serious lupus." },
+      { "name": "Belimumab (Benlysta)", "class": "Biologic", "note": "Targets the immune cells that drive lupus when standard treatment isn't enough." }
+    ],
+    "redFlags": "Chest pain, trouble breathing, new confusion, or a seizure during a lupus flare is an emergency — call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Lupus", "url": "https://medlineplus.gov/search/?query=lupus" },
+      { "label": "Lupus Foundation of America", "url": "https://www.lupus.org/" }
+    ]
+  },
+  {
+    "id": "fibromyalgia",
+    "name": "Fibromyalgia",
+    "aka": "Fibro",
+    "specialtyId": "rheumatology",
+    "category": "Bones & Joints",
+    "prevalence": "~4 million U.S. adults",
+    "overview": "Fibromyalgia causes widespread pain, deep fatigue, and trouble sleeping or concentrating (often called \"fibro fog\"). It isn't caused by joint damage — instead, the nervous system seems to turn up the volume on pain signals. It's real, it's common, and it affects women more often than men. While there's no cure, a mix of regular gentle exercise, good sleep habits, stress management, and certain medicines helps most people feel meaningfully better.",
+    "symptoms": [
+      "Widespread aching or burning pain",
+      "Deep fatigue, even after a full night's sleep",
+      "Trouble thinking clearly (\"fibro fog\")",
+      "Poor, unrefreshing sleep",
+      "Headaches",
+      "Heightened sensitivity to touch, noise, or light"
+    ],
+    "drugs": [
+      { "name": "Regular low-impact exercise", "class": "Lifestyle", "note": "Walking, swimming, or yoga is one of the most proven treatments." },
+      { "name": "Duloxetine (Cymbalta)", "class": "SNRI antidepressant", "note": "Eases pain while lifting mood and energy." },
+      { "name": "Pregabalin (Lyrica)", "class": "Nerve-pain medicine", "note": "Calms overactive pain signals." },
+      { "name": "Amitriptyline", "class": "Tricyclic antidepressant", "note": "An older, low-cost option that can improve sleep and pain." }
+    ],
+    "redFlags": "Fibromyalgia doesn't cause hot swollen joints, high fever, or sudden weakness — those signs point to something else, so seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Fibromyalgia", "url": "https://medlineplus.gov/search/?query=fibromyalgia" },
+      { "label": "Arthritis Foundation", "url": "https://www.arthritis.org/" }
+    ]
+  },
+  {
+    "id": "psoriatic-arthritis",
+    "name": "Psoriatic Arthritis",
+    "aka": "PsA",
+    "specialtyId": "rheumatology",
+    "category": "Bones & Joints",
+    "prevalence": "~1 million U.S. adults",
+    "overview": "Psoriatic arthritis is a form of arthritis that affects some people who have psoriasis, the skin condition that causes scaly, itchy patches. It can make joints stiff, swollen, and painful, and may cause sausage-like swelling of a finger or toe. Catching it early matters, because untreated inflammation can damage joints over time. The good news: today's medicines can calm the inflammation, protect the joints, and often clear the skin too.",
+    "symptoms": [
+      "Stiff, swollen, painful joints",
+      "Sausage-like swelling of a finger or toe",
+      "Scaly skin patches (psoriasis)",
+      "Pitted or crumbling fingernails",
+      "Morning stiffness that lasts a while",
+      "Heel or foot pain"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases mild joint pain and stiffness." },
+      { "name": "Methotrexate", "class": "DMARD", "note": "A weekly medicine that slows joint inflammation." },
+      { "name": "Adalimumab (Humira)", "class": "TNF-blocker biologic", "note": "Calms inflammation in both the joints and the skin." },
+      { "name": "Apremilast (Otezla)", "class": "PDE4 inhibitor", "note": "A pill option often used for milder disease." },
+      { "name": "Secukinumab (Cosentyx)", "class": "IL-17 biologic", "note": "Another biologic that treats joints and skin together." }
+    ],
+    "redFlags": "A single joint that is suddenly hot, very swollen, and paired with fever could be infected — seek same-day or emergency care.",
+    "resources": [
+      { "label": "MedlinePlus — Psoriatic Arthritis", "url": "https://medlineplus.gov/search/?query=psoriatic%20arthritis" },
+      { "label": "National Psoriasis Foundation", "url": "https://www.psoriasis.org/" }
+    ]
+  },
+  {
+    "id": "ankylosing-spondylitis",
+    "name": "Ankylosing Spondylitis",
+    "aka": "AS, axial spondyloarthritis",
+    "specialtyId": "rheumatology",
+    "category": "Bones & Joints",
+    "prevalence": "~500,000 U.S. adults",
+    "overview": "Ankylosing spondylitis is a type of arthritis that mainly affects the spine, causing long-term inflammation in the back and hips. It usually starts in early adulthood with back pain and stiffness that's worse in the morning and better with movement — the opposite of a typical strained back. Over time it can cause bones in the spine to fuse, so early treatment and regular exercise matter. Today's medicines can ease pain and slow the disease itself.",
+    "symptoms": [
+      "Low-back pain and stiffness, worst in the morning",
+      "Pain that improves with movement, not rest",
+      "Stiffness that wakes you late in the night",
+      "Hip or buttock pain",
+      "Fatigue",
+      "A gradually stooped posture over time"
+    ],
+    "drugs": [
+      { "name": "Naproxen / Ibuprofen", "class": "NSAID", "note": "The first choice for easing pain and stiffness." },
+      { "name": "Physical therapy & daily stretching", "class": "Lifestyle", "note": "Keeps the spine flexible and posture strong." },
+      { "name": "Adalimumab (Humira)", "class": "TNF-blocker biologic", "note": "Used when NSAIDs aren't enough; slows the disease itself." },
+      { "name": "Secukinumab (Cosentyx)", "class": "IL-17 biologic", "note": "An alternative biologic when TNF blockers aren't a fit." }
+    ],
+    "redFlags": "Severe back pain after even a minor fall, or new numbness with loss of bladder or bowel control, needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Ankylosing Spondylitis", "url": "https://medlineplus.gov/search/?query=ankylosing%20spondylitis" },
+      { "label": "Spondylitis Association of America", "url": "https://www.spondylitis.org/" }
+    ]
+  }
+]

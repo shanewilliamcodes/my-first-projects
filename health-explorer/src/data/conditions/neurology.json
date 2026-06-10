@@ -1,0 +1,166 @@
+[
+  {
+    "id": "peripheral-neuropathy",
+    "name": "Peripheral Neuropathy",
+    "aka": "Nerve damage, polyneuropathy",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "~20 million Americans",
+    "overview": "Peripheral neuropathy means the nerves that carry signals between your brain, spinal cord, and the rest of your body are damaged. It often starts as numbness, tingling, or burning in the feet or hands. Diabetes is the most common cause in the U.S., but vitamin shortages, certain medicines, and alcohol can also play a role. Treating the underlying cause can slow or stop the damage, and several medicines help calm nerve pain.",
+    "symptoms": [
+      "Numbness or tingling in the feet or hands",
+      "Burning or sharp, jabbing pain",
+      "Feeling like you're wearing invisible socks or gloves",
+      "Trouble with balance or walking",
+      "Extra sensitivity to touch"
+    ],
+    "drugs": [
+      { "name": "Gabapentin (Neurontin)", "class": "Anticonvulsant", "note": "Calms overactive nerve-pain signals." },
+      { "name": "Pregabalin (Lyrica)", "class": "Anticonvulsant", "note": "A similar nerve-pain medicine, often used for diabetic neuropathy." },
+      { "name": "Duloxetine (Cymbalta)", "class": "SNRI antidepressant", "note": "Treats nerve pain even when mood is fine." },
+      { "name": "Amitriptyline", "class": "Tricyclic antidepressant", "note": "An older option often taken at bedtime." },
+      { "name": "Lidocaine or capsaicin patches", "class": "Topical", "note": "Applied to the skin over painful areas." }
+    ],
+    "redFlags": "Sudden weakness, numbness that spreads quickly up the body, or loss of bladder or bowel control needs emergency care — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Peripheral Neuropathy", "url": "https://medlineplus.gov/search/?query=peripheral%20neuropathy" },
+      { "label": "National Institute of Neurological Disorders and Stroke", "url": "https://www.ninds.nih.gov/" }
+    ]
+  },
+  {
+    "id": "multiple-sclerosis",
+    "name": "Multiple Sclerosis",
+    "aka": "MS",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "~1 million U.S. adults",
+    "overview": "Multiple sclerosis (MS) is a condition where the immune system mistakenly attacks the protective coating around nerves in the brain and spinal cord. That can cause vision problems, numbness, fatigue, and trouble with balance, often in episodes called relapses. MS usually appears between ages 20 and 40 and affects women more often. There's no cure yet, but today's medicines can greatly slow the disease, and many people with MS live full, active lives.",
+    "symptoms": [
+      "Numbness or weakness, often on one side of the body",
+      "Blurred or double vision, or pain with eye movement",
+      "Deep, persistent fatigue",
+      "Tingling or electric-shock sensations",
+      "Trouble with balance or coordination"
+    ],
+    "drugs": [
+      { "name": "Ocrelizumab (Ocrevus)", "class": "Disease-modifying infusion", "note": "A twice-yearly infusion that slows MS activity." },
+      { "name": "Glatiramer acetate (Copaxone)", "class": "Disease-modifying injection", "note": "A long-trusted shot that reduces relapses." },
+      { "name": "Dimethyl fumarate (Tecfidera)", "class": "Disease-modifying pill", "note": "A convenient oral option that lowers relapse risk." },
+      { "name": "Methylprednisolone", "class": "Steroid", "note": "Short courses help calm a relapse." }
+    ],
+    "redFlags": "Sudden vision loss, severe weakness, or trouble speaking should be treated as an emergency — call 911, since a stroke and a severe relapse can look alike.",
+    "resources": [
+      { "label": "MedlinePlus — Multiple Sclerosis", "url": "https://medlineplus.gov/search/?query=multiple%20sclerosis" },
+      { "label": "National MS Society", "url": "https://www.nationalmssociety.org/" }
+    ]
+  },
+  {
+    "id": "sciatica",
+    "name": "Sciatica",
+    "aka": "Lumbar radiculopathy",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "about 40% of people at some point in life",
+    "overview": "Sciatica is pain that travels along the sciatic nerve — from the lower back down through the hip and leg, usually on one side. It most often happens when a slipped (herniated) disk or a bone spur presses on the nerve. The pain can feel sharp, burning, or electric. The good news: most cases get better on their own within weeks with gentle activity, stretching, and over-the-counter pain relievers.",
+    "symptoms": [
+      "Pain radiating from the lower back down one leg",
+      "Burning, sharp, or electric-shock pain",
+      "Numbness or tingling in the leg or foot",
+      "Pain that worsens with sitting, coughing, or sneezing",
+      "Leg weakness in some cases"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen (Advil) / Naproxen (Aleve)", "class": "NSAID", "note": "First choice for easing pain and inflammation." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "An option when NSAIDs aren't a good fit." },
+      { "name": "Physical therapy", "class": "Exercise therapy", "note": "Targeted stretches and strengthening speed recovery." },
+      { "name": "Cyclobenzaprine", "class": "Muscle relaxant", "note": "Short-term help when back muscles spasm." },
+      { "name": "Steroid injection", "class": "Procedure", "note": "Considered for stubborn pain that won't settle." }
+    ],
+    "redFlags": "Loss of bladder or bowel control, or numbness in the groin or inner thighs, can signal serious nerve compression — go to the ER right away.",
+    "resources": [
+      { "label": "MedlinePlus — Sciatica", "url": "https://medlineplus.gov/search/?query=sciatica" },
+      { "label": "National Institute of Neurological Disorders and Stroke", "url": "https://www.ninds.nih.gov/" }
+    ]
+  },
+  {
+    "id": "essential-tremor",
+    "name": "Essential Tremor",
+    "aka": "Benign essential tremor, familial tremor",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "~7 million Americans",
+    "overview": "Essential tremor is a nervous-system condition that causes rhythmic shaking, most often in the hands — you may notice it when writing, drinking from a cup, or using utensils. It often runs in families and becomes more common with age. It is not Parkinson's disease, though the two are sometimes confused. The tremor isn't dangerous, but it can be frustrating, and medicines — or procedures in tougher cases — can steady things considerably.",
+    "symptoms": [
+      "Shaking of the hands, especially during tasks",
+      "Head nodding or shaking",
+      "A shaky or quivering voice",
+      "Tremor that worsens with stress, caffeine, or tiredness",
+      "Shaking that eases when the hands are at rest"
+    ],
+    "drugs": [
+      { "name": "Propranolol (Inderal)", "class": "Beta-blocker", "note": "The most common first choice for steadying tremor." },
+      { "name": "Primidone (Mysoline)", "class": "Anticonvulsant", "note": "Works about as well as propranolol for many people." },
+      { "name": "Topiramate (Topamax)", "class": "Anticonvulsant", "note": "A backup when first-line medicines fall short." },
+      { "name": "Gabapentin (Neurontin)", "class": "Anticonvulsant", "note": "Sometimes used when other options aren't tolerated." }
+    ],
+    "redFlags": "A tremor that starts suddenly, happens at rest, or comes with weakness or slurred speech needs urgent evaluation — call 911 if a stroke is suspected.",
+    "resources": [
+      { "label": "MedlinePlus — Essential Tremor", "url": "https://medlineplus.gov/search/?query=essential%20tremor" },
+      { "label": "International Essential Tremor Foundation", "url": "https://www.essentialtremor.org/" }
+    ]
+  },
+  {
+    "id": "concussion",
+    "name": "Concussion",
+    "aka": "Mild traumatic brain injury (mTBI)",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "~3 million U.S. cases each year",
+    "overview": "A concussion is a mild traumatic brain injury caused by a bump, blow, or jolt to the head — or a hit to the body that shakes the brain. It can cause headache, confusion, dizziness, and memory trouble, even without a loss of consciousness. Most people recover fully within days to weeks with rest and a gradual return to normal activities. Protecting the brain from another hit while it heals is the most important step.",
+    "symptoms": [
+      "Headache or a feeling of pressure in the head",
+      "Dizziness or balance problems",
+      "Confusion or feeling foggy",
+      "Nausea or vomiting",
+      "Sensitivity to light or noise",
+      "Memory trouble around the time of the injury"
+    ],
+    "drugs": [
+      { "name": "Rest and gradual return to activity", "class": "Lifestyle", "note": "The cornerstone of concussion recovery." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Usually preferred for headache in the first days." },
+      { "name": "Ibuprofen (Advil)", "class": "NSAID", "note": "Often fine later in recovery — check with your clinician first." }
+    ],
+    "redFlags": "A worsening headache, repeated vomiting, one pupil larger than the other, seizures, or trouble waking up means call 911 or go to the ER immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Concussion", "url": "https://medlineplus.gov/search/?query=concussion" },
+      { "label": "Brain Injury Association of America", "url": "https://www.biausa.org/" }
+    ]
+  },
+  {
+    "id": "restless-legs",
+    "name": "Restless Legs Syndrome",
+    "aka": "Willis-Ekbom disease, RLS",
+    "specialtyId": "neurology",
+    "category": "Brain & Nerves",
+    "prevalence": "about 1 in 10 U.S. adults",
+    "overview": "Restless legs syndrome causes an uncomfortable urge to move your legs, especially in the evening or when lying down — often described as crawling, tugging, or itching deep inside the legs. Moving brings relief, but the feeling returns when you rest, which can make sleep difficult. Low iron, pregnancy, and certain medicines can trigger or worsen it. Lifestyle changes and several medicines work well for most people, so better nights are very possible.",
+    "symptoms": [
+      "A strong urge to move the legs, especially at rest",
+      "Crawling, tugging, or itching feelings deep in the legs",
+      "Symptoms that get worse in the evening and at night",
+      "Temporary relief with movement",
+      "Trouble falling or staying asleep"
+    ],
+    "drugs": [
+      { "name": "Gabapentin enacarbil (Horizant)", "class": "Anticonvulsant", "note": "An FDA-approved first-line option for nightly symptoms." },
+      { "name": "Pramipexole (Mirapex)", "class": "Dopamine agonist", "note": "Eases the urge to move the legs." },
+      { "name": "Ropinirole (Requip)", "class": "Dopamine agonist", "note": "A similar option taken in the evening." },
+      { "name": "Iron supplements", "class": "Mineral", "note": "Help when blood tests show low iron stores." }
+    ],
+    "redFlags": "RLS itself isn't an emergency, but new leg pain with swelling, warmth, or redness could be a blood clot — seek same-day or emergency care.",
+    "resources": [
+      { "label": "MedlinePlus — Restless Legs Syndrome", "url": "https://medlineplus.gov/search/?query=restless%20legs%20syndrome" },
+      { "label": "Restless Legs Syndrome Foundation", "url": "https://www.rls.org/" }
+    ]
+  }
+]

@@ -1,0 +1,109 @@
+[
+  {
+    "id": "pad",
+    "name": "Peripheral Artery Disease",
+    "aka": "PAD, poor circulation in the legs",
+    "specialtyId": "cardiology",
+    "category": "Heart & Circulation",
+    "prevalence": "~6.5 million U.S. adults age 40 and older",
+    "overview": "Peripheral artery disease happens when fatty plaque narrows the arteries that carry blood to your legs. The classic sign is cramping or aching in the calves when you walk that eases with rest. It matters because the same plaque buildup often affects the heart and brain, raising the risk of heart attack and stroke. The encouraging news: walking programs, quitting smoking, and common medicines can ease symptoms and protect your arteries.",
+    "symptoms": ["Leg cramping or aching when walking that eases with rest", "Numbness or weakness in the leg", "A foot or lower leg that feels cold", "Sores on the toes or feet that heal slowly", "Shiny skin or hair loss on the lower legs"],
+    "drugs": [
+      { "name": "Atorvastatin (Lipitor)", "class": "Statin", "note": "Lowers cholesterol and slows plaque buildup." },
+      { "name": "Aspirin (low-dose)", "class": "Antiplatelet", "note": "Helps keep clots from forming in narrowed arteries." },
+      { "name": "Clopidogrel (Plavix)", "class": "Antiplatelet", "note": "An alternative or addition to aspirin." },
+      { "name": "Cilostazol", "class": "Vasodilator", "note": "Can help you walk farther without pain." },
+      { "name": "Supervised walking program", "class": "Exercise therapy", "note": "A proven first-line treatment that builds pain-free walking distance." }
+    ],
+    "redFlags": "A leg or foot that suddenly turns cold, pale, numb, or intensely painful may mean an artery is completely blocked — call 911 or get to the ER right away.",
+    "resources": [
+      { "label": "MedlinePlus — Peripheral Artery Disease", "url": "https://medlineplus.gov/search/?query=peripheral%20artery%20disease" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  },
+  {
+    "id": "dvt",
+    "name": "Deep Vein Thrombosis (DVT)",
+    "aka": "Blood clot in a deep vein",
+    "specialtyId": "cardiology",
+    "category": "Heart & Circulation",
+    "prevalence": "Up to ~900,000 Americans affected each year (DVT and pulmonary embolism combined)",
+    "overview": "Deep vein thrombosis is a blood clot that forms in a deep vein, usually in the leg, causing swelling and pain. It matters because a piece of the clot can break loose and travel to the lungs — a pulmonary embolism, which can be life-threatening. Surgery, long trips, pregnancy, and long stretches of sitting raise the risk. Blood thinners treat most clots, and most people recover fully.",
+    "symptoms": ["Swelling in one leg (rarely both)", "Leg pain or cramping, often starting in the calf", "Skin that feels warm over the sore area", "Red or discolored skin on the leg", "A vein that feels hard or tender to the touch"],
+    "drugs": [
+      { "name": "Apixaban (Eliquis)", "class": "Anticoagulant", "note": "A common blood-thinning pill for treating clots." },
+      { "name": "Rivaroxaban (Xarelto)", "class": "Anticoagulant", "note": "Another widely used pill-based blood thinner." },
+      { "name": "Warfarin (Coumadin)", "class": "Anticoagulant", "note": "An older blood thinner that needs regular blood tests." },
+      { "name": "Enoxaparin (Lovenox)", "class": "Anticoagulant (injection)", "note": "An injectable thinner often used when treatment starts." },
+      { "name": "Compression stockings", "class": "Supportive care", "note": "Can ease leg swelling while you recover." }
+    ],
+    "redFlags": "Sudden shortness of breath, chest pain, or coughing up blood can mean the clot has traveled to the lungs — call 911 immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Deep Vein Thrombosis", "url": "https://medlineplus.gov/search/?query=deep%20vein%20thrombosis" },
+      { "label": "National Blood Clot Alliance", "url": "https://www.stoptheclot.org/" }
+    ]
+  },
+  {
+    "id": "heart-palpitations",
+    "name": "Heart Palpitations & Arrhythmias",
+    "aka": "Irregular heartbeat, skipped beats",
+    "specialtyId": "cardiology",
+    "category": "Heart & Circulation",
+    "prevalence": "About 1 in 20 U.S. adults has some type of arrhythmia",
+    "overview": "Heart palpitations are the feeling that your heart is racing, fluttering, or skipping beats. Most of the time they're harmless and triggered by stress, caffeine, or lack of sleep. Sometimes, though, they signal an arrhythmia — a glitch in the heart's electrical rhythm — that deserves a checkup. Doctors can usually pinpoint the cause with a simple heart-rhythm recording, and most rhythm problems today are very treatable.",
+    "symptoms": ["A fluttering, pounding, or racing feeling in the chest", "Skipped or extra heartbeats", "A flip-flop sensation in the chest or neck", "Lightheadedness or dizziness during episodes", "Episodes triggered by stress, caffeine, or poor sleep"],
+    "drugs": [
+      { "name": "Metoprolol (Lopressor)", "class": "Beta-blocker", "note": "Slows the heart and calms racing rhythms." },
+      { "name": "Diltiazem (Cardizem)", "class": "Calcium-channel blocker", "note": "Another common option to control heart rate." },
+      { "name": "Flecainide", "class": "Antiarrhythmic", "note": "Helps keep certain abnormal rhythms in check." },
+      { "name": "Catheter ablation", "class": "Procedure", "note": "A procedure that can correct many arrhythmias at their source, often permanently." }
+    ],
+    "redFlags": "Palpitations that come with chest pain, fainting, or severe shortness of breath need emergency care — call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Heart Palpitations", "url": "https://medlineplus.gov/search/?query=heart%20palpitations" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  },
+  {
+    "id": "heart-valve-disease",
+    "name": "Heart Valve Disease",
+    "aka": "Valvular heart disease",
+    "specialtyId": "cardiology",
+    "category": "Heart & Circulation",
+    "prevalence": "~2.5% of Americans — roughly 8 million people",
+    "overview": "Your heart has four valves that keep blood flowing in the right direction. Heart valve disease means one of them has become stiff (stenosis) or leaky (regurgitation), forcing the heart to work harder. It often develops slowly with age, so many people don't notice it at first — a doctor may hear a murmur before any symptoms appear. Mild cases just need monitoring, and advanced ones can be fixed with valve repair or replacement.",
+    "symptoms": ["Shortness of breath with activity or when lying down", "Feeling tired or worn out more easily", "Swollen ankles or feet", "A heart murmur heard by a doctor", "Chest pressure, fluttering, or dizziness"],
+    "drugs": [
+      { "name": "Furosemide (Lasix)", "class": "Diuretic", "note": "Eases fluid buildup and shortness of breath." },
+      { "name": "Metoprolol (Lopressor)", "class": "Beta-blocker", "note": "Lightens the heart's workload." },
+      { "name": "Warfarin (Coumadin)", "class": "Anticoagulant", "note": "Prevents clots, especially with mechanical valves." },
+      { "name": "Valve repair or replacement", "class": "Procedure", "note": "The definitive fix for advanced valve disease, often done through a small catheter." }
+    ],
+    "redFlags": "Sudden severe shortness of breath, chest pain, or fainting needs emergency care — call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Heart Valve Disease", "url": "https://medlineplus.gov/search/?query=heart%20valve%20disease" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  },
+  {
+    "id": "aortic-aneurysm",
+    "name": "Aortic Aneurysm",
+    "aka": "AAA (abdominal), thoracic aortic aneurysm",
+    "specialtyId": "cardiology",
+    "category": "Heart & Circulation",
+    "prevalence": "About 200,000 new U.S. diagnoses each year",
+    "overview": "An aortic aneurysm is a bulge in the wall of the aorta, the body's largest artery, which runs from the heart through the chest and belly. Most aneurysms grow slowly and cause no symptoms, so they're often found during scans done for other reasons. Small ones are simply watched with regular imaging, and larger ones can be repaired before they become dangerous. Controlling blood pressure and not smoking help keep them from growing.",
+    "symptoms": ["Often no symptoms at all — found on a scan", "A deep, steady ache in the belly or back", "A pulsing feeling near the belly button (abdominal type)", "Chest or upper back pain (chest type)", "Hoarseness or trouble swallowing with large chest aneurysms"],
+    "drugs": [
+      { "name": "Metoprolol (Lopressor)", "class": "Beta-blocker", "note": "Lowers blood pressure to ease stress on the aorta." },
+      { "name": "Losartan (Cozaar)", "class": "ARB (blood-pressure medicine)", "note": "Another option for keeping pressure off the aortic wall." },
+      { "name": "Atorvastatin (Lipitor)", "class": "Statin", "note": "Helps slow artery disease throughout the body." },
+      { "name": "Endovascular or open surgical repair", "class": "Procedure", "note": "Repairs larger aneurysms before they can rupture." }
+    ],
+    "redFlags": "Sudden, severe, tearing pain in the chest, back, or belly — especially with lightheadedness or fainting — may mean a rupture; call 911 immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Aortic Aneurysm", "url": "https://medlineplus.gov/search/?query=aortic%20aneurysm" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  }
+]

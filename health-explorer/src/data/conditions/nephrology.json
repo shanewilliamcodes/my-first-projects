@@ -1,0 +1,66 @@
+[
+  {
+    "id": "kidney-stones",
+    "name": "Kidney Stones",
+    "aka": "Nephrolithiasis, renal calculi",
+    "specialtyId": "nephrology",
+    "category": "Kidneys & Urinary",
+    "prevalence": "About 1 in 10 Americans over a lifetime",
+    "overview": "Kidney stones are hard, pebble-like pieces of mineral that form inside the kidneys, usually when urine becomes too concentrated. Small stones often pass on their own, though the trip can be very painful. Larger ones sometimes need a procedure to break them up or remove them. The good news: most stones cause no lasting damage, and drinking plenty of water is the single best way to prevent new ones.",
+    "symptoms": ["Sharp pain in the side or back that comes in waves", "Pain spreading to the lower belly or groin", "Pink, red, or brown urine", "Nausea or vomiting", "Burning or urgency when urinating"],
+    "drugs": [
+      { "name": "Ibuprofen (Advil) / Naproxen (Aleve)", "class": "NSAID", "note": "Eases the pain while a stone passes." },
+      { "name": "Tamsulosin (Flomax)", "class": "Alpha blocker", "note": "Relaxes the urinary tract so the stone passes more easily." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "A gentler option when NSAIDs aren't a good fit." },
+      { "name": "Potassium citrate", "class": "Preventive", "note": "Makes urine less likely to form certain types of stones." },
+      { "name": "Shock wave lithotripsy", "class": "Procedure", "note": "Breaks larger stones into pieces small enough to pass." }
+    ],
+    "redFlags": "Stone pain with fever and chills, or being unable to urinate at all, can mean a dangerous blocked or infected kidney — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Kidney Stones", "url": "https://medlineplus.gov/search/?query=kidney%20stones" },
+      { "label": "National Kidney Foundation", "url": "https://www.kidney.org/" }
+    ]
+  },
+  {
+    "id": "polycystic-kidney-disease",
+    "name": "Polycystic Kidney Disease",
+    "aka": "PKD",
+    "specialtyId": "nephrology",
+    "category": "Kidneys & Urinary",
+    "prevalence": "~500,000 people in the U.S.",
+    "overview": "Polycystic kidney disease is an inherited condition in which clusters of fluid-filled cysts grow in the kidneys, slowly enlarging them and crowding out healthy tissue. It usually runs in families and is often found in adulthood. Many people live full lives for decades with PKD, especially when blood pressure is well controlled. Newer medicines can also slow cyst growth in some people, so regular checkups really pay off.",
+    "symptoms": ["High blood pressure", "Pain in the back or side", "Blood in the urine", "Repeated urinary tract or kidney infections", "A feeling of fullness or swelling in the belly"],
+    "drugs": [
+      { "name": "Lisinopril", "class": "ACE inhibitor", "note": "Controls blood pressure, which helps protect the kidneys." },
+      { "name": "Losartan", "class": "ARB", "note": "Another first-choice blood pressure medicine for PKD." },
+      { "name": "Tolvaptan (Jynarque)", "class": "Vasopressin blocker", "note": "Can slow cyst growth in faster-progressing PKD." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Preferred for pain because NSAIDs can stress the kidneys." }
+    ],
+    "redFlags": "A sudden, severe \"worst of your life\" headache needs a 911 call — PKD raises the risk of a brain aneurysm.",
+    "resources": [
+      { "label": "MedlinePlus — Polycystic Kidney Disease", "url": "https://medlineplus.gov/search/?query=polycystic%20kidney%20disease" },
+      { "label": "PKD Foundation", "url": "https://pkdcure.org/" }
+    ]
+  },
+  {
+    "id": "acute-kidney-injury",
+    "name": "Acute Kidney Injury",
+    "aka": "AKI, acute renal failure",
+    "specialtyId": "nephrology",
+    "category": "Kidneys & Urinary",
+    "prevalence": "About 1 in 5 hospitalized adults",
+    "overview": "Acute kidney injury is a sudden drop in how well the kidneys filter waste, developing over hours or days. It most often happens to people who are already sick or hospitalized — from dehydration, serious infection, blood loss, or certain medicines. Unlike chronic kidney disease, AKI is often reversible: treating the cause and supporting the body usually lets the kidneys recover, though some people need dialysis for a short time.",
+    "symptoms": ["Making much less urine than usual", "Swelling in the legs, ankles, or around the eyes", "Unusual tiredness or confusion", "Nausea or loss of appetite", "Shortness of breath"],
+    "drugs": [
+      { "name": "IV fluids", "class": "Supportive care", "note": "Restores hydration and blood flow to the kidneys." },
+      { "name": "Medication review", "class": "Supportive care", "note": "Doctors pause drugs that stress the kidneys, like NSAIDs." },
+      { "name": "Furosemide (Lasix)", "class": "Diuretic", "note": "Helps the body shed extra fluid when it builds up." },
+      { "name": "Dialysis", "class": "Procedure", "note": "Temporarily filters the blood until the kidneys recover." }
+    ],
+    "redFlags": "Little or no urine along with swelling, confusion, or trouble breathing is an emergency — go to the ER or call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Acute Kidney Injury", "url": "https://medlineplus.gov/search/?query=acute%20kidney%20injury" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  }
+]

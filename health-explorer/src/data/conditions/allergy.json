@@ -1,0 +1,111 @@
+[
+  {
+    "id": "food-allergies",
+    "name": "Food Allergies",
+    "aka": "Food hypersensitivity",
+    "specialtyId": "allergy",
+    "category": "Allergy & Immune",
+    "prevalence": "~20 million Americans",
+    "overview": "A food allergy happens when the immune system mistakes a harmless food — like peanuts, milk, eggs, or shellfish — for a threat and overreacts. Reactions range from an itchy mouth or hives to a severe, life-threatening reaction called anaphylaxis. There's no cure yet, so the main strategy is avoiding the trigger food and carrying epinephrine if your doctor recommends it. Most people manage food allergies well with a clear plan, careful label-reading, and the right medicines on hand.",
+    "symptoms": [
+      "Hives or itchy skin",
+      "Tingling or itching in the mouth",
+      "Swelling of the lips, face, or throat",
+      "Stomach pain, vomiting, or diarrhea",
+      "Wheezing or trouble breathing (severe reactions)"
+    ],
+    "drugs": [
+      { "name": "Cetirizine (Zyrtec) / Diphenhydramine (Benadryl)", "class": "Antihistamine", "note": "Calms mild reactions like itching and hives." },
+      { "name": "Epinephrine (EpiPen)", "class": "Emergency injection", "note": "Lifesaving shot for severe reactions — use it and call 911." },
+      { "name": "Omalizumab (Xolair)", "class": "Biologic", "note": "A shot that can soften reactions to accidental exposures." },
+      { "name": "Peanut oral immunotherapy (Palforzia)", "class": "Immunotherapy", "note": "Builds tolerance to peanut in tiny daily steps under a doctor's care." }
+    ],
+    "redFlags": "Trouble breathing, throat tightness, or widespread hives after eating means use epinephrine right away and call 911 — don't wait to see if it passes.",
+    "resources": [
+      { "label": "MedlinePlus — Food Allergies", "url": "https://medlineplus.gov/search/?query=food%20allergies" },
+      { "label": "FARE (Food Allergy Research & Education)", "url": "https://www.foodallergy.org/" }
+    ]
+  },
+  {
+    "id": "anaphylaxis",
+    "name": "Anaphylaxis",
+    "aka": "Anaphylactic shock",
+    "specialtyId": "allergy",
+    "category": "Allergy & Immune",
+    "prevalence": "about 1 in 50 Americans (some estimates higher)",
+    "overview": "Anaphylaxis is a severe, whole-body allergic reaction that comes on fast — usually within minutes of exposure to a trigger like certain foods, insect stings, medicines, or latex. It can cause trouble breathing, a sudden drop in blood pressure, and fainting, so it is always a medical emergency. The good news: epinephrine works quickly when given right away, and most people recover fully. Anyone at risk should carry two epinephrine auto-injectors and know how to use them.",
+    "symptoms": [
+      "Trouble breathing or wheezing",
+      "Throat tightness or a hoarse voice",
+      "Widespread hives or flushed skin",
+      "Dizziness or fainting from a drop in blood pressure",
+      "Nausea, vomiting, or belly cramps",
+      "A sudden sense that something is very wrong"
+    ],
+    "drugs": [
+      { "name": "Epinephrine (EpiPen)", "class": "Emergency injection", "note": "The first and most important treatment — use it immediately." },
+      { "name": "Diphenhydramine (Benadryl)", "class": "Antihistamine", "note": "Helps with hives and itching after epinephrine is given." },
+      { "name": "Albuterol", "class": "Inhaled bronchodilator", "note": "Eases wheezing once epinephrine is on board." },
+      { "name": "Prednisone", "class": "Steroid", "note": "Sometimes given afterward to calm lingering inflammation." }
+    ],
+    "redFlags": "Anaphylaxis is always an emergency — use epinephrine immediately and call 911, even if symptoms seem to improve.",
+    "resources": [
+      { "label": "MedlinePlus — Anaphylaxis", "url": "https://medlineplus.gov/search/?query=anaphylaxis" },
+      { "label": "Asthma and Allergy Foundation of America", "url": "https://www.aafa.org/" }
+    ]
+  },
+  {
+    "id": "drug-allergies",
+    "name": "Drug Allergies",
+    "aka": "Medication allergy",
+    "specialtyId": "allergy",
+    "category": "Allergy & Immune",
+    "prevalence": "~1 in 10 Americans report a drug allergy",
+    "overview": "A drug allergy is when the immune system reacts to a medicine as if it were harmful, causing hives, itching, swelling, or — rarely — a severe reaction called anaphylaxis. Antibiotics like penicillin are the most common culprits. The key is knowing which medicine caused the reaction and telling every doctor and pharmacist about it. Interestingly, many people who think they're allergic to penicillin actually aren't, so allergy testing can sometimes safely open up more treatment options.",
+    "symptoms": [
+      "Skin rash or hives",
+      "Itching",
+      "Fever",
+      "Swelling of the face or throat",
+      "Wheezing or shortness of breath"
+    ],
+    "drugs": [
+      { "name": "Diphenhydramine (Benadryl)", "class": "Antihistamine", "note": "Relieves hives and itching from mild reactions." },
+      { "name": "Hydrocortisone cream", "class": "Topical steroid", "note": "Soothes itchy skin rashes." },
+      { "name": "Prednisone", "class": "Steroid", "note": "For stronger or more widespread reactions." },
+      { "name": "Epinephrine (EpiPen)", "class": "Emergency injection", "note": "For severe whole-body reactions — use it and call 911." }
+    ],
+    "redFlags": "Trouble breathing, swelling of the face or throat, or a blistering, peeling rash after taking a medicine means use epinephrine if you have it and call 911 or get to the ER now.",
+    "resources": [
+      { "label": "MedlinePlus — Drug Allergies", "url": "https://medlineplus.gov/search/?query=drug%20allergies" },
+      { "label": "American College of Allergy, Asthma & Immunology", "url": "https://acaai.org/" }
+    ]
+  },
+  {
+    "id": "insect-sting-allergy",
+    "name": "Insect Sting Allergy",
+    "aka": "Venom allergy",
+    "specialtyId": "allergy",
+    "category": "Allergy & Immune",
+    "prevalence": "about 3% of U.S. adults",
+    "overview": "Most insect stings cause only temporary pain, redness, and swelling. But in people with an insect sting allergy, the immune system overreacts to venom from bees, wasps, hornets, yellow jackets, or fire ants — sometimes causing a dangerous whole-body reaction. Anyone who has had a serious reaction should carry epinephrine and see an allergist. Venom immunotherapy (allergy shots) can greatly lower the risk of future severe reactions, making time outdoors feel a lot safer.",
+    "symptoms": [
+      "Large swelling that spreads beyond the sting site",
+      "Hives or itching far from the sting",
+      "Swelling of the face, lips, or throat",
+      "Trouble breathing or wheezing",
+      "Dizziness or fainting"
+    ],
+    "drugs": [
+      { "name": "Diphenhydramine (Benadryl)", "class": "Antihistamine", "note": "Eases itching and swelling from most stings." },
+      { "name": "Hydrocortisone cream", "class": "Topical steroid", "note": "Calms redness and itching at the sting site." },
+      { "name": "Epinephrine (EpiPen)", "class": "Emergency injection", "note": "Lifesaving treatment for a severe allergic reaction." },
+      { "name": "Venom immunotherapy", "class": "Allergy shots", "note": "Gradually retrains the immune system to tolerate insect venom." }
+    ],
+    "redFlags": "Hives all over, trouble breathing, throat swelling, or dizziness after a sting means use epinephrine if you have it and call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Insect Sting Allergy", "url": "https://medlineplus.gov/search/?query=insect%20sting%20allergy" },
+      { "label": "American Academy of Allergy, Asthma & Immunology", "url": "https://www.aaaai.org/" }
+    ]
+  }
+]

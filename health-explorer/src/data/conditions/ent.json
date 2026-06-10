@@ -1,0 +1,150 @@
+[
+  {
+    "id": "sinusitis",
+    "name": "Sinus Infection (Sinusitis)",
+    "aka": "Rhinosinusitis",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "About 29 million U.S. adults each year",
+    "overview": "A sinus infection happens when the moist air spaces behind your cheeks, nose, and forehead get inflamed and filled with mucus, usually after a cold. That causes facial pressure, stuffiness, and thick drainage. Most cases are caused by viruses and clear up on their own within a week or two — antibiotics only help when bacteria are to blame. Rest, fluids, saline rinses, and time are often the best medicine.",
+    "symptoms": ["Pressure or pain around the cheeks, eyes, or forehead", "Stuffy or blocked nose", "Thick yellow or green mucus", "Reduced sense of smell", "Post-nasal drip and cough"],
+    "drugs": [
+      { "name": "Saline nasal rinse", "class": "Nasal rinse", "note": "Flushes out mucus and soothes irritated sinuses." },
+      { "name": "Acetaminophen (Tylenol) / Ibuprofen (Advil)", "class": "Pain reliever", "note": "Eases facial pain, pressure, and fever." },
+      { "name": "Fluticasone (Flonase)", "class": "Steroid nasal spray", "note": "Calms swelling inside the nose." },
+      { "name": "Pseudoephedrine (Sudafed)", "class": "Decongestant", "note": "Short-term relief for a stuffed-up nose." },
+      { "name": "Amoxicillin-clavulanate (Augmentin)", "class": "Antibiotic", "note": "For bacterial infections that aren't improving on their own." }
+    ],
+    "redFlags": "Swelling or redness around an eye, vision changes, severe headache with a stiff neck, or confusion can mean the infection is spreading — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Sinusitis", "url": "https://medlineplus.gov/search/?query=sinusitis" },
+      { "label": "American Academy of Otolaryngology", "url": "https://www.entnet.org/" }
+    ]
+  },
+  {
+    "id": "ear-infection",
+    "name": "Ear Infections",
+    "aka": "Otitis media",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "About 5 out of 6 children have one by age 3",
+    "overview": "Ear infections happen when fluid builds up behind the eardrum and gets infected, usually during or after a cold. They're one of the most common reasons young children see a doctor, though adults get them too. The classic signs are ear pain, fussiness, and trouble hearing. Many mild cases clear up on their own within a few days; antibiotics help when symptoms are severe or don't improve.",
+    "symptoms": ["Ear pain, or tugging at the ear in young kids", "Muffled hearing", "Fever", "Fussiness or trouble sleeping", "Fluid draining from the ear"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "First step for easing ear pain and fever." },
+      { "name": "Ibuprofen (Advil, Motrin)", "class": "NSAID", "note": "Another good option for pain and fever." },
+      { "name": "Amoxicillin", "class": "Antibiotic", "note": "The usual first choice when an antibiotic is needed." },
+      { "name": "Ear tubes (tympanostomy)", "class": "Procedure", "note": "A minor surgery for kids who get infection after infection." }
+    ],
+    "redFlags": "A high fever with a stiff neck, swelling or redness behind the ear, or a child who is unusually drowsy or hard to wake needs emergency care.",
+    "resources": [
+      { "label": "MedlinePlus — Ear Infections", "url": "https://medlineplus.gov/search/?query=ear%20infection" },
+      { "label": "HealthyChildren (American Academy of Pediatrics)", "url": "https://www.healthychildren.org/" }
+    ]
+  },
+  {
+    "id": "tinnitus",
+    "name": "Tinnitus (Ringing in the Ears)",
+    "aka": "",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "~25 million U.S. adults",
+    "overview": "Tinnitus is hearing a sound — ringing, buzzing, or hissing — that isn't coming from the outside world. It's usually linked to age-related hearing loss, loud-noise exposure, or even earwax buildup, and it's rarely a sign of something dangerous. There's no single cure, but many people find real relief with hearing aids, sound machines, and counseling approaches that teach the brain to tune the noise out.",
+    "symptoms": ["Ringing, buzzing, hissing, or humming in the ears", "Sound seems louder in quiet places, especially at night", "Trouble concentrating or falling asleep", "Often comes along with some hearing loss", "May be constant or come and go"],
+    "drugs": [
+      { "name": "Hearing aids", "class": "Device", "note": "Boosting outside sound often makes the ringing fade into the background." },
+      { "name": "Sound therapy (white-noise machines)", "class": "Therapy", "note": "Masks the ringing, especially at bedtime." },
+      { "name": "Cognitive behavioral therapy (CBT)", "class": "Therapy", "note": "Teaches the brain to react less to the sound." },
+      { "name": "Earwax removal", "class": "Procedure", "note": "A quick fix when built-up wax is the cause." }
+    ],
+    "redFlags": "Tinnitus in only one ear, tinnitus that pulses with your heartbeat, or ringing with sudden hearing loss needs prompt evaluation — sudden hearing loss is a same-day emergency.",
+    "resources": [
+      { "label": "MedlinePlus — Tinnitus", "url": "https://medlineplus.gov/search/?query=tinnitus" },
+      { "label": "American Tinnitus Association", "url": "https://www.ata.org/" }
+    ]
+  },
+  {
+    "id": "hearing-loss",
+    "name": "Hearing Loss",
+    "aka": "Presbycusis (age-related hearing loss)",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "About 1 in 8 Americans age 12 and older",
+    "overview": "Hearing loss usually creeps in slowly, most often from aging, years of loud noise, or both. You might find yourself asking people to repeat things or turning the TV up. It matters because untreated hearing loss can lead to isolation and strain relationships, but today's options — including hearing aids sold over the counter — are better and easier to get than ever. A simple hearing test is the place to start.",
+    "symptoms": ["Asking people to repeat themselves", "Trouble following conversations in noisy places", "Turning the TV or phone volume way up", "Speech sounds muffled or mumbled", "Ringing in the ears (tinnitus)"],
+    "drugs": [
+      { "name": "Hearing aids", "class": "Device", "note": "The main treatment — now sold over the counter for mild-to-moderate loss." },
+      { "name": "Earwax removal", "class": "Procedure", "note": "A quick fix when wax buildup is the culprit." },
+      { "name": "Assistive listening devices", "class": "Device", "note": "Phone captions and TV streamers fill in the gaps." },
+      { "name": "Cochlear implant", "class": "Procedure", "note": "For severe loss when hearing aids aren't enough." }
+    ],
+    "redFlags": "Sudden hearing loss in one or both ears is a medical emergency — seek care the same day, because quick treatment can sometimes save your hearing.",
+    "resources": [
+      { "label": "MedlinePlus — Hearing Loss", "url": "https://medlineplus.gov/search/?query=hearing%20loss" },
+      { "label": "NIDCD (National Institute on Deafness)", "url": "https://www.nidcd.nih.gov/" }
+    ]
+  },
+  {
+    "id": "vertigo-bppv",
+    "name": "Vertigo (BPPV)",
+    "aka": "Benign paroxysmal positional vertigo",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "About 2 in 100 adults at some point",
+    "overview": "BPPV is the most common cause of vertigo — that sudden spinning feeling. It happens when tiny calcium crystals in the inner ear drift out of place, confusing your balance sensors whenever you roll over in bed or tilt your head. The spells are brief but can be intense. The good news: a simple series of head movements called the Epley maneuver fixes most cases, often in a single office visit.",
+    "symptoms": ["Brief spinning sensation triggered by head movements", "Worse when rolling over in bed or looking up", "Nausea during spells", "Unsteadiness or loss of balance", "Episodes usually last less than a minute"],
+    "drugs": [
+      { "name": "Epley maneuver", "class": "Procedure", "note": "Guided head movements that put the loose crystals back in place — the main treatment." },
+      { "name": "Meclizine (Antivert)", "class": "Antihistamine", "note": "Short-term help for the dizzy, queasy feeling." },
+      { "name": "Vestibular rehab exercises", "class": "Therapy", "note": "Retrains your balance system if symptoms linger." },
+      { "name": "Ondansetron (Zofran)", "class": "Anti-nausea", "note": "For severe nausea during bad spells." }
+    ],
+    "redFlags": "Vertigo with double vision, slurred speech, weakness, numbness, or a sudden severe headache could be a stroke — call 911.",
+    "resources": [
+      { "label": "MedlinePlus — Vertigo", "url": "https://medlineplus.gov/search/?query=vertigo" },
+      { "label": "Vestibular Disorders Association", "url": "https://vestibular.org/" }
+    ]
+  },
+  {
+    "id": "tonsillitis",
+    "name": "Tonsillitis",
+    "aka": "Tonsil infection",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "Millions of U.S. cases a year, mostly kids ages 5–15",
+    "overview": "Tonsillitis means the tonsils — the two soft pads at the back of the throat — are inflamed, usually from a virus and sometimes from strep bacteria. It brings a sore throat, trouble swallowing, fever, and swollen glands. Viral cases get better with rest and fluids; strep needs antibiotics. Tonsil-removal surgery is reserved these days for kids and adults who get infections again and again.",
+    "symptoms": ["Sore throat and pain when swallowing", "Red, swollen tonsils, sometimes with white patches", "Fever", "Swollen, tender glands in the neck", "Scratchy voice or bad breath"],
+    "drugs": [
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Eases throat pain and fever." },
+      { "name": "Ibuprofen (Advil, Motrin)", "class": "NSAID", "note": "Another solid choice for pain and fever." },
+      { "name": "Amoxicillin / Penicillin", "class": "Antibiotic", "note": "First choice when a strep test comes back positive." },
+      { "name": "Tonsillectomy", "class": "Procedure", "note": "Surgery to remove the tonsils after frequent repeat infections." }
+    ],
+    "redFlags": "Trouble breathing, drooling, inability to swallow, a muffled voice, or severe one-sided throat swelling can signal a serious abscess — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Tonsillitis", "url": "https://medlineplus.gov/search/?query=tonsillitis" },
+      { "label": "American Academy of Otolaryngology", "url": "https://www.entnet.org/" }
+    ]
+  },
+  {
+    "id": "laryngitis",
+    "name": "Laryngitis",
+    "aka": "Voice box inflammation",
+    "specialtyId": "ent",
+    "category": "Ear, Nose & Throat",
+    "prevalence": "Very common — about 1 in 3 people have a voice problem at some point",
+    "overview": "Laryngitis is irritation of the voice box (larynx) that leaves you hoarse, raspy, or barely able to speak above a whisper. Most cases come from a cold virus or from overusing your voice — think cheering at a game — and they heal on their own within a week or two. Resting your voice and drinking plenty of fluids speeds things along; antibiotics almost never help. Hoarseness that drags on for weeks deserves a checkup.",
+    "symptoms": ["Hoarse, raspy, or weak voice", "Losing your voice entirely", "Sore or dry throat", "Tickling or raw feeling in the throat", "Dry cough"],
+    "drugs": [
+      { "name": "Voice rest and fluids", "class": "Self-care", "note": "The main treatment — give the vocal cords time to heal." },
+      { "name": "Humidifier or steam", "class": "Self-care", "note": "Moist air soothes an irritated voice box." },
+      { "name": "Acetaminophen (Tylenol) / Ibuprofen (Advil)", "class": "Pain reliever", "note": "Eases throat soreness." },
+      { "name": "Omeprazole (Prilosec)", "class": "Acid reducer", "note": "Helps when stomach acid reflux is behind chronic hoarseness." }
+    ],
+    "redFlags": "Hoarseness with trouble breathing, noisy breathing, or trouble swallowing needs ER care right away; hoarseness lasting more than three weeks needs a doctor's look.",
+    "resources": [
+      { "label": "MedlinePlus — Laryngitis", "url": "https://medlineplus.gov/search/?query=laryngitis" },
+      { "label": "American Speech-Language-Hearing Association", "url": "https://www.asha.org/" }
+    ]
+  }
+]

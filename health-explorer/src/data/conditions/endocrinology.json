@@ -1,0 +1,137 @@
+[
+  {
+    "id": "type-1-diabetes",
+    "name": "Type 1 Diabetes",
+    "aka": "Juvenile diabetes, insulin-dependent diabetes",
+    "specialtyId": "endocrinology",
+    "category": "Hormones & Metabolism",
+    "prevalence": "~2 million Americans",
+    "overview": "Type 1 diabetes happens when the immune system mistakenly destroys the cells in the pancreas that make insulin — the hormone that moves sugar from the blood into the body's cells. Without insulin, blood sugar climbs to dangerous levels, so people with type 1 take insulin every day for life. It often starts in childhood but can appear at any age. With modern insulins, pumps, and glucose monitors, people with type 1 live full, active lives.",
+    "symptoms": [
+      "Extreme thirst and frequent urination",
+      "Unexplained weight loss",
+      "Constant hunger",
+      "Feeling very tired or weak",
+      "Blurry vision"
+    ],
+    "drugs": [
+      { "name": "Rapid-acting insulin (Humalog, NovoLog)", "class": "Insulin", "note": "Taken with meals to handle blood-sugar rises from food." },
+      { "name": "Long-acting insulin (Lantus, Tresiba)", "class": "Insulin", "note": "Provides a steady background level of insulin all day." },
+      { "name": "Insulin pump with glucose monitor", "class": "Device", "note": "Many people use these instead of multiple daily shots." },
+      { "name": "Glucagon (Baqsimi, Gvoke)", "class": "Emergency rescue", "note": "Raises blood sugar fast during a severe low." }
+    ],
+    "redFlags": "Vomiting, deep rapid breathing, fruity-smelling breath, or confusion can signal diabetic ketoacidosis — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Type 1 Diabetes", "url": "https://medlineplus.gov/search/?query=type%201%20diabetes" },
+      { "label": "American Diabetes Association", "url": "https://diabetes.org/" }
+    ]
+  },
+  {
+    "id": "prediabetes",
+    "name": "Prediabetes",
+    "aka": "Borderline diabetes, impaired glucose tolerance",
+    "specialtyId": "endocrinology",
+    "category": "Hormones & Metabolism",
+    "prevalence": "~98 million U.S. adults",
+    "overview": "Prediabetes means your blood sugar is higher than normal but not yet high enough to count as type 2 diabetes. It's remarkably common — more than 1 in 3 American adults have it, and most don't know. The encouraging news: prediabetes is often reversible. Losing a modest amount of weight, moving more, and eating better can bring blood sugar back to normal and cut your risk of developing diabetes roughly in half.",
+    "symptoms": [
+      "Usually no symptoms — most people don't know they have it",
+      "Sometimes increased thirst or urination",
+      "Darkened, velvety skin patches on the neck or armpits",
+      "Feeling more tired than usual",
+      "Often found only through a routine blood test"
+    ],
+    "drugs": [
+      { "name": "Lifestyle changes", "class": "First-line treatment", "note": "Losing 5-7% of body weight and walking regularly can cut diabetes risk about in half." },
+      { "name": "Metformin", "class": "Biguanide", "note": "Sometimes prescribed when lifestyle changes alone aren't enough." },
+      { "name": "Diabetes Prevention Program", "class": "Lifestyle program", "note": "A CDC-backed group program proven to lower the risk of type 2 diabetes." }
+    ],
+    "redFlags": "Extreme thirst, constant urination, blurry vision, or unplanned weight loss can mean diabetes has developed — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Prediabetes", "url": "https://medlineplus.gov/search/?query=prediabetes" },
+      { "label": "CDC — Diabetes", "url": "https://www.cdc.gov/diabetes/" }
+    ]
+  },
+  {
+    "id": "hyperthyroidism",
+    "name": "Hyperthyroidism (Overactive Thyroid)",
+    "aka": "Overactive thyroid, Graves' disease (most common cause)",
+    "specialtyId": "endocrinology",
+    "category": "Hormones & Metabolism",
+    "prevalence": "About 1 in 100 Americans",
+    "overview": "Hyperthyroidism means the thyroid gland in your neck makes too much thyroid hormone, putting your whole body into overdrive — heart racing, weight dropping, hands shaky, mind anxious. The most common cause is Graves' disease, where the immune system overstimulates the thyroid. It's very treatable: medicines can slow hormone production, and radioactive iodine or surgery offer lasting fixes. Most people feel like themselves again once hormone levels are back to normal.",
+    "symptoms": [
+      "Racing or irregular heartbeat",
+      "Weight loss despite a good appetite",
+      "Feeling anxious, irritable, or shaky",
+      "Sweating more and feeling too warm",
+      "Trouble sleeping",
+      "Bulging or irritated eyes (with Graves' disease)"
+    ],
+    "drugs": [
+      { "name": "Methimazole (Tapazole)", "class": "Antithyroid", "note": "First-choice pill that slows the thyroid's hormone production." },
+      { "name": "Propranolol / Atenolol", "class": "Beta-blocker", "note": "Calms a racing heart and tremors while other treatment takes effect." },
+      { "name": "Radioactive iodine", "class": "Procedure", "note": "A one-time capsule that shrinks overactive thyroid tissue." },
+      { "name": "Propylthiouracil (PTU)", "class": "Antithyroid", "note": "An alternative used in early pregnancy or when methimazole isn't tolerated." }
+    ],
+    "redFlags": "Fever, a very fast heartbeat, and confusion or agitation can signal thyroid storm, a rare emergency — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Hyperthyroidism", "url": "https://medlineplus.gov/search/?query=hyperthyroidism" },
+      { "label": "American Thyroid Association", "url": "https://www.thyroid.org/" }
+    ]
+  },
+  {
+    "id": "low-testosterone",
+    "name": "Low Testosterone",
+    "aka": "Low T, hypogonadism",
+    "specialtyId": "endocrinology",
+    "category": "Men's Health",
+    "prevalence": "About 2 in 100 men (more common with age)",
+    "overview": "Testosterone naturally declines as men get older, but when levels drop well below normal, it can sap energy, mood, sex drive, and muscle strength. A simple morning blood test confirms the diagnosis — symptoms alone aren't enough, since fatigue and low libido have many causes, including poor sleep, stress, and depression. When true low T is found, testosterone replacement can help many men feel better, though it requires ongoing monitoring by a doctor.",
+    "symptoms": [
+      "Low sex drive",
+      "Trouble getting or keeping erections",
+      "Fatigue and low energy",
+      "Loss of muscle and increased body fat",
+      "Feeling down or irritable"
+    ],
+    "drugs": [
+      { "name": "Testosterone gel (AndroGel)", "class": "Hormone replacement", "note": "A daily gel rubbed into the skin — one of the most common forms." },
+      { "name": "Testosterone injection (Depo-Testosterone)", "class": "Hormone replacement", "note": "A shot given every one to two weeks." },
+      { "name": "Testosterone patch (Androderm)", "class": "Hormone replacement", "note": "Worn on the skin and changed daily." },
+      { "name": "Lifestyle changes", "class": "Supportive care", "note": "Weight loss, exercise, and better sleep can raise levels naturally." }
+    ],
+    "redFlags": "If you're on testosterone therapy and develop chest pain, sudden shortness of breath, or a swollen painful leg, call 911 — these can signal a blood clot.",
+    "resources": [
+      { "label": "MedlinePlus — Low Testosterone", "url": "https://medlineplus.gov/search/?query=low%20testosterone" },
+      { "label": "Urology Care Foundation", "url": "https://www.urologyhealth.org/" }
+    ]
+  },
+  {
+    "id": "metabolic-syndrome",
+    "name": "Metabolic Syndrome",
+    "aka": "Syndrome X, insulin resistance syndrome",
+    "specialtyId": "endocrinology",
+    "category": "Hormones & Metabolism",
+    "prevalence": "~1 in 3 U.S. adults",
+    "overview": "Metabolic syndrome isn't one disease — it's a cluster of risk factors that tend to show up together: a large waistline, high blood pressure, high blood sugar, high triglycerides, and low \"good\" cholesterol. Having three or more raises your risk of heart disease, stroke, and type 2 diabetes. About 1 in 3 American adults has it. The hopeful part: the same lifestyle changes — losing weight, exercising, eating better — improve all five at once.",
+    "symptoms": [
+      "Usually no obvious symptoms day to day",
+      "A larger waistline (apple-shaped weight gain)",
+      "High blood pressure readings",
+      "High blood sugar on lab tests",
+      "High triglycerides or low \"good\" HDL cholesterol"
+    ],
+    "drugs": [
+      { "name": "Lifestyle changes", "class": "First-line treatment", "note": "Weight loss, exercise, and healthier eating improve every part of the syndrome." },
+      { "name": "Atorvastatin (Lipitor)", "class": "Statin", "note": "Lowers cholesterol to protect the heart." },
+      { "name": "Lisinopril", "class": "ACE inhibitor", "note": "A common choice for bringing blood pressure down." },
+      { "name": "Metformin", "class": "Biguanide", "note": "Helps control blood sugar when it starts creeping up." }
+    ],
+    "redFlags": "Chest pain, sudden weakness on one side, face drooping, or trouble speaking can signal a heart attack or stroke — call 911 right away.",
+    "resources": [
+      { "label": "MedlinePlus — Metabolic Syndrome", "url": "https://medlineplus.gov/search/?query=metabolic%20syndrome" },
+      { "label": "American Heart Association", "url": "https://www.heart.org/" }
+    ]
+  }
+]

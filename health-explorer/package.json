@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "conditions": "node scripts/merge-conditions.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

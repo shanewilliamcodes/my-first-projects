@@ -1,0 +1,147 @@
+[
+  {
+    "id": "hiv",
+    "name": "HIV",
+    "aka": "Human immunodeficiency virus",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~1.2 million U.S. adults",
+    "overview": "HIV is a virus that attacks the immune system, the body's defense against infection. It spreads through certain body fluids, most often during sex or by sharing needles. Without treatment it can lead to AIDS, but today daily medicine can keep the virus so low it's undetectable — letting people live long, healthy lives and avoid passing it to others. There is no cure yet, but treatment works.",
+    "symptoms": ["Flu-like illness weeks after infection", "Fever, sore throat, and tiredness", "Swollen lymph nodes", "Rash", "Often no symptoms for years"],
+    "drugs": [
+      { "name": "Bictegravir combo (Biktarvy)", "class": "Antiretroviral", "note": "A common single-pill daily treatment." },
+      { "name": "Dolutegravir (Tivicay)", "class": "Integrase inhibitor", "note": "Blocks the virus from copying itself." },
+      { "name": "Emtricitabine/tenofovir (Truvada)", "class": "Antiretroviral", "note": "Also used as PrEP to prevent infection." },
+      { "name": "Cabotegravir (Apretude)", "class": "Long-acting injectable", "note": "A shot option given every two months." }
+    ],
+    "redFlags": "High fever, trouble breathing, confusion, or a severe new infection can signal a dangerous complication — seek same-day care or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — HIV", "url": "https://medlineplus.gov/search/?query=HIV" },
+      { "label": "CDC — HIV", "url": "https://www.cdc.gov/hiv/" }
+    ]
+  },
+  {
+    "id": "hepatitis-b",
+    "name": "Hepatitis B",
+    "aka": "Hep B, HBV",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~880,000 U.S. adults",
+    "overview": "Hepatitis B is a viral infection that inflames the liver. It spreads through blood and body fluids, including during birth, sex, or sharing needles. Many adults clear it on their own, but some develop a long-term (chronic) infection that can quietly damage the liver over years. A safe vaccine prevents it, and when long-term treatment is needed, medicines can control the virus and protect the liver.",
+    "symptoms": ["Tiredness and weakness", "Yellowing of skin or eyes (jaundice)", "Belly pain on the upper right side", "Dark urine", "Nausea or poor appetite"],
+    "drugs": [
+      { "name": "Tenofovir (Viread)", "class": "Antiviral", "note": "A common daily pill for chronic infection." },
+      { "name": "Entecavir (Baraclude)", "class": "Antiviral", "note": "Lowers the virus and protects the liver." },
+      { "name": "Hepatitis B vaccine", "class": "Vaccine", "note": "Safely prevents infection before exposure." },
+      { "name": "Peginterferon", "class": "Immune therapy", "note": "An injectable option for some patients." }
+    ],
+    "redFlags": "Severe belly pain, vomiting blood, deep yellowing of the skin, or confusion can mean serious liver trouble — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Hepatitis B", "url": "https://medlineplus.gov/search/?query=Hepatitis%20B" },
+      { "label": "CDC — Hepatitis", "url": "https://www.cdc.gov/hepatitis/" }
+    ]
+  },
+  {
+    "id": "hepatitis-c",
+    "name": "Hepatitis C",
+    "aka": "Hep C, HCV",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~2.4 million U.S. adults",
+    "overview": "Hepatitis C is a viral infection of the liver that spreads mainly through blood, often from sharing needles. It usually causes no symptoms for years, so many people don't know they have it until a routine blood test finds it. Left untreated it can scar the liver over time. The good news: newer pills now cure most people in just 8 to 12 weeks, which is why testing matters.",
+    "symptoms": ["Often no symptoms for years", "Tiredness", "Yellowing of skin or eyes (jaundice)", "Belly pain on the upper right side", "Dark urine"],
+    "drugs": [
+      { "name": "Sofosbuvir/velpatasvir (Epclusa)", "class": "Antiviral", "note": "A common pill that cures most people." },
+      { "name": "Glecaprevir/pibrentasvir (Mavyret)", "class": "Antiviral", "note": "A short 8-week cure for many." },
+      { "name": "Ledipasvir/sofosbuvir (Harvoni)", "class": "Antiviral", "note": "Another effective curative regimen." }
+    ],
+    "redFlags": "Vomiting blood, severe belly pain, deep jaundice, or confusion can signal advanced liver damage — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Hepatitis C", "url": "https://medlineplus.gov/search/?query=Hepatitis%20C" },
+      { "label": "CDC — Hepatitis", "url": "https://www.cdc.gov/hepatitis/" }
+    ]
+  },
+  {
+    "id": "lyme-disease",
+    "name": "Lyme Disease",
+    "aka": "",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~476,000 U.S. cases per year",
+    "overview": "Lyme disease is a bacterial infection spread by the bite of an infected blacklegged (deer) tick. An early sign is often a spreading, sometimes bullseye-shaped rash, along with flu-like aches. Caught early, it's usually cured with a short course of antibiotics. If untreated, it can spread to the joints, heart, or nervous system, so prompt treatment after a known tick bite or rash matters.",
+    "symptoms": ["Spreading rash, sometimes shaped like a bullseye", "Fever and chills", "Headache and fatigue", "Muscle and joint aches", "Swollen lymph nodes"],
+    "drugs": [
+      { "name": "Doxycycline", "class": "Antibiotic", "note": "First-choice treatment for most adults." },
+      { "name": "Amoxicillin", "class": "Antibiotic", "note": "Often used for kids or in pregnancy." },
+      { "name": "Cefuroxime (Ceftin)", "class": "Antibiotic", "note": "An alternative for some patients." },
+      { "name": "Ceftriaxone", "class": "Antibiotic (IV)", "note": "For more serious nervous-system or heart cases." }
+    ],
+    "redFlags": "Fainting, a very slow or irregular heartbeat, severe headache with a stiff neck, or facial drooping need urgent care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Lyme Disease", "url": "https://medlineplus.gov/search/?query=Lyme%20Disease" },
+      { "label": "CDC — Lyme Disease", "url": "https://www.cdc.gov/lyme/" }
+    ]
+  },
+  {
+    "id": "tuberculosis",
+    "name": "Tuberculosis",
+    "aka": "TB",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~9,600 U.S. cases per year",
+    "overview": "Tuberculosis is a bacterial infection that usually attacks the lungs. It spreads through the air when someone with active TB coughs or sneezes. Many people carry it in a sleeping (latent) form with no symptoms and can't spread it, but it can wake up later. Active TB causes a lasting cough and other symptoms. It's curable, but treatment takes several months of antibiotics taken exactly as directed.",
+    "symptoms": ["A cough lasting three weeks or more", "Coughing up blood or mucus", "Chest pain", "Fever, chills, and night sweats", "Weight loss and tiredness"],
+    "drugs": [
+      { "name": "Isoniazid", "class": "Antibiotic", "note": "A core TB drug, often part of combos." },
+      { "name": "Rifampin", "class": "Antibiotic", "note": "Used with other drugs to kill the bacteria." },
+      { "name": "Pyrazinamide", "class": "Antibiotic", "note": "Part of the standard early treatment phase." },
+      { "name": "Ethambutol", "class": "Antibiotic", "note": "Added to prevent drug resistance." }
+    ],
+    "redFlags": "Coughing up large amounts of blood, severe trouble breathing, or chest pain with high fever needs emergency care — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Tuberculosis", "url": "https://medlineplus.gov/search/?query=Tuberculosis" },
+      { "label": "CDC — Tuberculosis", "url": "https://www.cdc.gov/tb/" }
+    ]
+  },
+  {
+    "id": "stis",
+    "name": "STIs (Chlamydia, Gonorrhea & Syphilis)",
+    "aka": "STDs, sexually transmitted infections",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~2.4 million U.S. cases reported per year",
+    "overview": "Chlamydia, gonorrhea, and syphilis are common infections passed through sex. Many people have no symptoms, which is why they spread easily and why regular testing matters. When symptoms do appear, they may include discharge, burning, or sores. Left untreated they can cause lasting harm, including infertility, but all three are curable with antibiotics. Treating partners and getting retested helps stop reinfection.",
+    "symptoms": ["Unusual discharge from the penis or vagina", "Burning when you pee", "Sores, bumps, or a rash in the genital area", "Pelvic or lower-belly pain", "Often no symptoms at all"],
+    "drugs": [
+      { "name": "Ceftriaxone", "class": "Antibiotic", "note": "First-choice shot for gonorrhea." },
+      { "name": "Doxycycline", "class": "Antibiotic", "note": "Standard treatment for chlamydia." },
+      { "name": "Penicillin G (Bicillin)", "class": "Antibiotic", "note": "The main treatment for syphilis." },
+      { "name": "Azithromycin", "class": "Antibiotic", "note": "An alternative for some infections." }
+    ],
+    "redFlags": "Severe pelvic pain with fever, testicle pain and swelling, or symptoms during pregnancy need same-day care — call your doctor or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — STIs (Chlamydia, Gonorrhea & Syphilis)", "url": "https://medlineplus.gov/search/?query=sexually%20transmitted%20infections" },
+      { "label": "CDC — STIs", "url": "https://www.cdc.gov/sti/" }
+    ]
+  },
+  {
+    "id": "genital-herpes",
+    "name": "Genital Herpes",
+    "aka": "HSV, herpes simplex virus",
+    "specialtyId": "infectious-disease",
+    "category": "Infections",
+    "prevalence": "~18 million U.S. adults",
+    "overview": "Genital herpes is a very common infection caused by the herpes simplex virus and spread through skin-to-skin contact during sex. It can cause outbreaks of painful blisters or sores, though many people have mild symptoms or none at all. There's no cure, but the virus stays manageable: daily or as-needed medicine eases outbreaks, shortens them, and lowers the chance of passing it to a partner.",
+    "symptoms": ["Painful blisters or sores in the genital area", "Itching or tingling before an outbreak", "Burning when you pee", "Flu-like aches during the first outbreak", "Often mild or no symptoms"],
+    "drugs": [
+      { "name": "Valacyclovir (Valtrex)", "class": "Antiviral", "note": "A convenient once- or twice-daily option." },
+      { "name": "Acyclovir (Zovirax)", "class": "Antiviral", "note": "Treats outbreaks and can be taken daily." },
+      { "name": "Famciclovir (Famvir)", "class": "Antiviral", "note": "Another antiviral for outbreaks." }
+    ],
+    "redFlags": "A severe first outbreak with trouble peeing, a stiff neck with bad headache, or sores during late pregnancy need prompt care — call your doctor or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Genital Herpes", "url": "https://medlineplus.gov/search/?query=Genital%20Herpes" },
+      { "label": "CDC — Genital Herpes", "url": "https://www.cdc.gov/herpes/" }
+    ]
+  }
+]

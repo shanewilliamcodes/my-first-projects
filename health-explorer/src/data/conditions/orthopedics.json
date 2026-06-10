@@ -1,0 +1,191 @@
+[
+  {
+    "id": "low-back-pain",
+    "name": "Low Back Pain",
+    "aka": "Lumbago",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "About 8 in 10 U.S. adults at some point in life",
+    "overview": "Low back pain is one of the most common reasons people see a doctor — most adults will deal with it at some point. It usually comes from strained muscles, ligaments, or normal wear in the spine, not from anything dangerous. The good news: most episodes get better within a few weeks with gentle movement, over-the-counter pain relievers, and time. Staying active actually helps you heal faster than bed rest.",
+    "symptoms": [
+      "Aching or stiffness in the lower back",
+      "Muscle spasms or tightness",
+      "Pain that worsens with bending or lifting",
+      "Pain that sometimes shoots down a leg (sciatica)",
+      "Trouble standing up straight"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "First choice for easing pain and inflammation." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "An option when NSAIDs aren't a good fit." },
+      { "name": "Cyclobenzaprine (Flexeril)", "class": "Muscle relaxant", "note": "Short-term help for painful muscle spasms." },
+      { "name": "Physical therapy", "class": "Therapy", "note": "Builds strength and helps prevent repeat episodes." }
+    ],
+    "redFlags": "Back pain with new loss of bladder or bowel control, numbness in the groin, or leg weakness can signal serious nerve compression — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Low Back Pain", "url": "https://medlineplus.gov/search/?query=low%20back%20pain" },
+      { "label": "NIAMS (NIH)", "url": "https://www.niams.nih.gov/" }
+    ]
+  },
+  {
+    "id": "neck-pain",
+    "name": "Neck Pain",
+    "aka": "Cervicalgia",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "About 1 in 3 U.S. adults each year",
+    "overview": "Neck pain is extremely common and usually comes from muscle strain — think long hours at a desk, sleeping in an awkward position, or stress that tightens the shoulders. Most cases ease up within days to a few weeks with gentle stretching, heat, and over-the-counter pain relievers. Less often, a pinched nerve causes pain that travels down the arm; that usually improves too, but takes longer.",
+    "symptoms": [
+      "Stiff, sore neck that's hard to turn",
+      "Muscle tightness or spasms",
+      "Headaches that start at the base of the skull",
+      "Pain that worsens after sitting or driving",
+      "Tingling that travels into the shoulder or arm"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases pain and calms inflammation." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "A gentler option for mild pain." },
+      { "name": "Cyclobenzaprine (Flexeril)", "class": "Muscle relaxant", "note": "Used briefly for muscle spasms." },
+      { "name": "Physical therapy", "class": "Therapy", "note": "Stretching and strengthening for lasting relief." }
+    ],
+    "redFlags": "Neck pain after a car crash or fall, or pain with fever and a stiff neck, or new arm weakness or numbness, needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Neck Pain", "url": "https://medlineplus.gov/search/?query=neck%20pain" },
+      { "label": "American Academy of Orthopaedic Surgeons", "url": "https://www.aaos.org/" }
+    ]
+  },
+  {
+    "id": "carpal-tunnel",
+    "name": "Carpal Tunnel Syndrome",
+    "aka": "Median nerve compression",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "About 4 to 10 million Americans",
+    "overview": "Carpal tunnel syndrome happens when the median nerve gets squeezed as it passes through a narrow tunnel in your wrist, causing numbness, tingling, and weakness in the hand — often worse at night. Typing, assembly work, and conditions like diabetes or pregnancy can raise the risk. Caught early, it often improves with a simple wrist splint; when it doesn't, a brief outpatient surgery brings relief for most people.",
+    "symptoms": [
+      "Numbness or tingling in the thumb and first fingers",
+      "Symptoms that wake you up at night",
+      "Hand weakness or dropping objects",
+      "A 'pins and needles' feeling when gripping",
+      "Relief from shaking out the hand"
+    ],
+    "drugs": [
+      { "name": "Wrist splint", "class": "Device", "note": "Worn at night to keep the wrist straight." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "May ease pain, though relief is often modest." },
+      { "name": "Corticosteroid injection", "class": "Steroid", "note": "Reduces swelling around the nerve." },
+      { "name": "Carpal tunnel release", "class": "Procedure", "note": "A short outpatient surgery that relieves the pressure." }
+    ],
+    "redFlags": "Constant numbness, a weakening grip, or shrinking muscle at the base of the thumb can mean lasting nerve damage — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Carpal Tunnel Syndrome", "url": "https://medlineplus.gov/search/?query=carpal%20tunnel%20syndrome" },
+      { "label": "NINDS (NIH)", "url": "https://www.ninds.nih.gov/" }
+    ]
+  },
+  {
+    "id": "plantar-fasciitis",
+    "name": "Plantar Fasciitis",
+    "aka": "Heel spur syndrome",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "~2 million Americans treated each year",
+    "overview": "Plantar fasciitis is irritation of the thick band of tissue (the plantar fascia) that runs along the bottom of your foot, causing stabbing heel pain — classically with the first steps in the morning. Runners, people who stand all day, and those carrying extra weight get it most. It's stubborn but rarely serious: stretching, supportive shoes, and time resolve most cases within several months.",
+    "symptoms": [
+      "Stabbing heel pain with the first steps of the day",
+      "Pain after (not usually during) exercise",
+      "Tenderness at the bottom of the heel",
+      "Pain after long periods of standing",
+      "Stiffness that eases as you move"
+    ],
+    "drugs": [
+      { "name": "Stretching exercises", "class": "Therapy", "note": "Daily calf and foot stretches are the core treatment." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Takes the edge off heel pain." },
+      { "name": "Orthotic shoe inserts", "class": "Device", "note": "Cushion the heel and support the arch." },
+      { "name": "Corticosteroid injection", "class": "Steroid", "note": "For stubborn pain that won't settle." }
+    ],
+    "redFlags": "A sudden pop with severe heel pain or being unable to put weight on the foot could mean a rupture or fracture — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Plantar Fasciitis", "url": "https://medlineplus.gov/search/?query=plantar%20fasciitis" },
+      { "label": "American Podiatric Medical Association", "url": "https://www.apma.org/" }
+    ]
+  },
+  {
+    "id": "rotator-cuff-injury",
+    "name": "Rotator Cuff Injury",
+    "aka": "Rotator cuff tear or tendinopathy",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "~2 million U.S. doctor visits each year",
+    "overview": "Your rotator cuff is the group of muscles and tendons that keeps your shoulder stable and lets you raise your arm. Injuries range from inflammation and small fraying to full tears, and they're very common with age — many tears come from normal wear, not accidents. Pain often shows up when reaching overhead or lying on the sore side. Most people improve with physical therapy and don't need surgery.",
+    "symptoms": [
+      "Dull ache deep in the shoulder",
+      "Pain when reaching overhead or behind the back",
+      "Pain at night, especially lying on that side",
+      "Arm weakness when lifting",
+      "Clicking or crackling with movement"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases pain and swelling." },
+      { "name": "Physical therapy", "class": "Therapy", "note": "The mainstay — restores strength and motion." },
+      { "name": "Corticosteroid injection", "class": "Steroid", "note": "Can calm pain enough to make therapy easier." },
+      { "name": "Rotator cuff repair", "class": "Procedure", "note": "Surgery for full tears or pain that won't improve." }
+    ],
+    "redFlags": "If you can't lift your arm at all after a fall or sudden injury, the tendon may be fully torn — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Rotator Cuff Injury", "url": "https://medlineplus.gov/search/?query=rotator%20cuff%20injury" },
+      { "label": "American Academy of Orthopaedic Surgeons", "url": "https://www.aaos.org/" }
+    ]
+  },
+  {
+    "id": "knee-injuries",
+    "name": "Knee Injuries (ACL & Meniscus)",
+    "aka": "ACL tear, meniscus tear",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "~200,000 ACL injuries in the U.S. each year",
+    "overview": "The ACL is a ligament that keeps the knee stable, and the meniscus is the cartilage cushion inside it — both are commonly injured in sports that involve pivoting, jumping, or sudden stops. A pop, swelling, and a knee that feels wobbly are classic signs. Some tears heal with physical therapy alone; others, especially ACL tears in active people, are repaired with a well-established outpatient surgery followed by months of rehab.",
+    "symptoms": [
+      "A 'pop' felt or heard at the moment of injury",
+      "Rapid swelling",
+      "A knee that buckles or feels unstable",
+      "Pain along the joint line",
+      "Locking or catching when bending (meniscus)"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases pain and swelling after injury." },
+      { "name": "RICE (rest, ice, compression, elevation)", "class": "Self-care", "note": "First aid in the days after injury." },
+      { "name": "Physical therapy", "class": "Therapy", "note": "Rebuilds strength and stability." },
+      { "name": "Arthroscopic surgery", "class": "Procedure", "note": "Repairs or reconstructs tears through small incisions." }
+    ],
+    "redFlags": "A knee that looks deformed, won't bear any weight, or comes with a numb or cold foot needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Knee Injuries", "url": "https://medlineplus.gov/search/?query=knee%20injuries" },
+      { "label": "American Academy of Orthopaedic Surgeons", "url": "https://www.aaos.org/" }
+    ]
+  },
+  {
+    "id": "tendinitis",
+    "name": "Tendinitis",
+    "aka": "Tendonitis, tendinopathy",
+    "specialtyId": "orthopedics",
+    "category": "Bones & Joints",
+    "prevalence": "Affects millions of Americans each year",
+    "overview": "Tendinitis is irritation or inflammation of a tendon — the strong cord that attaches muscle to bone. It usually comes from repeating the same motion over and over, which is why names like tennis elbow, golfer's elbow, and jumper's knee are so familiar. The fix is rarely complicated: rest the area, ice it, ease the pain with over-the-counter medicine, and return to activity gradually.",
+    "symptoms": [
+      "Dull ache where the tendon meets the bone",
+      "Tenderness when pressing on the area",
+      "Mild swelling or warmth",
+      "Pain that worsens with the repeated motion",
+      "Stiffness after rest"
+    ],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "First-line relief for pain and inflammation." },
+      { "name": "Diclofenac gel (Voltaren)", "class": "Topical NSAID", "note": "Rubbed on the skin right where it hurts." },
+      { "name": "Rest and ice", "class": "Self-care", "note": "Gives the tendon time to settle down." },
+      { "name": "Corticosteroid injection", "class": "Steroid", "note": "For pain that doesn't improve — used sparingly." }
+    ],
+    "redFlags": "A sudden snap or pop followed by weakness or inability to move the joint may mean the tendon has ruptured — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Tendinitis", "url": "https://medlineplus.gov/search/?query=tendinitis" },
+      { "label": "NIAMS (NIH)", "url": "https://www.niams.nih.gov/" }
+    ]
+  }
+]

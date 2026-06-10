@@ -1,0 +1,172 @@
+[
+  {
+    "id": "pcos",
+    "name": "PCOS",
+    "aka": "Polycystic ovary syndrome",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "~5 million U.S. women of reproductive age",
+    "overview": "PCOS (polycystic ovary syndrome) is a hormone condition that can cause irregular periods, extra facial or body hair, acne, and trouble getting pregnant. It's one of the most common reasons for missed periods in younger women, and it raises the chance of type 2 diabetes later on. There's no cure, but birth control pills, other medicines, and steady habits like regular exercise manage symptoms well — and most women with PCOS can still have children.",
+    "symptoms": ["Irregular or missed periods", "Extra hair on the face or body", "Acne or oily skin", "Weight gain that's hard to lose", "Thinning hair on the scalp", "Trouble getting pregnant"],
+    "drugs": [
+      { "name": "Combined birth control pills", "class": "Hormonal contraceptive", "note": "First-line treatment that regulates periods and improves acne and excess hair." },
+      { "name": "Metformin (Glucophage)", "class": "Insulin sensitizer", "note": "Improves the body's insulin response and can help restore regular cycles." },
+      { "name": "Spironolactone (Aldactone)", "class": "Anti-androgen", "note": "Reduces acne and unwanted hair growth." },
+      { "name": "Letrozole (Femara)", "class": "Fertility medicine", "note": "First-choice pill to help with ovulation when trying to conceive." }
+    ],
+    "redFlags": "Sudden, severe pelvic pain — especially with nausea or vomiting — could signal a twisted ovary, so go to the ER right away.",
+    "resources": [
+      { "label": "MedlinePlus — PCOS", "url": "https://medlineplus.gov/search/?query=PCOS" },
+      { "label": "American College of Obstetricians and Gynecologists", "url": "https://www.acog.org/" }
+    ]
+  },
+  {
+    "id": "endometriosis",
+    "name": "Endometriosis",
+    "aka": "",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "~6.5 million U.S. women",
+    "overview": "Endometriosis happens when tissue similar to the lining of the uterus grows outside it — on the ovaries, fallopian tubes, or elsewhere in the pelvis. That tissue swells and bleeds with each cycle, causing painful periods, pain during sex, and sometimes trouble conceiving. It often takes years to get diagnosed, so speaking up about severe period pain matters. Pain relievers, hormone treatments, and surgery can all bring real relief.",
+    "symptoms": ["Very painful periods that interfere with daily life", "Pain during or after sex", "Pain with bowel movements or urination during periods", "Heavy periods or spotting between periods", "Trouble getting pregnant", "Fatigue around periods"],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Usual first step for easing period pain." },
+      { "name": "Combined birth control pills", "class": "Hormonal contraceptive", "note": "Lighten periods and calm endometriosis pain." },
+      { "name": "Norethindrone", "class": "Progestin", "note": "Hormone pill that thins the misplaced tissue to reduce pain." },
+      { "name": "Elagolix (Orilissa)", "class": "GnRH blocker", "note": "For moderate-to-severe pain when other options fall short." },
+      { "name": "Laparoscopic surgery", "class": "Procedure", "note": "Removes endometriosis tissue and can improve fertility." }
+    ],
+    "redFlags": "Sudden, severe pelvic pain with fever, vomiting, or fainting needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Endometriosis", "url": "https://medlineplus.gov/search/?query=endometriosis" },
+      { "label": "American College of Obstetricians and Gynecologists", "url": "https://www.acog.org/" }
+    ]
+  },
+  {
+    "id": "uterine-fibroids",
+    "name": "Uterine Fibroids",
+    "aka": "Leiomyomas",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "Up to ~70% of women by age 50",
+    "overview": "Uterine fibroids are noncancerous growths of muscle in the wall of the uterus. They're extremely common, and many cause no symptoms at all. When they do, the usual problems are heavy or long periods, pelvic pressure, and frequent urination. Fibroids almost never turn into cancer, and they often shrink on their own after menopause. Treatments range from medicines that lighten bleeding to procedures that remove or shrink the fibroids themselves.",
+    "symptoms": ["Heavy or long-lasting periods", "Pelvic pressure or fullness", "Frequent urination", "Pain during sex", "Lower back ache"],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases cramping and mild pain." },
+      { "name": "Hormonal birth control", "class": "Hormonal contraceptive", "note": "Lightens heavy periods, though it doesn't shrink fibroids." },
+      { "name": "Tranexamic acid (Lysteda)", "class": "Antifibrinolytic", "note": "Taken only during periods to cut heavy bleeding." },
+      { "name": "Leuprolide (Lupron)", "class": "GnRH agonist", "note": "Shrinks fibroids temporarily, often before surgery." },
+      { "name": "Myomectomy or fibroid embolization", "class": "Procedure", "note": "Removes or shrinks fibroids while keeping the uterus." }
+    ],
+    "redFlags": "Soaking through a pad or tampon every hour, or bleeding with dizziness or fainting, is an emergency — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Uterine Fibroids", "url": "https://medlineplus.gov/search/?query=uterine%20fibroids" },
+      { "label": "Office on Women's Health", "url": "https://www.womenshealth.gov/" }
+    ]
+  },
+  {
+    "id": "menopause",
+    "name": "Menopause",
+    "aka": "The change of life",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "~1.3 million U.S. women reach menopause each year",
+    "overview": "Menopause is the natural point when periods stop for good — usually around age 51 in the U.S. The years leading up to it (perimenopause) can bring hot flashes, night sweats, sleep trouble, mood swings, and vaginal dryness as estrogen levels fall. It's a normal life stage, not an illness, but the symptoms are real and treatable. Hormone therapy and other medicines help many women feel like themselves again.",
+    "symptoms": ["Hot flashes and night sweats", "Irregular, then absent, periods", "Trouble sleeping", "Mood changes or irritability", "Vaginal dryness", "Thinning hair or dry skin"],
+    "drugs": [
+      { "name": "Estrogen / estrogen-progestin therapy", "class": "Hormone therapy", "note": "Most effective treatment for hot flashes and night sweats." },
+      { "name": "Vaginal estrogen", "class": "Hormone therapy (local)", "note": "Treats dryness and discomfort with very little hormone absorbed." },
+      { "name": "Paroxetine (Brisdelle)", "class": "SSRI", "note": "Non-hormonal option that reduces hot flashes." },
+      { "name": "Gabapentin", "class": "Nerve-pain medicine", "note": "Can ease hot flashes, especially at night." }
+    ],
+    "redFlags": "Any vaginal bleeding after menopause isn't normal — seek same-day care to rule out serious causes.",
+    "resources": [
+      { "label": "MedlinePlus — Menopause", "url": "https://medlineplus.gov/search/?query=menopause" },
+      { "label": "The Menopause Society", "url": "https://www.menopause.org/" }
+    ]
+  },
+  {
+    "id": "yeast-infection",
+    "name": "Yeast Infection",
+    "aka": "Vaginal candidiasis",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "About 3 in 4 women have one at some point",
+    "overview": "A vaginal yeast infection happens when a fungus that normally lives in small amounts in the vagina (usually Candida) overgrows, causing itching, burning, and a thick white discharge. Antibiotics, pregnancy, and diabetes can make one more likely. Yeast infections are very common, not a sign of poor hygiene, and not usually spread through sex. Over-the-counter creams or a single prescription pill clear most infections within a few days.",
+    "symptoms": ["Vaginal itching or burning", "Thick, white, cottage-cheese-like discharge", "Redness and swelling of the vulva", "Burning with urination or sex"],
+    "drugs": [
+      { "name": "Miconazole (Monistat)", "class": "Antifungal (OTC)", "note": "Over-the-counter cream or suppository used for one to seven days." },
+      { "name": "Fluconazole (Diflucan)", "class": "Antifungal (pill)", "note": "Single prescription pill that clears most infections." },
+      { "name": "Clotrimazole", "class": "Antifungal (OTC)", "note": "Another over-the-counter cream option." },
+      { "name": "Terconazole", "class": "Antifungal (prescription)", "note": "Prescription cream for stubborn infections." }
+    ],
+    "redFlags": "If you also have fever, chills, or pelvic pain, it may be a more serious infection — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Yeast Infection", "url": "https://medlineplus.gov/search/?query=yeast%20infection" },
+      { "label": "CDC — Candidiasis", "url": "https://www.cdc.gov/candidiasis/" }
+    ]
+  },
+  {
+    "id": "pms-pmdd",
+    "name": "PMS & PMDD",
+    "aka": "Premenstrual syndrome / premenstrual dysphoric disorder",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "PMS affects ~3 in 4 menstruating women; PMDD about 5%",
+    "overview": "PMS is the cluster of symptoms — bloating, breast tenderness, irritability, food cravings — that shows up in the week or two before a period and fades once it starts. PMDD is a more severe form in which mood symptoms like depression, anger, or anxiety seriously disrupt daily life. Both are common and very treatable. Tracking your symptoms across a couple of cycles helps your doctor confirm the pattern and find the right treatment.",
+    "symptoms": ["Bloating and breast tenderness", "Irritability or mood swings", "Food cravings", "Fatigue and trouble sleeping", "With PMDD: intense sadness, anger, or anxiety", "Symptoms lift within days of the period starting"],
+    "drugs": [
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases cramps, headaches, and breast tenderness." },
+      { "name": "Sertraline (Zoloft) / Fluoxetine (Prozac)", "class": "SSRI", "note": "First-choice medicines for PMDD mood symptoms." },
+      { "name": "Drospirenone birth control (Yaz)", "class": "Hormonal contraceptive", "note": "Birth control pill that is FDA-approved for PMDD." },
+      { "name": "Spironolactone", "class": "Diuretic", "note": "Can reduce bloating and breast tenderness." }
+    ],
+    "redFlags": "If premenstrual mood symptoms ever include thoughts of self-harm or suicide, call or text 988 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — PMS & PMDD", "url": "https://medlineplus.gov/search/?query=PMS%20%26%20PMDD" },
+      { "label": "Office on Women's Health", "url": "https://www.womenshealth.gov/" }
+    ]
+  },
+  {
+    "id": "cervical-cancer",
+    "name": "Cervical Cancer",
+    "aka": "",
+    "specialtyId": "obgyn",
+    "category": "Cancer",
+    "prevalence": "~14,000 new U.S. cases each year",
+    "overview": "Cervical cancer starts in the cervix, the lower part of the uterus, and is almost always caused by long-lasting infection with HPV, a very common virus. It grows slowly, which is why it's one of the most preventable cancers: the HPV vaccine prevents most cases, and routine Pap and HPV tests can catch cell changes years before cancer ever develops. Found early, cervical cancer is highly treatable, often with surgery alone.",
+    "symptoms": ["Often no symptoms early on", "Bleeding between periods or after sex", "Unusual vaginal discharge", "Pelvic pain or pain during sex", "Bleeding after menopause"],
+    "drugs": [
+      { "name": "Surgery (cone biopsy or hysterectomy)", "class": "Procedure", "note": "Main treatment for early-stage cancer." },
+      { "name": "Radiation therapy", "class": "Procedure", "note": "Often combined with chemo for larger tumors." },
+      { "name": "Cisplatin", "class": "Chemotherapy", "note": "Most common chemo, usually given alongside radiation." },
+      { "name": "HPV vaccine (Gardasil 9)", "class": "Preventive vaccine", "note": "Prevents the infections that cause most cervical cancers." }
+    ],
+    "redFlags": "Heavy vaginal bleeding with dizziness, fainting, or a racing heartbeat is an emergency — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Cervical Cancer", "url": "https://medlineplus.gov/search/?query=cervical%20cancer" },
+      { "label": "American Cancer Society", "url": "https://www.cancer.org/" }
+    ]
+  },
+  {
+    "id": "ovarian-cysts",
+    "name": "Ovarian Cysts",
+    "aka": "",
+    "specialtyId": "obgyn",
+    "category": "Women's Health",
+    "prevalence": "About 8% of premenopausal women develop one needing treatment",
+    "overview": "Ovarian cysts are fluid-filled sacs that form on or inside an ovary, usually as a normal part of the monthly cycle. Most cause no symptoms, are found by chance on an ultrasound, and go away on their own within a few months. Some cause a pelvic ache, bloating, or pain during sex. Cysts are almost always benign, especially before menopause, so doctors often simply monitor them and treat pain if needed.",
+    "symptoms": ["Often no symptoms at all", "Dull pelvic ache or pressure on one side", "Bloating or a feeling of fullness", "Pain during sex", "Sudden sharp pain if a cyst ruptures or twists"],
+    "drugs": [
+      { "name": "Watchful waiting", "class": "Monitoring", "note": "Most cysts go away on their own within a few months." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Relieves pelvic ache while a cyst resolves." },
+      { "name": "Hormonal birth control", "class": "Hormonal contraceptive", "note": "Helps prevent new cysts from forming." },
+      { "name": "Laparoscopic surgery", "class": "Procedure", "note": "Removes large or persistent cysts through tiny incisions." }
+    ],
+    "redFlags": "Sudden, sharp pelvic pain with fever, vomiting, or faintness can mean a ruptured or twisted cyst — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Ovarian Cysts", "url": "https://medlineplus.gov/search/?query=ovarian%20cysts" },
+      { "label": "American College of Obstetricians and Gynecologists", "url": "https://www.acog.org/" }
+    ]
+  }
+]

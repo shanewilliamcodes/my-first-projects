@@ -1,7 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import {
-  CONDITIONS, TOP_DRUGS, SPECIALTIES,
-  CONDITION_COUNT, DRUG_COUNT, SPECIALTY_COUNT,
+  CONDITIONS, TOP_DRUGS, SPECIALTIES, CONDITION_COUNT,
   specialtyById, conditionById, conditionsForSpecialty, guessSpecialtyId,
   searchAll, costPlusUrl, goodRxUrl, trumpRxUrl,
   findProviderUrl, zocdocUrl, healthgradesUrl, medlineSearchUrl,
@@ -23,6 +22,13 @@ const CATEGORY_ORDER = [
   'Lungs & Breathing', 'Digestive Health', 'Brain & Nerves',
   'Bones & Joints', 'Cancer', 'Kidneys & Urinary', 'Skin',
   'Allergy & Immune', 'Infections', 'Blood',
+  "Women's Health", "Men's Health", 'Eyes & Vision', 'Ear, Nose & Throat',
+];
+
+// Quick-search suggestions shown under the hero.
+const POPULAR_SEARCHES = [
+  'High blood pressure', 'Diabetes', 'Anxiety', 'Shingles',
+  'Pancreatic cancer', 'Sleep apnea', 'ADHD', 'Ozempic',
 ];
 
 // Small hook for live fetches with loading/error states (mirrors the NBA app).
@@ -30,8 +36,8 @@ function useLive(fn, deps) {
   const [state, setState] = useState({ loading: true, error: null, data: null });
   useEffect(() => {
     let alive = true;
-    setState({ loading: true, error: null, data: null });
     Promise.resolve()
+      .then(() => { if (alive) setState({ loading: true, error: null, data: null }); })
       .then(fn)
       .then((d) => alive && setState({ loading: false, error: null, data: d }))
       .catch((e) => alive && setState({ loading: false, error: e.message || 'Something went wrong', data: null }));
@@ -276,7 +282,7 @@ function NewsView() {
 
 /* ============================ condition modal ============================ */
 
-function ConditionModal({ condition: c, onClose, onOpenCondition }) {
+function ConditionModal({ condition: c, onClose, onOpenDrug }) {
   const spec = specialtyById(c.specialtyId);
   const research = useLive(() => fetchPubMed(`${c.name} treatment`, { retmax: 5 }), [c.id]);
 
@@ -336,32 +342,55 @@ function ConditionModal({ condition: c, onClose, onOpenCondition }) {
             </ul>
           </section>
 
-          {/* drugs ranked */}
+          {/* treatments & medications, ranked */}
           <section>
             <h3 className="mb-1 text-sm font-bold uppercase tracking-wider text-slate-400">
-              Most commonly prescribed
+              Common treatments &amp; medications
             </h3>
             <p className="mb-3 text-xs text-slate-500">
-              Ranked roughly most-to-least common. Compare cash prices via the links — no insurance needed.
+              Ranked roughly most-to-least common. Tap a medication for FDA facts and cash prices — no insurance needed.
             </p>
             <div className="space-y-2">
-              {c.drugs.map((d, i) => (
-                <div key={d.name} className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 text-xs font-bold text-emerald-300">
-                      {i + 1}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-baseline gap-x-2">
-                        <span className="font-bold text-white">{d.name}</span>
-                        <span className="text-xs text-cyan-300/80">{d.class}</span>
+              {c.drugs.map((d, i) => {
+                // Procedures, devices, and home care aren't medications — no FDA
+                // label or price links for those. Careful: "Chemotherapy",
+                // "Immunotherapy" etc. ARE drugs, so "therapy" alone only
+                // counts when it's the entire class.
+                const cls = (d.class || '').trim();
+                const isMed =
+                  !/\b(procedure|surgery|surgical|device|maneuver|home care|lifestyle|irrigation|rinse|implant|vestibular|counseling|physical therapy)\b/i.test(cls) &&
+                  !/^(therapy|home care|prevention|supplement|skin barrier|emergency rescue|electrolyte|vaccine[s]?( \(.*\))?)$/i.test(cls);
+                const open = () => onOpenDrug({ name: d.name, class: d.class, use: c.name, conditionId: c.id });
+                return (
+                  <div
+                    key={d.name}
+                    role={isMed ? 'button' : undefined}
+                    tabIndex={isMed ? 0 : undefined}
+                    onClick={isMed ? open : undefined}
+                    onKeyDown={isMed ? (e) => e.key === 'Enter' && open() : undefined}
+                    className={`rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 transition ${
+                      isMed ? 'cursor-pointer hover:border-emerald-400/40 hover:bg-white/[0.06]' : ''
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-emerald-500/15 text-xs font-bold text-emerald-300">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-baseline gap-x-2">
+                          <span className="font-bold text-white">{d.name}</span>
+                          <span className="text-xs text-cyan-300/80">{d.class}</span>
+                        </div>
+                        <p className="mt-0.5 text-sm text-slate-400">{d.note}</p>
+                        {isMed && (
+                          <div className="mt-2" onClick={(e) => e.stopPropagation()}><PriceLinks drug={d.name} /></div>
+                        )}
                       </div>
-                      <p className="mt-0.5 text-sm text-slate-400">{d.note}</p>
-                      <div className="mt-2"><PriceLinks drug={d.name} /></div>
+                      {isMed && <span className="mt-1 shrink-0 text-xs font-semibold text-emerald-300/70">Details ›</span>}
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <LinkBtn href={trumpRxUrl()} color="bg-white/10 hover:bg-white/20">🏛️ TrumpRx.gov</LinkBtn>
@@ -517,40 +546,50 @@ function DrugModal({ drug: d, onClose, onOpenCondition }) {
   const label = useLive(() => fetchDrugLabel(d.name), [d.name]);
   const cleanName = d.name.replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim();
 
+  // Capture-phase Esc: when this modal is stacked above a condition page,
+  // Esc closes only this one (the modal underneath never sees the event).
   useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose();
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 p-3 backdrop-blur-sm sm:p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-black/70 p-3 backdrop-blur-sm sm:p-6" onClick={onClose}>
       <div className="relative my-4 w-full max-w-xl rounded-3xl border border-white/10 bg-slate-900 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20">✕</button>
 
         <div className="rounded-t-3xl bg-gradient-to-b from-emerald-500/20 to-transparent px-6 pt-8 pb-5">
           <div className="mb-2 text-4xl">💊</div>
-          <h2 className="text-2xl font-extrabold text-white">{d.name}</h2>
+          <h2 className="text-2xl font-extrabold capitalize text-white">{d.name}</h2>
           {d.brand && <p className="text-sm text-slate-400">brand name: {d.brand}</p>}
           <div className="mt-3 flex flex-wrap gap-2">
-            <Pill tone="cyan">{d.class}</Pill>
+            {d.class && <Pill tone="cyan">{d.class}</Pill>}
             {d.rank && <Pill tone="emerald">#{d.rank} most prescribed in U.S.</Pill>}
           </div>
         </div>
 
         <div className="space-y-6 px-6 pb-8">
           {/* what it treats */}
-          <div className="rounded-2xl bg-white/5 px-4 py-3 text-sm">
-            <span className="font-semibold text-emerald-300">Commonly used for: </span>
-            {cond ? (
-              <button onClick={() => { onClose(); onOpenCondition(cond.id); }} className="text-slate-200 underline decoration-dotted hover:text-white">
-                {d.use}
-              </button>
-            ) : (
-              <span className="text-slate-200">{d.use}</span>
-            )}
-            {d.rx && <span className="text-slate-500"> · ~{d.rx.replace('~', '')} prescriptions/year</span>}
-          </div>
+          {d.use && (
+            <div className="rounded-2xl bg-white/5 px-4 py-3 text-sm">
+              <span className="font-semibold text-emerald-300">Commonly used for: </span>
+              {cond ? (
+                <button onClick={() => { onClose(); onOpenCondition(cond.id); }} className="text-slate-200 underline decoration-dotted hover:text-white">
+                  {d.use}
+                </button>
+              ) : (
+                <span className="text-slate-200">{d.use}</span>
+              )}
+              {d.rx && <span className="text-slate-500"> · ~{d.rx.replace('~', '')} prescriptions/year</span>}
+            </div>
+          )}
 
           {/* official FDA facts */}
           <section>
@@ -706,53 +745,66 @@ function SearchResults({ query, onOpenCondition, onOpenLive, onOpenDrug, onClear
 
 /* ============================ tabs / views ============================ */
 
-function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug }) {
+function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSearch }) {
   const featured = FEATURED_IDS.map(conditionById).filter(Boolean);
   const topTen = TOP_DRUGS.slice(0, 10);
+  const [heroQ, setHeroQ] = useState('');
+
+  const submitHero = (e) => {
+    e.preventDefault();
+    if (heroQ.trim()) onSearch(heroQ.trim());
+  };
 
   return (
     <div className="space-y-12">
-      {/* hero */}
-      <section className="mx-auto max-w-3xl text-center">
+      {/* hero — search is the product */}
+      <section className="mx-auto max-w-3xl pt-2 text-center sm:pt-6">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-300">
-          ✚ Plain-English health reference
+          ✚ Built on NIH, FDA &amp; PubMed data
         </div>
         <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-5xl">
-          Understand any condition,<br className="hidden sm:block" /> in plain English.
+          Any condition. Any drug.<br className="hidden sm:block" /> Explained in plain English.
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-base text-slate-400 sm:text-lg">
-          Look up a medical condition to see what it is, which specialist treats it,
-          the medications most often prescribed, and where to find care — plus ways to
-          pay less for your prescriptions.
+          What it is, who treats it, what's usually prescribed, where to find care —
+          and how to pay less for your medication.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <button onClick={() => onGoTab('conditions')}
-            className="rounded-xl bg-emerald-500 px-5 py-3 text-sm font-bold text-slate-900 transition hover:bg-emerald-400">
-            Browse conditions
-          </button>
-          <button onClick={() => onGoTab('drugs')}
-            className="rounded-xl bg-white/10 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/20">
-            Top prescribed drugs
-          </button>
+
+        <form onSubmit={submitHero} className="mx-auto mt-7 max-w-xl">
+          <div className="relative">
+            <input
+              value={heroQ}
+              onChange={(e) => setHeroQ(e.target.value)}
+              placeholder="Try “shingles”, “metformin”, or “chest pain”…"
+              className="w-full rounded-2xl border border-white/15 bg-white/5 py-4 pl-12 pr-28 text-base text-white placeholder-slate-500 shadow-xl outline-none transition focus:border-emerald-400/60 focus:bg-white/10"
+            />
+            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-500">🔍</span>
+            <button type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-900 transition hover:bg-emerald-400">
+              Search
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {POPULAR_SEARCHES.map((p) => (
+            <button key={p} onClick={() => onSearch(p)}
+              className="rounded-full bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-emerald-500/20 hover:text-emerald-200">
+              {p}
+            </button>
+          ))}
         </div>
-        <div className="mt-6 flex justify-center gap-6 text-center">
-          {[[CONDITION_COUNT, 'Conditions'], [DRUG_COUNT, 'Drugs ranked'], [SPECIALTY_COUNT, 'Specialties']].map(
-            ([n, l]) => (
-              <div key={l}>
-                <div className="text-2xl font-extrabold text-white">{n}</div>
-                <div className="text-xs uppercase tracking-wide text-slate-500">{l}</div>
-              </div>
-            )
-          )}
-        </div>
+        <p className="mt-3 text-xs text-slate-600">
+          Searches the U.S. National Library of Medicine — thousands of conditions, plus the top 100 drugs.
+        </p>
       </section>
 
-      {/* most common conditions */}
+      {/* most-searched conditions */}
       <section>
         <div className="mb-4 flex items-end justify-between">
           <div>
-            <h2 className="text-xl font-bold text-white">Most common conditions</h2>
-            <p className="text-sm text-slate-400">The ones people ask about most.</p>
+            <h2 className="text-xl font-bold text-white">Most-searched conditions</h2>
+            <p className="text-sm text-slate-400">The big ones — each with a full plain-English guide.</p>
           </div>
           <button onClick={() => onGoTab('conditions')} className="text-sm font-semibold text-emerald-300 hover:underline">
             View all →
@@ -770,10 +822,10 @@ function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug }) {
         <div className="mb-4 flex items-end justify-between">
           <div>
             <h2 className="text-xl font-bold text-white">Top 10 prescribed drugs</h2>
-            <p className="text-sm text-slate-400">The most-filled prescriptions in the U.S.</p>
+            <p className="text-sm text-slate-400">Tap any drug for FDA facts and ways to pay less.</p>
           </div>
           <button onClick={() => onGoTab('drugs')} className="text-sm font-semibold text-emerald-300 hover:underline">
-            See all {DRUG_COUNT} →
+            See the top 100 →
           </button>
         </div>
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40">
@@ -783,20 +835,25 @@ function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug }) {
         </div>
       </section>
 
-      {/* specialties preview */}
+      {/* all specialties, compact */}
       <section>
         <div className="mb-4 flex items-end justify-between">
           <div>
             <h2 className="text-xl font-bold text-white">Browse by specialty</h2>
-            <p className="text-sm text-slate-400">Not sure where to start? Pick the area that fits.</p>
+            <p className="text-sm text-slate-400">Every kind of doctor, and what they treat.</p>
           </div>
           <button onClick={() => onGoTab('specialties')} className="text-sm font-semibold text-emerald-300 hover:underline">
-            View all →
+            Details →
           </button>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {SPECIALTIES.slice(0, 8).map((s) => (
-            <SpecialtyCard key={s.id} s={s} onClick={() => onOpenSpecialty(s.id)} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {SPECIALTIES.map((s) => (
+            <button key={s.id} onClick={() => onOpenSpecialty(s.id)}
+              className="flex flex-col items-center gap-1.5 rounded-2xl border border-white/10 bg-slate-800/40 px-3 py-4 text-center transition hover:-translate-y-0.5 hover:border-cyan-400/40 hover:bg-slate-800/70">
+              <span className="text-2xl">{s.emoji}</span>
+              <span className="text-xs font-semibold leading-tight text-white">{s.name}</span>
+              <span className="text-[10px] text-slate-500">{conditionsForSpecialty(s.id).length} guides</span>
+            </button>
           ))}
         </div>
       </section>
@@ -811,6 +868,12 @@ function ConditionsView({ onOpenCondition }) {
 
   return (
     <div>
+      <div className="mb-5">
+        <h2 className="text-xl font-bold text-white">Condition guides</h2>
+        <p className="text-sm text-slate-400">
+          {CONDITION_COUNT} in-depth plain-English guides — and thousands more conditions via the search bar above.
+        </p>
+      </div>
       <div className="mb-6 flex flex-wrap gap-2">
         {cats.map((c) => (
           <button
@@ -829,19 +892,53 @@ function ConditionsView({ onOpenCondition }) {
           <ConditionCard key={c.id} c={c} onClick={() => onOpenCondition(c.id)} />
         ))}
       </div>
+      <p className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center text-sm text-slate-400">
+        Don't see what you're looking for? Type it in the <span className="font-semibold text-emerald-300">search bar</span> at the top —
+        we search the entire U.S. National Library of Medicine.
+      </p>
     </div>
   );
 }
 
 function DrugsView({ onOpenCondition, onOpenDrug }) {
+  const [lookup, setLookup] = useState('');
+
+  const submitLookup = (e) => {
+    e.preventDefault();
+    const name = lookup.trim();
+    if (name) {
+      onOpenDrug({ name });
+      setLookup('');
+    }
+  };
+
   return (
     <div>
       <div className="mb-5">
         <h2 className="text-xl font-bold text-white">Most prescribed drugs in the U.S.</h2>
         <p className="text-sm text-slate-400">
-          Ranked by approximate annual prescriptions. Tap a drug for details, or tap its use to read about the condition.
+          Ranked by approximate annual prescriptions. Tap a drug for FDA facts, what it treats, and ways to pay less.
         </p>
       </div>
+
+      {/* look up ANY drug via the FDA */}
+      <form onSubmit={submitLookup} className="mb-6">
+        <div className="relative">
+          <input
+            value={lookup}
+            onChange={(e) => setLookup(e.target.value)}
+            placeholder="Not in the list? Look up any drug — e.g. “Ozempic”, “amoxicillin”…"
+            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-10 pr-24 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/50 focus:bg-white/10"
+          />
+          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">💊</span>
+          <button type="submit"
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-emerald-500 px-3.5 py-2 text-xs font-bold text-slate-900 transition hover:bg-emerald-400">
+            Look up
+          </button>
+        </div>
+        <p className="mt-1.5 text-xs text-slate-600">Pulls the official label from the FDA — works for most U.S. prescription and OTC drugs.</p>
+      </form>
+
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40">
         {TOP_DRUGS.map((d) => (
           <DrugRow key={d.rank} d={d} onConditionClick={onOpenCondition} onOpenDrug={onOpenDrug} />
@@ -987,7 +1084,7 @@ export default function App() {
         ) : openSpecialty ? (
           <SpecialtyDetail specialty={openSpecialty} onBack={() => setOpenSpecialtyId(null)} onOpenCondition={setOpenConditionId} />
         ) : tab === 'home' ? (
-          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} />
+          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} onSearch={setQuery} />
         ) : tab === 'conditions' ? (
           <ConditionsView onOpenCondition={setOpenConditionId} />
         ) : tab === 'drugs' ? (
@@ -1003,8 +1100,9 @@ export default function App() {
       <footer className="border-t border-white/10 px-4 py-8">
         <div className="mx-auto max-w-6xl space-y-3 text-center text-xs text-slate-500">
           <p>
-            Health Explorer is a personal educational project. Information is general and drawn from public
-            sources (CDC, NIH/MedlinePlus, and similar). Drug rankings are approximate and for scale only.
+            Health Explorer is a personal educational project. Condition guides draw on public sources
+            (CDC, NIH/MedlinePlus); search covers the U.S. National Library of Medicine; drug facts come
+            from the official FDA label. Drug rankings are approximate and for scale only.
           </p>
           <p>
             It does <span className="font-semibold text-slate-400">not</span> provide medical advice, diagnosis, or treatment.
@@ -1018,7 +1116,7 @@ export default function App() {
         <ConditionModal
           condition={openCondition}
           onClose={() => setOpenConditionId(null)}
-          onOpenCondition={setOpenConditionId}
+          onOpenDrug={setOpenDrug}
         />
       )}
 

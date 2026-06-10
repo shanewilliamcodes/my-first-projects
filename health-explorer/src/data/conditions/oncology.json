@@ -1,0 +1,169 @@
+[
+  {
+    "id": "pancreatic-cancer",
+    "name": "Pancreatic Cancer",
+    "aka": "Cancer of the pancreas",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~67,000 new U.S. cases each year",
+    "overview": "Pancreatic cancer starts in the pancreas, an organ behind the stomach that makes digestive juices and insulin. Because early symptoms are vague, it is often found after it has spread, which makes it one of the harder cancers to treat. When caught early, surgery can remove it, and chemotherapy helps at every stage. Researchers are working hard on better tests and treatments, and care teams can do a lot to ease symptoms.",
+    "symptoms": [
+      "Yellowing of the skin or eyes (jaundice)",
+      "Belly pain that spreads to the back",
+      "Unexplained weight loss",
+      "Loss of appetite",
+      "New or hard-to-control diabetes",
+      "Dark urine or light-colored stools"
+    ],
+    "drugs": [
+      { "name": "FOLFIRINOX", "class": "Combination chemotherapy", "note": "A mix of chemo medicines often used for people healthy enough to handle it." },
+      { "name": "Gemcitabine (Gemzar)", "class": "Chemotherapy", "note": "A long-standing mainstay, used alone or in combinations." },
+      { "name": "Nab-paclitaxel (Abraxane)", "class": "Chemotherapy", "note": "Often paired with gemcitabine." },
+      { "name": "Whipple surgery", "class": "Procedure", "note": "Removes the tumor when the cancer is caught early enough." }
+    ],
+    "redFlags": "New yellowing of the skin or eyes, severe belly pain, or vomiting that won't stop needs same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Pancreatic Cancer", "url": "https://medlineplus.gov/search/?query=pancreatic%20cancer" },
+      { "label": "Pancreatic Cancer Action Network", "url": "https://pancan.org/" }
+    ]
+  },
+  {
+    "id": "leukemia",
+    "name": "Leukemia",
+    "aka": "Cancer of the blood and bone marrow",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~62,000 new U.S. cases each year",
+    "overview": "Leukemia is cancer of the blood-forming cells in the bone marrow. It crowds out healthy blood cells, leading to fatigue, infections, and easy bruising. There are several types — acute kinds come on fast, while chronic kinds grow slowly, sometimes for years. Treatment has improved dramatically: some forms are highly curable, especially in children, and others can be controlled for the long term with a daily pill.",
+    "symptoms": [
+      "Constant tiredness or weakness",
+      "Frequent fevers or infections",
+      "Easy bruising or bleeding",
+      "Swollen lymph nodes",
+      "Pale skin",
+      "Bone or joint pain"
+    ],
+    "drugs": [
+      { "name": "Cytarabine", "class": "Chemotherapy", "note": "A backbone chemo medicine for acute leukemia." },
+      { "name": "Imatinib (Gleevec)", "class": "Targeted therapy", "note": "A daily pill that transformed treatment of chronic myeloid leukemia." },
+      { "name": "Ibrutinib (Imbruvica)", "class": "Targeted therapy", "note": "A pill commonly used for chronic lymphocytic leukemia." },
+      { "name": "Rituximab (Rituxan)", "class": "Monoclonal antibody", "note": "Often combined with other medicines for certain types." }
+    ],
+    "redFlags": "A high fever, bleeding that won't stop, or sudden trouble breathing needs emergency care — call 911 or go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Leukemia", "url": "https://medlineplus.gov/search/?query=leukemia" },
+      { "label": "Leukemia & Lymphoma Society", "url": "https://www.lls.org/" }
+    ]
+  },
+  {
+    "id": "lymphoma",
+    "name": "Lymphoma",
+    "aka": "Hodgkin and non-Hodgkin lymphoma",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~90,000 new U.S. cases each year",
+    "overview": "Lymphoma is cancer of the lymphatic system — the network of nodes and vessels that helps your body fight infection. The two main families are Hodgkin and non-Hodgkin lymphoma, and the first sign is often a painless swollen lymph node in the neck, armpit, or groin. Many lymphomas respond very well to treatment, and Hodgkin lymphoma is one of the most curable cancers, even when found at a later stage.",
+    "symptoms": [
+      "Painless swollen lymph nodes",
+      "Drenching night sweats",
+      "Fever without an infection",
+      "Unexplained weight loss",
+      "Persistent fatigue",
+      "Itchy skin"
+    ],
+    "drugs": [
+      { "name": "Rituximab (Rituxan)", "class": "Monoclonal antibody", "note": "A mainstay for most non-Hodgkin lymphomas." },
+      { "name": "R-CHOP", "class": "Combination chemotherapy", "note": "The standard first treatment for many non-Hodgkin lymphomas." },
+      { "name": "ABVD", "class": "Combination chemotherapy", "note": "A common first treatment for Hodgkin lymphoma." },
+      { "name": "Radiation therapy", "class": "Procedure", "note": "Targets specific groups of affected lymph nodes." }
+    ],
+    "redFlags": "A rapidly growing lump with trouble breathing or swallowing, or a fever with shaking chills, needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Lymphoma", "url": "https://medlineplus.gov/search/?query=lymphoma" },
+      { "label": "Leukemia & Lymphoma Society", "url": "https://www.lls.org/" }
+    ]
+  },
+  {
+    "id": "bladder-cancer",
+    "name": "Bladder Cancer",
+    "aka": "Urothelial cancer",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~83,000 new U.S. cases each year",
+    "overview": "Bladder cancer starts in the lining of the bladder, and its most common warning sign is blood in the urine. Smoking is the biggest risk factor. The good news: most cases are found early, while the cancer is still in the bladder's inner layer, where it is very treatable and often curable. Because bladder cancer can come back, regular checkups with a urologist are a key part of care.",
+    "symptoms": [
+      "Blood in the urine (often painless)",
+      "Needing to urinate more often than usual",
+      "Burning or pain when urinating",
+      "Feeling a sudden, strong urge to go",
+      "Lower back pain on one side"
+    ],
+    "drugs": [
+      { "name": "TURBT surgery", "class": "Procedure", "note": "Removes bladder tumors through the urethra — no incision needed." },
+      { "name": "BCG therapy", "class": "Immunotherapy", "note": "Placed directly into the bladder to keep early cancer from returning." },
+      { "name": "Mitomycin", "class": "Chemotherapy", "note": "Another medicine placed inside the bladder after tumor removal." },
+      { "name": "Cisplatin-based chemotherapy", "class": "Chemotherapy", "note": "Used when cancer grows into the bladder muscle." }
+    ],
+    "redFlags": "Heavy bleeding with clots or being unable to pass urine at all is an emergency — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Bladder Cancer", "url": "https://medlineplus.gov/search/?query=bladder%20cancer" },
+      { "label": "American Cancer Society", "url": "https://www.cancer.org/" }
+    ]
+  },
+  {
+    "id": "kidney-cancer",
+    "name": "Kidney Cancer",
+    "aka": "Renal cell carcinoma",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~82,000 new U.S. cases each year",
+    "overview": "Most kidney cancers are renal cell carcinoma, which starts in the tiny tubes that filter your blood. Many cases today are found early — often by accident on a scan done for something else — and surgery alone frequently cures those. For cancer that has spread, newer immunotherapy and targeted pills have greatly improved the outlook compared with a decade ago, and treatment keeps getting better.",
+    "symptoms": [
+      "Blood in the urine",
+      "A lump or pain in the side or lower back",
+      "Unexplained weight loss",
+      "Ongoing fatigue",
+      "Fever that comes and goes",
+      "Loss of appetite"
+    ],
+    "drugs": [
+      { "name": "Kidney surgery (nephrectomy)", "class": "Procedure", "note": "Removing part or all of the kidney often cures early kidney cancer." },
+      { "name": "Pembrolizumab (Keytruda)", "class": "Immunotherapy", "note": "Helps the immune system find and attack cancer cells." },
+      { "name": "Cabozantinib (Cabometyx)", "class": "Targeted therapy", "note": "A pill that blocks signals tumors use to grow." },
+      { "name": "Nivolumab (Opdivo)", "class": "Immunotherapy", "note": "Another immune-boosting option, sometimes used in combinations." }
+    ],
+    "redFlags": "Heavy or persistent blood in the urine, or severe one-sided back pain with fever, needs same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Kidney Cancer", "url": "https://medlineplus.gov/search/?query=kidney%20cancer" },
+      { "label": "National Kidney Foundation", "url": "https://www.kidney.org/" }
+    ]
+  },
+  {
+    "id": "ovarian-cancer",
+    "name": "Ovarian Cancer",
+    "aka": "",
+    "specialtyId": "oncology",
+    "category": "Cancer",
+    "prevalence": "~20,000 new U.S. cases each year",
+    "overview": "Ovarian cancer begins in the ovaries or fallopian tubes. Its early symptoms — bloating, pelvic pain, feeling full quickly — are easy to mistake for everyday stomach issues, so it is often found at a later stage. Treatment usually combines surgery with chemotherapy, and newer maintenance pills help keep the cancer from coming back. Women with a family history of breast or ovarian cancer should ask their doctor about genetic testing.",
+    "symptoms": [
+      "Bloating that doesn't go away",
+      "Pelvic or belly pain",
+      "Feeling full quickly when eating",
+      "Needing to urinate urgently or often",
+      "Ongoing fatigue",
+      "Bleeding after menopause or unusual periods"
+    ],
+    "drugs": [
+      { "name": "Carboplatin", "class": "Chemotherapy", "note": "The backbone chemo medicine for ovarian cancer." },
+      { "name": "Paclitaxel (Taxol)", "class": "Chemotherapy", "note": "Usually given together with carboplatin." },
+      { "name": "Debulking surgery", "class": "Procedure", "note": "Removes as much of the cancer as possible." },
+      { "name": "Olaparib (Lynparza)", "class": "PARP inhibitor", "note": "A maintenance pill that helps keep cancer from returning." }
+    ],
+    "redFlags": "Severe belly pain with vomiting, a hard swollen abdomen, or trouble breathing needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Ovarian Cancer", "url": "https://medlineplus.gov/search/?query=ovarian%20cancer" },
+      { "label": "American College of Obstetricians and Gynecologists", "url": "https://www.acog.org/" }
+    ]
+  }
+]

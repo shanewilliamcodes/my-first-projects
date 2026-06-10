@@ -1,0 +1,163 @@
+[
+  {
+    "id": "glaucoma",
+    "name": "Glaucoma",
+    "aka": "",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~3 million Americans",
+    "overview": "Glaucoma is a group of eye diseases that damage the optic nerve — the cable carrying images from your eye to your brain — usually because of high pressure inside the eye. It develops slowly and silently, often stealing side vision first, so many people don't notice until damage is done. There's no cure, but daily eye drops, laser treatment, or surgery can lower eye pressure and protect the vision you still have. Regular eye exams catch it early.",
+    "symptoms": [
+      "Often no symptoms at first",
+      "Gradual loss of side (peripheral) vision",
+      "Patchy blind spots over time",
+      "In sudden attacks: severe eye pain, halos around lights, and nausea"
+    ],
+    "drugs": [
+      { "name": "Latanoprost (Xalatan)", "class": "Prostaglandin eye drop", "note": "First-choice nightly drop that lowers eye pressure." },
+      { "name": "Timolol (Timoptic)", "class": "Beta-blocker eye drop", "note": "Cuts down the amount of fluid the eye makes." },
+      { "name": "Brimonidine (Alphagan P)", "class": "Alpha-agonist eye drop", "note": "Often added when one drop isn't enough." },
+      { "name": "Dorzolamide (Trusopt)", "class": "Carbonic anhydrase inhibitor drop", "note": "Another add-on that lowers fluid production." },
+      { "name": "Laser trabeculoplasty", "class": "Procedure", "note": "Quick office laser that helps fluid drain from the eye." }
+    ],
+    "redFlags": "Sudden severe eye pain with blurred vision, halos around lights, headache, or nausea can be an acute glaucoma attack — go to the ER right away.",
+    "resources": [
+      { "label": "MedlinePlus — Glaucoma", "url": "https://medlineplus.gov/search/?query=glaucoma" },
+      { "label": "Glaucoma Research Foundation", "url": "https://www.glaucoma.org/" }
+    ]
+  },
+  {
+    "id": "cataracts",
+    "name": "Cataracts",
+    "aka": "",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~24 million Americans age 40 and older",
+    "overview": "A cataract is a clouding of the eye's natural lens, like looking through a foggy window. It's a normal part of aging — most people develop some clouding as they get older. Vision slowly gets blurry, colors fade, and glare at night gets worse. The good news: cataract surgery is one of the safest and most common operations in the U.S., replacing the cloudy lens with a clear artificial one and restoring sharp vision for most people.",
+    "symptoms": [
+      "Cloudy or blurry vision",
+      "Colors that look faded or yellowed",
+      "Glare and halos, especially driving at night",
+      "Needing brighter light to read",
+      "Frequent changes in glasses prescription"
+    ],
+    "drugs": [
+      { "name": "Cataract surgery", "class": "Procedure", "note": "Replaces the cloudy lens with a clear artificial one; the only real fix." },
+      { "name": "Updated glasses or contacts", "class": "Lifestyle", "note": "A stronger prescription and anti-glare coating help in early stages." },
+      { "name": "Brighter lighting and magnifiers", "class": "Lifestyle", "note": "Simple home changes that ease reading until surgery is needed." }
+    ],
+    "redFlags": "Sudden vision loss, flashes of light, or a dark curtain over your vision is not a cataract — seek same-day eye care.",
+    "resources": [
+      { "label": "MedlinePlus — Cataracts", "url": "https://medlineplus.gov/search/?query=cataracts" },
+      { "label": "American Academy of Ophthalmology", "url": "https://www.aao.org/" }
+    ]
+  },
+  {
+    "id": "macular-degeneration",
+    "name": "Macular Degeneration",
+    "aka": "Age-related macular degeneration (AMD)",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~20 million U.S. adults",
+    "overview": "Macular degeneration affects the macula — the small center of the retina you use for reading, driving, and recognizing faces. It blurs central vision while side vision stays intact, so it does not cause total blindness. The common 'dry' form usually progresses slowly; the 'wet' form moves faster but can be treated with eye injections that often save sight. Special vitamin formulas can slow the disease in some people, which is why early detection matters.",
+    "symptoms": [
+      "Blurry or fuzzy central vision",
+      "Straight lines that look wavy or bent",
+      "A dark or empty spot in the middle of your view",
+      "Trouble recognizing faces",
+      "Colors that seem less bright"
+    ],
+    "drugs": [
+      { "name": "AREDS2 vitamins", "class": "Supplement", "note": "A specific vitamin formula that slows dry AMD in some people." },
+      { "name": "Aflibercept (Eylea)", "class": "Anti-VEGF injection", "note": "In-office eye injection that treats wet AMD." },
+      { "name": "Ranibizumab (Lucentis)", "class": "Anti-VEGF injection", "note": "Another commonly used injection for wet AMD." },
+      { "name": "Bevacizumab (Avastin)", "class": "Anti-VEGF injection", "note": "A lower-cost option used the same way." }
+    ],
+    "redFlags": "If straight lines suddenly look wavy or a dark spot appears in your central vision, get same-day care from an eye doctor — wet AMD can damage sight quickly.",
+    "resources": [
+      { "label": "MedlinePlus — Macular Degeneration", "url": "https://medlineplus.gov/search/?query=macular%20degeneration" },
+      { "label": "American Macular Degeneration Foundation", "url": "https://www.macular.org/" }
+    ]
+  },
+  {
+    "id": "dry-eye",
+    "name": "Dry Eye",
+    "aka": "Dry eye disease",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~16 million U.S. adults diagnosed",
+    "overview": "Dry eye happens when your eyes don't make enough tears, or the tears dry up too fast. It causes burning, grittiness, and — surprisingly — watery eyes, since irritation triggers reflex tearing. Screen time, aging, dry air, contact lenses, and some medicines all make it worse. It's uncomfortable but rarely serious, and most people get real relief with artificial tears, warm compresses, and small habit changes like taking regular screen breaks.",
+    "symptoms": [
+      "Burning, stinging, or gritty feeling",
+      "Redness and irritation",
+      "Watery eyes (reflex tearing)",
+      "Blurry vision that clears when you blink",
+      "Tired eyes after reading or screen use"
+    ],
+    "drugs": [
+      { "name": "Artificial tears (OTC)", "class": "Lubricant eye drop", "note": "The first step; can be used as often as needed." },
+      { "name": "Lubricating gel or ointment", "class": "Lubricant", "note": "Thicker overnight relief for eyes that dry out while you sleep." },
+      { "name": "Cyclosporine (Restasis)", "class": "Anti-inflammatory eye drop", "note": "Prescription drop that helps your eyes make more of their own tears." },
+      { "name": "Lifitegrast (Xiidra)", "class": "Anti-inflammatory eye drop", "note": "An alternative prescription for stubborn cases." }
+    ],
+    "redFlags": "Severe eye pain, light sensitivity, or a sudden change in vision is more than dry eye — seek same-day eye care.",
+    "resources": [
+      { "label": "MedlinePlus — Dry Eye", "url": "https://medlineplus.gov/search/?query=dry%20eye" },
+      { "label": "National Eye Institute", "url": "https://www.nei.nih.gov/" }
+    ]
+  },
+  {
+    "id": "pink-eye",
+    "name": "Pink Eye (Conjunctivitis)",
+    "aka": "Conjunctivitis",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~6 million U.S. cases each year",
+    "overview": "Pink eye is inflammation of the conjunctiva, the clear film covering the white of the eye. Viruses cause most cases, and those clear up on their own in a week or two; bacteria and allergies cause the rest. It spreads easily, so wash your hands often and don't share towels or pillowcases. Most pink eye looks worse than it is and doesn't harm vision, but a doctor can tell which kind you have and whether drops will help.",
+    "symptoms": [
+      "Pink or red color in the white of the eye",
+      "Itching, burning, or a gritty feeling",
+      "Watery or sticky discharge",
+      "Crusty lashes, especially in the morning",
+      "Mild light sensitivity"
+    ],
+    "drugs": [
+      { "name": "Artificial tears and cool compresses", "class": "Supportive care", "note": "Soothe most viral cases while they run their course." },
+      { "name": "Polymyxin B / trimethoprim (Polytrim)", "class": "Antibiotic eye drop", "note": "Used when a doctor confirms bacterial pink eye." },
+      { "name": "Erythromycin ointment", "class": "Antibiotic eye ointment", "note": "A common bacterial option, especially for kids." },
+      { "name": "Ketotifen (Zaditor)", "class": "Antihistamine eye drop", "note": "Calms itchy, allergy-driven pink eye." }
+    ],
+    "redFlags": "Eye pain, blurred vision, intense redness, severe light sensitivity, or pink eye in a newborn needs same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Pink Eye", "url": "https://medlineplus.gov/search/?query=pink%20eye" },
+      { "label": "CDC — Conjunctivitis", "url": "https://www.cdc.gov/conjunctivitis/" }
+    ]
+  },
+  {
+    "id": "diabetic-retinopathy",
+    "name": "Diabetic Retinopathy",
+    "aka": "Diabetic eye disease",
+    "specialtyId": "ophthalmology",
+    "category": "Eyes & Vision",
+    "prevalence": "~9.6 million U.S. adults",
+    "overview": "Diabetic retinopathy is eye damage caused by high blood sugar weakening the tiny blood vessels in the retina. It's a leading cause of new blindness in working-age American adults — yet it often has no early symptoms at all. That's why everyone with diabetes needs a dilated eye exam every year. Keeping blood sugar and blood pressure in range slows the damage, and modern treatments like eye injections protect vision when it's caught in time.",
+    "symptoms": [
+      "Often no symptoms early on",
+      "Blurry or fluctuating vision",
+      "Floaters (dark spots or strings drifting in view)",
+      "Dark or empty areas in your vision",
+      "Trouble seeing at night"
+    ],
+    "drugs": [
+      { "name": "Blood sugar and blood pressure control", "class": "Prevention", "note": "The foundation of treatment — it slows damage at every stage." },
+      { "name": "Aflibercept (Eylea)", "class": "Anti-VEGF injection", "note": "Eye injection that treats swelling and abnormal blood vessels." },
+      { "name": "Ranibizumab (Lucentis)", "class": "Anti-VEGF injection", "note": "Another widely used injection for diabetic eye disease." },
+      { "name": "Laser photocoagulation", "class": "Procedure", "note": "Seals leaking vessels in more advanced disease." }
+    ],
+    "redFlags": "A sudden shower of floaters, flashes of light, or a dark curtain over your vision can signal bleeding or retinal detachment — get emergency eye care the same day.",
+    "resources": [
+      { "label": "MedlinePlus — Diabetic Retinopathy", "url": "https://medlineplus.gov/search/?query=diabetic%20retinopathy" },
+      { "label": "American Diabetes Association", "url": "https://diabetes.org/" }
+    ]
+  }
+]

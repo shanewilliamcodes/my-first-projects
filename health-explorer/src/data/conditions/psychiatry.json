@@ -1,0 +1,193 @@
+[
+  {
+    "id": "bipolar-disorder",
+    "name": "Bipolar Disorder",
+    "aka": "Manic-depressive illness",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~7 million U.S. adults",
+    "overview": "Bipolar disorder causes unusual shifts in mood and energy — periods of feeling extremely \"up\" (mania) and periods of deep depression. These swings go far beyond everyday ups and downs and can disrupt work, sleep, and relationships. It usually starts in the late teens or early adult years. With mood-stabilizing medicine and therapy, most people can even out the swings and live full, productive lives.",
+    "symptoms": [
+      "Periods of high energy, racing thoughts, and little need for sleep",
+      "Risky or impulsive behavior during \"up\" periods",
+      "Stretches of deep sadness or hopelessness",
+      "Big swings in energy and activity",
+      "Trouble keeping up at work or school during episodes"
+    ],
+    "drugs": [
+      { "name": "Lithium", "class": "Mood stabilizer", "note": "The classic, well-proven medicine for evening out mood swings." },
+      { "name": "Quetiapine (Seroquel)", "class": "Antipsychotic", "note": "Treats both the manic and depressive sides." },
+      { "name": "Lamotrigine (Lamictal)", "class": "Mood stabilizer", "note": "Especially helpful at preventing the depressive lows." },
+      { "name": "Valproate (Depakote)", "class": "Mood stabilizer", "note": "Often used to calm acute mania." },
+      { "name": "Aripiprazole (Abilify)", "class": "Antipsychotic", "note": "Helps control mania and prevent future episodes." }
+    ],
+    "redFlags": "Thoughts of suicide or self-harm, or mania so severe that someone may hurt themselves, are emergencies — call or text 988, or call 911 if there is immediate danger.",
+    "resources": [
+      { "label": "MedlinePlus — Bipolar Disorder", "url": "https://medlineplus.gov/search/?query=bipolar%20disorder" },
+      { "label": "National Institute of Mental Health", "url": "https://www.nimh.nih.gov/" }
+    ]
+  },
+  {
+    "id": "ptsd",
+    "name": "PTSD",
+    "aka": "Post-traumatic stress disorder",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~12 million U.S. adults in a given year",
+    "overview": "PTSD can develop after living through or witnessing something terrifying — combat, an assault, an accident, or a disaster. The brain's alarm system stays stuck on \"high alert,\" bringing nightmares, flashbacks, and a constant feeling of being on edge. It is not a sign of weakness, and it can affect anyone. Trauma-focused therapy works well for most people, and certain antidepressants can help too.",
+    "symptoms": [
+      "Flashbacks or nightmares that replay the event",
+      "Avoiding places, people, or reminders of what happened",
+      "Feeling jumpy, on edge, or easily startled",
+      "Trouble sleeping or concentrating",
+      "Feeling numb, guilty, or detached from others"
+    ],
+    "drugs": [
+      { "name": "Trauma-focused therapy", "class": "Psychotherapy", "note": "The most effective treatment — helps the brain process the trauma safely." },
+      { "name": "Sertraline (Zoloft)", "class": "SSRI antidepressant", "note": "FDA-approved for PTSD; eases anxiety and low mood." },
+      { "name": "Paroxetine (Paxil)", "class": "SSRI antidepressant", "note": "The other FDA-approved medicine for PTSD." },
+      { "name": "Prazosin", "class": "Alpha-blocker", "note": "Sometimes used to quiet trauma-related nightmares." }
+    ],
+    "redFlags": "If thoughts of suicide or self-harm appear, call or text the 988 Suicide & Crisis Lifeline right away, or call 911 if someone is in immediate danger.",
+    "resources": [
+      { "label": "MedlinePlus — PTSD", "url": "https://medlineplus.gov/search/?query=PTSD" },
+      { "label": "National Center for PTSD (VA)", "url": "https://www.ptsd.va.gov/" }
+    ]
+  },
+  {
+    "id": "ocd",
+    "name": "OCD",
+    "aka": "Obsessive-compulsive disorder",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~2-3 million U.S. adults",
+    "overview": "OCD causes unwanted, intrusive thoughts (obsessions) and repeated behaviors a person feels driven to do (compulsions), like excessive hand-washing or checking. People with OCD usually know the thoughts don't make sense, but the urge to act on them is powerful and time-consuming. It's a brain-based condition — not a personality quirk — and a specific type of therapy plus medication brings real relief to most people.",
+    "symptoms": [
+      "Unwanted thoughts or fears that keep coming back",
+      "Repeated rituals like washing, checking, or counting",
+      "Needing things arranged \"just right\"",
+      "Rituals that eat up an hour or more each day",
+      "Distress when rituals are interrupted"
+    ],
+    "drugs": [
+      { "name": "Exposure & response prevention (ERP)", "class": "Psychotherapy", "note": "The gold-standard therapy that retrains the brain's alarm response." },
+      { "name": "Sertraline (Zoloft)", "class": "SSRI antidepressant", "note": "A first-choice medicine, often at higher strengths than for depression." },
+      { "name": "Fluoxetine (Prozac)", "class": "SSRI antidepressant", "note": "Another common first-line option for OCD." },
+      { "name": "Clomipramine (Anafranil)", "class": "Tricyclic antidepressant", "note": "An older medicine used when SSRIs don't help enough." }
+    ],
+    "redFlags": "If intrusive thoughts turn toward suicide or self-harm, call or text 988 right away, and seek same-day care if symptoms suddenly make daily life impossible.",
+    "resources": [
+      { "label": "MedlinePlus — OCD", "url": "https://medlineplus.gov/search/?query=OCD" },
+      { "label": "International OCD Foundation", "url": "https://iocdf.org/" }
+    ]
+  },
+  {
+    "id": "panic-disorder",
+    "name": "Panic Disorder",
+    "aka": "",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~6 million U.S. adults",
+    "overview": "Panic disorder causes sudden waves of intense fear — panic attacks — that can strike out of the blue, with a racing heart, shortness of breath, dizziness, and a feeling that something terrible is happening. Attacks usually peak within minutes and pass, but the fear of the next one can start to take over daily life. The good news: panic disorder is one of the most treatable anxiety conditions.",
+    "symptoms": [
+      "Sudden surges of intense fear or dread",
+      "Racing or pounding heartbeat",
+      "Shortness of breath or chest tightness",
+      "Dizziness, sweating, or trembling",
+      "Worry about when the next attack will hit",
+      "Avoiding places where attacks have happened"
+    ],
+    "drugs": [
+      { "name": "Sertraline (Zoloft)", "class": "SSRI antidepressant", "note": "A first-choice daily medicine that makes attacks less frequent." },
+      { "name": "Escitalopram (Lexapro)", "class": "SSRI antidepressant", "note": "Another common first-line daily option." },
+      { "name": "Cognitive behavioral therapy", "class": "Psychotherapy", "note": "Teaches skills that take the power out of panic attacks." },
+      { "name": "Alprazolam (Xanax)", "class": "Benzodiazepine", "note": "Short-term rescue for severe attacks; can be habit-forming." }
+    ],
+    "redFlags": "A first-time attack with chest pain or trouble breathing can mimic a heart attack — call 911 to be safe — and call or text 988 for any thoughts of self-harm.",
+    "resources": [
+      { "label": "MedlinePlus — Panic Disorder", "url": "https://medlineplus.gov/search/?query=panic%20disorder" },
+      { "label": "Anxiety & Depression Association of America", "url": "https://adaa.org/" }
+    ]
+  },
+  {
+    "id": "schizophrenia",
+    "name": "Schizophrenia",
+    "aka": "",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~2-3 million U.S. adults",
+    "overview": "Schizophrenia is a serious brain disorder that changes how a person thinks, feels, and perceives reality. It can cause hallucinations (hearing or seeing things others don't), fixed false beliefs, and trouble organizing thoughts. Symptoms usually appear between the late teens and early 30s. It is not \"split personality,\" and it is no one's fault. Antipsychotic medicine plus steady support helps many people manage symptoms and live meaningful lives.",
+    "symptoms": [
+      "Hearing voices or seeing things others don't",
+      "Strong beliefs that don't match reality",
+      "Jumbled thoughts or speech that's hard to follow",
+      "Pulling away from friends and family",
+      "Loss of motivation or emotional expression"
+    ],
+    "drugs": [
+      { "name": "Risperidone (Risperdal)", "class": "Antipsychotic", "note": "A common first-choice medicine for easing hallucinations and delusions." },
+      { "name": "Aripiprazole (Abilify)", "class": "Antipsychotic", "note": "A first-line option that tends to cause less weight gain." },
+      { "name": "Olanzapine (Zyprexa)", "class": "Antipsychotic", "note": "Effective, though it can affect weight and blood sugar." },
+      { "name": "Clozapine (Clozaril)", "class": "Antipsychotic", "note": "Reserved for when other medicines haven't worked; needs blood monitoring." }
+    ],
+    "redFlags": "If someone may harm themselves or others, or voices are commanding them to, call 911 or call/text 988 immediately.",
+    "resources": [
+      { "label": "MedlinePlus — Schizophrenia", "url": "https://medlineplus.gov/search/?query=schizophrenia" },
+      { "label": "National Alliance on Mental Illness", "url": "https://www.nami.org/" }
+    ]
+  },
+  {
+    "id": "alcohol-use-disorder",
+    "name": "Alcohol Use Disorder",
+    "aka": "Alcoholism",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "~28 million U.S. adults",
+    "overview": "Alcohol use disorder means drinking has become hard to control and keeps causing problems — at home, at work, or with health — yet stopping feels difficult. It ranges from mild to severe, and it is a medical condition, not a moral failing. Effective treatments exist, including medications that reduce cravings, counseling, and support groups, and many people recover fully. Even cutting back brings real health benefits.",
+    "symptoms": [
+      "Drinking more, or longer, than intended",
+      "Strong cravings for alcohol",
+      "Needing more drinks to feel the same effect",
+      "Drinking despite problems with family, work, or health",
+      "Shakiness, sweating, or nausea when not drinking"
+    ],
+    "drugs": [
+      { "name": "Naltrexone (Vivitrol)", "class": "Anti-craving medicine", "note": "A first-choice medicine that dulls the urge to drink." },
+      { "name": "Acamprosate (Campral)", "class": "Anti-craving medicine", "note": "Helps the brain stay steady after quitting." },
+      { "name": "Counseling & support groups", "class": "Behavioral treatment", "note": "Therapy and groups like AA are a core part of recovery." },
+      { "name": "Disulfiram (Antabuse)", "class": "Alcohol-deterrent", "note": "Causes unpleasant effects if alcohol is consumed." }
+    ],
+    "redFlags": "Withdrawal with confusion, seizures, or hallucinations after heavy drinking stops is life-threatening — call 911 — and call or text 988 for thoughts of self-harm.",
+    "resources": [
+      { "label": "MedlinePlus — Alcohol Use Disorder", "url": "https://medlineplus.gov/search/?query=alcohol%20use%20disorder" },
+      { "label": "National Institute on Alcohol Abuse and Alcoholism", "url": "https://www.niaaa.nih.gov/" }
+    ]
+  },
+  {
+    "id": "eating-disorders",
+    "name": "Eating Disorders",
+    "aka": "Anorexia, bulimia, binge-eating disorder",
+    "specialtyId": "psychiatry",
+    "category": "Mental Health",
+    "prevalence": "about 9% of Americans in their lifetime",
+    "overview": "Eating disorders — including anorexia, bulimia, and binge-eating disorder — are serious conditions in which eating, weight, and body image take over a person's thoughts and health. They affect people of every gender, age, and body size, and they are medical illnesses, not choices. Because they can damage the heart and other organs, early treatment matters. With therapy, nutrition support, and sometimes medication, full recovery is possible.",
+    "symptoms": [
+      "Intense fear of gaining weight or distorted body image",
+      "Severely limiting food, or episodes of binge eating",
+      "Vomiting, laxatives, or extreme exercise to \"undo\" eating",
+      "Noticeable weight changes",
+      "Eating in secret or withdrawing at mealtimes",
+      "Dizziness, fainting, or feeling cold all the time"
+    ],
+    "drugs": [
+      { "name": "Nutrition counseling & talk therapy", "class": "Behavioral treatment", "note": "The foundation of treatment — restoring health and rebuilding a calm relationship with food." },
+      { "name": "Fluoxetine (Prozac)", "class": "SSRI antidepressant", "note": "FDA-approved for bulimia; reduces binge-purge cycles." },
+      { "name": "Lisdexamfetamine (Vyvanse)", "class": "Stimulant", "note": "FDA-approved for moderate to severe binge-eating disorder." }
+    ],
+    "redFlags": "Fainting, chest pain, or a very slow or irregular heartbeat needs emergency care — call 911 — and call or text 988 for thoughts of self-harm.",
+    "resources": [
+      { "label": "MedlinePlus — Eating Disorders", "url": "https://medlineplus.gov/search/?query=eating%20disorders" },
+      { "label": "National Eating Disorders Association", "url": "https://www.nationaleatingdisorders.org/" }
+    ]
+  }
+]

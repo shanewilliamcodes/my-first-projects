@@ -1,0 +1,167 @@
+[
+  {
+    "id": "crohns-disease",
+    "name": "Crohn's Disease",
+    "aka": "Regional enteritis",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "~800,000 Americans",
+    "overview": "Crohn's disease is a long-term condition where the immune system mistakenly attacks the digestive tract, causing inflammation anywhere from mouth to anus — most often the end of the small intestine. It tends to flare up and then quiet down. There's no cure yet, but modern medicines can calm the inflammation, ease symptoms like pain and diarrhea, and help many people stay in remission for years.",
+    "symptoms": ["Belly pain and cramping (often lower right)", "Ongoing diarrhea", "Weight loss and fatigue", "Blood in the stool", "Mouth sores or sores near the anus"],
+    "drugs": [
+      { "name": "Prednisone / Budesonide", "class": "Steroid", "note": "Calms flares quickly; not meant for long-term use." },
+      { "name": "Azathioprine (Imuran)", "class": "Immunomodulator", "note": "Quiets the immune system to help keep remission going." },
+      { "name": "Adalimumab (Humira)", "class": "Biologic", "note": "Blocks a key inflammation signal; given as a shot." },
+      { "name": "Infliximab (Remicade)", "class": "Biologic", "note": "IV medicine for moderate-to-severe disease." }
+    ],
+    "redFlags": "Severe belly pain with fever, repeated vomiting, or a swollen, rigid abdomen could mean a blockage or tear — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Crohn's Disease", "url": "https://medlineplus.gov/search/?query=Crohn%27s%20disease" },
+      { "label": "Crohn's & Colitis Foundation", "url": "https://www.crohnscolitisfoundation.org/" }
+    ]
+  },
+  {
+    "id": "ulcerative-colitis",
+    "name": "Ulcerative Colitis",
+    "aka": "UC",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "~900,000 Americans",
+    "overview": "Ulcerative colitis is an inflammatory bowel disease that affects only the colon (large intestine), where the immune system causes sores and inflammation in the inner lining. Symptoms come in flares — bloody diarrhea, cramping, urgency — followed by calm stretches. It often starts in young adulthood. While there's no cure short of surgery, today's medicines keep many people symptom-free for long periods.",
+    "symptoms": ["Diarrhea, often with blood or pus", "Belly cramping", "Urgent need to go", "Fatigue", "Weight loss"],
+    "drugs": [
+      { "name": "Mesalamine (Lialda)", "class": "Aminosalicylate", "note": "The usual first medicine for mild-to-moderate UC." },
+      { "name": "Prednisone", "class": "Steroid", "note": "Short courses bring flares under control." },
+      { "name": "Azathioprine (Imuran)", "class": "Immunomodulator", "note": "Helps maintain remission between flares." },
+      { "name": "Infliximab (Remicade)", "class": "Biologic", "note": "For moderate-to-severe UC that other medicines don't control." }
+    ],
+    "redFlags": "Heavy rectal bleeding, high fever, or severe pain with a swollen belly can signal a dangerous complication — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Ulcerative Colitis", "url": "https://medlineplus.gov/search/?query=ulcerative%20colitis" },
+      { "label": "Crohn's & Colitis Foundation", "url": "https://www.crohnscolitisfoundation.org/" }
+    ]
+  },
+  {
+    "id": "celiac-disease",
+    "name": "Celiac Disease",
+    "aka": "Celiac sprue, gluten-sensitive enteropathy",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "~2 million Americans",
+    "overview": "Celiac disease is an immune reaction to gluten — a protein in wheat, barley, and rye. When someone with celiac eats gluten, their immune system damages the lining of the small intestine, blocking the absorption of nutrients. It can cause digestive trouble, fatigue, anemia, and more. The good news: a strict gluten-free diet lets the intestine heal, and most people feel dramatically better within weeks to months.",
+    "symptoms": ["Bloating, gas, and diarrhea", "Fatigue", "Weight loss", "Anemia (low iron)", "Itchy, blistery skin rash", "In children, slowed growth"],
+    "drugs": [
+      { "name": "Strict gluten-free diet", "class": "Lifestyle", "note": "The only proven treatment — it lets the intestine heal." },
+      { "name": "Vitamin & mineral supplements", "class": "Supplement", "note": "Replace iron, vitamin D, and other nutrients while the gut recovers." },
+      { "name": "Prednisone", "class": "Steroid", "note": "Rarely needed, for celiac that doesn't respond to the diet." }
+    ],
+    "redFlags": "Relentless diarrhea or vomiting with dizziness, confusion, or other signs of severe dehydration needs same-day medical care.",
+    "resources": [
+      { "label": "MedlinePlus — Celiac Disease", "url": "https://medlineplus.gov/search/?query=celiac%20disease" },
+      { "label": "Celiac Disease Foundation", "url": "https://celiac.org/" }
+    ]
+  },
+  {
+    "id": "gallstones",
+    "name": "Gallstones",
+    "aka": "Cholelithiasis",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "About 25 million Americans",
+    "overview": "Gallstones are hardened lumps of digestive fluid — usually cholesterol — that form in the gallbladder, a small pouch under the liver. Many people have them and never know it. Trouble starts when a stone blocks a duct, causing sudden pain in the upper right belly, often after a fatty meal. If stones keep causing attacks, removing the gallbladder is a safe, common surgery, and most people live normally without it.",
+    "symptoms": ["Sudden pain in the upper right belly", "Pain spreading to the right shoulder or back", "Nausea or vomiting", "Attacks often follow fatty meals"],
+    "drugs": [
+      { "name": "Gallbladder removal (cholecystectomy)", "class": "Procedure", "note": "The standard fix for stones that cause attacks, usually done with small incisions." },
+      { "name": "Ibuprofen / Naproxen", "class": "NSAID", "note": "Eases pain during a gallstone attack." },
+      { "name": "Ursodiol (Actigall)", "class": "Bile-acid pill", "note": "Can slowly dissolve some cholesterol stones when surgery isn't an option." }
+    ],
+    "redFlags": "Belly pain lasting more than a few hours with fever, chills, or yellowing skin or eyes means go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Gallstones", "url": "https://medlineplus.gov/search/?query=gallstones" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "peptic-ulcer",
+    "name": "Peptic Ulcer",
+    "aka": "Stomach ulcer, duodenal ulcer",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "About 1 in 10 Americans during their lifetime",
+    "overview": "A peptic ulcer is an open sore in the lining of the stomach or the first part of the small intestine. Most are caused by a common bacterium called H. pylori or by regular use of pain relievers like ibuprofen — not by stress or spicy food, as once believed. The burning belly pain can be miserable, but most ulcers heal completely with a few weeks of medicine.",
+    "symptoms": ["Burning or gnawing belly pain", "Pain that changes with eating", "Bloating or burping", "Nausea", "Feeling full quickly"],
+    "drugs": [
+      { "name": "Omeprazole (Prilosec)", "class": "Proton-pump inhibitor", "note": "Cuts stomach acid so the ulcer can heal." },
+      { "name": "Antibiotic combo (amoxicillin + clarithromycin)", "class": "Antibiotics", "note": "Clears H. pylori, the bacteria behind most ulcers." },
+      { "name": "Famotidine (Pepcid)", "class": "H2 blocker", "note": "A gentler acid reducer, used when medicines like omeprazole aren't a fit." },
+      { "name": "Bismuth subsalicylate (Pepto-Bismol)", "class": "Stomach protectant", "note": "Coats the ulcer and helps fight H. pylori." }
+    ],
+    "redFlags": "Vomiting blood, black or tarry stools, or sudden severe belly pain are emergencies — call 911 or get to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Peptic Ulcer", "url": "https://medlineplus.gov/search/?query=peptic%20ulcer" },
+      { "label": "American College of Gastroenterology", "url": "https://gi.org/" }
+    ]
+  },
+  {
+    "id": "fatty-liver",
+    "name": "Fatty Liver Disease",
+    "aka": "NAFLD, MASLD",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "About 1 in 4 U.S. adults",
+    "overview": "Fatty liver disease means extra fat has built up in the liver, usually linked to weight, diabetes, or high cholesterol rather than alcohol. Most people have no symptoms and find out through routine blood work. Caught early, it's very treatable — losing even 5 to 10 percent of body weight can clear much of the fat. Left alone, it can slowly progress to inflammation and scarring in some people.",
+    "symptoms": ["Usually no symptoms at all", "Tiredness", "Dull ache in the upper right belly", "Abnormal liver tests on routine blood work"],
+    "drugs": [
+      { "name": "Weight loss & exercise", "class": "Lifestyle", "note": "The most effective treatment — even modest weight loss helps the liver." },
+      { "name": "Vitamin E", "class": "Supplement", "note": "Sometimes used for liver inflammation, under a doctor's guidance." },
+      { "name": "Pioglitazone (Actos)", "class": "Diabetes medicine", "note": "An option for some people with diabetes and liver inflammation." },
+      { "name": "Resmetirom (Rezdiffra)", "class": "Liver medicine", "note": "A newer prescription for moderate-to-advanced liver scarring." }
+    ],
+    "redFlags": "Yellowing skin or eyes, a swollen belly, or new confusion can signal serious liver trouble — seek emergency care.",
+    "resources": [
+      { "label": "MedlinePlus — Fatty Liver Disease", "url": "https://medlineplus.gov/search/?query=fatty%20liver%20disease" },
+      { "label": "American Liver Foundation", "url": "https://liverfoundation.org/" }
+    ]
+  },
+  {
+    "id": "diverticulitis",
+    "name": "Diverticulitis",
+    "aka": "Diverticular disease",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "~200,000 U.S. hospital stays each year",
+    "overview": "Diverticulitis happens when small pouches that form in the colon wall (called diverticula) become inflamed or infected, causing pain — usually in the lower left belly — plus fever or nausea. The pouches themselves are very common with age and usually harmless. Most flares are mild and clear up with rest, a temporary liquid diet, and sometimes antibiotics, though severe or repeated attacks occasionally need surgery.",
+    "symptoms": ["Steady pain, usually in the lower left belly", "Fever and chills", "Nausea or vomiting", "Constipation or, less often, diarrhea", "Tenderness when the belly is pressed"],
+    "drugs": [
+      { "name": "Amoxicillin-clavulanate (Augmentin)", "class": "Antibiotic", "note": "A common choice when antibiotics are needed for a flare." },
+      { "name": "Metronidazole (Flagyl) + ciprofloxacin", "class": "Antibiotics", "note": "A frequently used pair for people who can't take penicillin." },
+      { "name": "Acetaminophen (Tylenol)", "class": "Pain reliever", "note": "Preferred over NSAIDs, which can irritate the colon." },
+      { "name": "Clear-liquid diet", "class": "Lifestyle", "note": "Rests the colon for a few days during a mild flare." }
+    ],
+    "redFlags": "Worsening pain, high fever, or vomiting that keeps you from holding down fluids needs emergency care — go to the ER.",
+    "resources": [
+      { "label": "MedlinePlus — Diverticulitis", "url": "https://medlineplus.gov/search/?query=diverticulitis" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  },
+  {
+    "id": "lactose-intolerance",
+    "name": "Lactose Intolerance",
+    "aka": "Lactose malabsorption",
+    "specialtyId": "gastroenterology",
+    "category": "Digestive Health",
+    "prevalence": "About 30–50 million Americans",
+    "overview": "Lactose intolerance means the body doesn't make enough lactase, the enzyme that digests the natural sugar in milk. After dairy, the undigested lactose ferments in the gut, causing gas, bloating, cramps, and diarrhea. It's extremely common — and it's not dangerous, and not the same as a milk allergy. Most people manage it easily by adjusting how much dairy they eat, choosing lactose-free products, or taking lactase tablets before meals.",
+    "symptoms": ["Bloating and gas", "Stomach cramps", "Diarrhea", "Nausea after eating dairy", "Rumbling stomach sounds"],
+    "drugs": [
+      { "name": "Lactase tablets (Lactaid)", "class": "Enzyme supplement", "note": "Taken with dairy to help digest the lactose." },
+      { "name": "Lactose-free dairy products", "class": "Lifestyle", "note": "Same nutrition as regular dairy, minus the lactose." },
+      { "name": "Calcium & vitamin D supplements", "class": "Supplement", "note": "Fill the nutritional gap if you cut back on dairy." }
+    ],
+    "redFlags": "Blood in the stool, unintended weight loss, or symptoms that continue even off dairy aren't from lactose intolerance — seek same-day care.",
+    "resources": [
+      { "label": "MedlinePlus — Lactose Intolerance", "url": "https://medlineplus.gov/search/?query=lactose%20intolerance" },
+      { "label": "NIDDK", "url": "https://www.niddk.nih.gov/" }
+    ]
+  }
+]
