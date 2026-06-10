@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import {
-  CONDITIONS, TOP_DRUGS, SPECIALTIES, CONDITION_COUNT,
+  CONDITIONS, TOP_DRUGS, SPECIALTIES, CONDITION_COUNT, SCREENINGS,
   specialtyById, conditionById, conditionsForSpecialty, guessSpecialtyId,
   searchAll, costPlusUrl, goodRxUrl, trumpRxUrl,
   findProviderUrl, zocdocUrl, healthgradesUrl, medlineSearchUrl,
@@ -65,6 +65,24 @@ function useFavorites() {
       return { ...f, [kind]: has ? f[kind].filter((x) => x !== key) : [...f[kind], key] };
     });
   return [favs, toggleFav];
+}
+
+// Last few things the user opened (conditions/drugs), persisted locally.
+// Keys look like "c:hypertension" or "d:Atorvastatin".
+function useRecents() {
+  const [recents, setRecents] = useState(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem('he:recents'));
+      if (Array.isArray(raw)) return raw.filter((x) => typeof x === 'string');
+    } catch { /* fresh start */ }
+    return [];
+  });
+  useEffect(() => {
+    try { localStorage.setItem('he:recents', JSON.stringify(recents)); } catch { /* quota */ }
+  }, [recents]);
+  const pushRecent = (key) =>
+    setRecents((r) => [key, ...r.filter((x) => x !== key)].slice(0, 8));
+  return [recents, pushRecent];
 }
 
 function Star({ active, onClick }) {
@@ -650,6 +668,25 @@ function DrugModal({ drug: d, onClose, onOpenCondition, isFav, onToggleFav }) {
                       <p className="text-sm leading-relaxed text-amber-100/90">{label.data.warning}</p>
                     </div>
                   )}
+                  {label.data.sideEffects && (
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
+                      <div className="mb-1 text-xs font-bold uppercase tracking-wide text-cyan-300">Common side effects</div>
+                      <p className="text-sm leading-relaxed text-slate-300">{label.data.sideEffects}</p>
+                    </div>
+                  )}
+                  {label.data.interactions && (
+                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
+                      <div className="mb-1 text-xs font-bold uppercase tracking-wide text-cyan-300">Interactions to know about</div>
+                      <p className="text-sm leading-relaxed text-slate-300">{label.data.interactions}</p>
+                    </div>
+                  )}
+                  <a
+                    href={`https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=${encodeURIComponent(cleanName)}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="inline-block text-xs font-semibold text-emerald-300 hover:underline"
+                  >
+                    Read the full official label (DailyMed, NIH) →
+                  </a>
                 </div>
               ) : (
                 <p className="text-sm text-slate-400">No official label summary was found for this name. Use the links below for details.</p>
@@ -785,12 +822,25 @@ function SearchResults({ query, onOpenCondition, onOpenLive, onOpenDrug, onClear
 
 /* ============================ tabs / views ============================ */
 
-function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSearch, favs }) {
+function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSearch, favs, recents }) {
   const featured = FEATURED_IDS.map(conditionById).filter(Boolean);
   const topTen = TOP_DRUGS.slice(0, 10);
   const [heroQ, setHeroQ] = useState('');
   const savedConditions = (favs?.conditions || []).map(conditionById).filter(Boolean);
   const savedDrugs = favs?.drugs || [];
+  // Resolve recent keys ("c:id" / "d:name") to display items; drop stale ids.
+  const recentItems = (recents || [])
+    .map((key) => {
+      const [t, ...rest] = key.split(':');
+      const k = rest.join(':');
+      if (t === 'c') {
+        const c = conditionById(k);
+        return c ? { key, label: c.name, open: () => onOpenCondition(c.id) } : null;
+      }
+      return { key, label: k, open: () => onOpenDrug(TOP_DRUGS.find((d) => d.name === k) || { name: k }) };
+    })
+    .filter(Boolean)
+    .slice(0, 6);
 
   const submitHero = (e) => {
     e.preventDefault();
@@ -840,6 +890,21 @@ function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSea
           Searches the U.S. National Library of Medicine — thousands of conditions, plus the top 100 drugs.
         </p>
       </section>
+
+      {/* recently viewed */}
+      {recentItems.length > 0 && (
+        <section className="-mt-4">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">🕘 Recent:</span>
+            {recentItems.map((r) => (
+              <button key={r.key} onClick={r.open}
+                className="rounded-full bg-white/5 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-white/15 hover:text-white">
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* saved items */}
       {(savedConditions.length > 0 || savedDrugs.length > 0) && (
@@ -970,13 +1035,20 @@ function ConditionsView({ onOpenCondition }) {
 function DrugsView({ onOpenCondition, onOpenDrug }) {
   const [lookup, setLookup] = useState('');
 
+  // One box does both: filters the top-100 list as you type, and
+  // submitting looks any drug up via the FDA if it's not in the list.
+  const q = lookup.trim().toLowerCase();
+  const filtered = q
+    ? TOP_DRUGS.filter((d) => [d.name, d.brand, d.class, d.use].join(' ').toLowerCase().includes(q))
+    : TOP_DRUGS;
+
   const submitLookup = (e) => {
     e.preventDefault();
     const name = lookup.trim();
-    if (name) {
-      onOpenDrug({ name });
-      setLookup('');
-    }
+    if (!name) return;
+    // Exactly one match in the list? Open it rich; otherwise FDA lookup.
+    onOpenDrug(filtered.length === 1 ? filtered[0] : { name });
+    setLookup('');
   };
 
   return (
@@ -994,7 +1066,7 @@ function DrugsView({ onOpenCondition, onOpenDrug }) {
           <input
             value={lookup}
             onChange={(e) => setLookup(e.target.value)}
-            placeholder="Not in the list? Look up any drug — e.g. “Ozempic”, “amoxicillin”…"
+            placeholder="Filter the list, or look up any drug — e.g. “Ozempic”, “amoxicillin”…"
             className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-10 pr-24 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400/50 focus:bg-white/10"
           />
           <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">💊</span>
@@ -1003,13 +1075,22 @@ function DrugsView({ onOpenCondition, onOpenDrug }) {
             Look up
           </button>
         </div>
-        <p className="mt-1.5 text-xs text-slate-600">Pulls the official label from the FDA — works for most U.S. prescription and OTC drugs.</p>
+        <p className="mt-1.5 text-xs text-slate-600">
+          {q && filtered.length > 0
+            ? `${filtered.length} match${filtered.length === 1 ? '' : 'es'} in the top 100 — or press Look up for the FDA label.`
+            : 'Typing filters the top 100; pressing Look up pulls the official FDA label for any U.S. drug.'}
+        </p>
       </form>
 
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40">
-        {TOP_DRUGS.map((d) => (
+        {filtered.map((d) => (
           <DrugRow key={d.rank} d={d} onConditionClick={onOpenCondition} onOpenDrug={onOpenDrug} />
         ))}
+        {filtered.length === 0 && (
+          <p className="p-6 text-center text-sm text-slate-400">
+            Not in the top 100 — press <span className="font-semibold text-emerald-300">Look up</span> to pull “{lookup.trim()}” from the FDA.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -1115,6 +1196,98 @@ function SpecialtyDetail({ specialty: s, onBack, onOpenCondition }) {
   );
 }
 
+/* ============================ checkups ============================ */
+
+function ScreeningCard({ s, dimmed }) {
+  return (
+    <div className={`rounded-2xl border border-white/10 bg-slate-800/40 p-4 ${dimmed ? 'opacity-60' : ''}`}>
+      <div className="flex items-start gap-3">
+        <span className="text-2xl">{s.emoji}</span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-bold text-white">{s.name}</h3>
+            {s.who !== 'all' && <Pill tone="cyan">{s.who === 'women' ? 'Women' : 'Men'}</Pill>}
+            <Pill>{s.ageMax ? `Ages ${s.ageMin}–${s.ageMax}` : `${s.ageMin}+`}</Pill>
+          </div>
+          <p className="mt-1 text-sm font-medium text-emerald-300/90">{s.freq}</p>
+          <p className="mt-1 text-sm leading-relaxed text-slate-400">{s.why}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CheckupsView() {
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('all');
+
+  const n = parseInt(age, 10);
+  const hasAge = !Number.isNaN(n) && n >= 18 && n <= 120;
+
+  const fitsSex = (s) => s.who === 'all' || sex === 'all' || s.who === sex;
+  const dueNow = SCREENINGS.filter((s) => fitsSex(s) && hasAge && n >= s.ageMin && (s.ageMax == null || n <= s.ageMax));
+  const comingUp = SCREENINGS.filter((s) => fitsSex(s) && hasAge && n < s.ageMin);
+  const all = SCREENINGS.filter(fitsSex);
+
+  const section = (title, list, dimmed = false) =>
+    list.length > 0 && (
+      <section className="mb-8">
+        <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-400">{title}</h3>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {list.map((s) => <ScreeningCard key={s.id} s={s} dimmed={dimmed} />)}
+        </div>
+      </section>
+    );
+
+  return (
+    <div>
+      <div className="mb-5">
+        <h2 className="text-xl font-bold text-white">Checkups, screenings &amp; vaccines</h2>
+        <p className="text-sm text-slate-400">
+          The routine care most adults should get — based on standard U.S. guidance (USPSTF &amp; CDC).
+          Enter your age to see your personal checklist.
+        </p>
+      </div>
+
+      {/* personalize */}
+      <div className="mb-8 flex flex-wrap items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/[0.06] p-4">
+        <label className="flex items-center gap-2 text-sm font-semibold text-slate-300">
+          Your age
+          <input
+            type="number" min="18" max="120" value={age} onChange={(e) => setAge(e.target.value)}
+            placeholder="e.g. 45"
+            className="w-24 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-emerald-400/50"
+          />
+        </label>
+        <div className="flex gap-1.5">
+          {[['all', 'Everyone'], ['women', 'Women'], ['men', 'Men']].map(([v, l]) => (
+            <button key={v} onClick={() => setSex(v)}
+              className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${
+                sex === v ? 'bg-emerald-500 text-slate-900' : 'bg-white/10 text-slate-300 hover:bg-white/20'
+              }`}>
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {hasAge ? (
+        <>
+          {section(`✅ Recommended at age ${n}`, dueNow)}
+          {section('🗓️ Coming up later', comingUp, true)}
+        </>
+      ) : (
+        section('All recommendations', all)
+      )}
+
+      <p className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center text-xs text-slate-500">
+        General guidance only — family history and personal risk can change what's right for you.
+        Bring this list to your next checkup and decide together with your doctor.
+      </p>
+    </div>
+  );
+}
+
 /* ============================ root ============================ */
 
 const TABS = [
@@ -1122,6 +1295,7 @@ const TABS = [
   { id: 'conditions', label: 'Conditions' },
   { id: 'drugs', label: 'Drugs' },
   { id: 'specialties', label: 'Specialties' },
+  { id: 'checkups', label: 'Checkups' },
   { id: 'news', label: 'News' },
 ];
 
@@ -1151,6 +1325,17 @@ export default function App() {
   const [openLive, setOpenLive] = useState(null);
   const [openDrug, setOpenDrug] = useState(init.drugName ? drugByName(init.drugName) : null);
   const [favs, toggleFav] = useFavorites();
+  const [recents, pushRecent] = useRecents();
+
+  // Track what gets opened for the "Recently viewed" strip on Home.
+  useEffect(() => {
+    if (openConditionId) pushRecent(`c:${openConditionId}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openConditionId]);
+  useEffect(() => {
+    if (openDrug?.name) pushRecent(`d:${openDrug.name}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openDrug?.name]);
 
   // Keep the URL hash in sync so any view is shareable.
   useEffect(() => {
@@ -1249,11 +1434,13 @@ export default function App() {
         ) : openSpecialty ? (
           <SpecialtyDetail specialty={openSpecialty} onBack={() => setOpenSpecialtyId(null)} onOpenCondition={setOpenConditionId} />
         ) : tab === 'home' ? (
-          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} onSearch={setQuery} favs={favs} />
+          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} onSearch={setQuery} favs={favs} recents={recents} />
         ) : tab === 'conditions' ? (
           <ConditionsView onOpenCondition={setOpenConditionId} />
         ) : tab === 'drugs' ? (
           <DrugsView onOpenCondition={setOpenConditionId} onOpenDrug={setOpenDrug} />
+        ) : tab === 'checkups' ? (
+          <CheckupsView />
         ) : tab === 'news' ? (
           <NewsView />
         ) : (

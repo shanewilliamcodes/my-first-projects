@@ -165,7 +165,7 @@ function firstSentence(text, max = 320) {
 export async function fetchDrugLabel(name) {
   const n = name.trim().toLowerCase().replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim();
   if (!n) return null;
-  return cached(`fda:${n}`, async () => {
+  return cached(`fda:v2:${n}`, async () => {
     const tryUrl = (field) =>
       `https://api.fda.gov/drug/label.json?search=openfda.${field}:"${enc(n)}"&limit=1`;
     try {
@@ -176,6 +176,8 @@ export async function fetchDrugLabel(name) {
       return {
         usage: firstSentence(r.indications_and_usage?.[0] || r.purpose?.[0] || ''),
         warning: firstSentence(r.warnings?.[0] || r.boxed_warning?.[0] || '', 280),
+        sideEffects: firstSentence(r.adverse_reactions?.[0] || '', 350),
+        interactions: firstSentence(r.drug_interactions?.[0] || '', 350),
         generic: r.openfda?.generic_name?.[0] || '',
         brand: r.openfda?.brand_name?.[0] || '',
       };

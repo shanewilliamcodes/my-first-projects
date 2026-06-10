@@ -1086,6 +1086,60 @@ export const TOP_DRUGS = [
   { rank: 100, name: 'Latanoprost', brand: 'Xalatan', class: 'Prostaglandin eye drop', use: 'Glaucoma', conditionId: null, rx: '~2M' },
 ];
 
+/* ---------------- recommended checkups, screenings & vaccines ---------------- *
+ * General adult guidance at the USPSTF/CDC consumer level. Ages are the
+ * typical recommended ranges; individuals with risk factors may start
+ * earlier — the UI says to ask your doctor. NOT medical advice.
+ */
+export const SCREENINGS = [
+  // -- screenings --
+  { id: 'bp-check', kind: 'screening', emoji: '🩺', name: 'Blood pressure check', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'At least once a year', why: 'High blood pressure has no symptoms but quietly drives heart attacks and strokes. A 30-second cuff reading catches it.' },
+  { id: 'cholesterol', kind: 'screening', emoji: '🫀', name: 'Cholesterol (lipid) panel', who: 'all', ageMin: 20, ageMax: null,
+    freq: 'Every 4–6 years; more often after 40 or with risk factors', why: 'A simple blood test that estimates your heart-disease risk and whether a statin would help.' },
+  { id: 'diabetes-screen', kind: 'screening', emoji: '🍬', name: 'Blood sugar (A1C) test', who: 'all', ageMin: 35, ageMax: 70,
+    freq: 'Every 3 years, more often if overweight or prediabetic', why: '1 in 5 people with diabetes don’t know they have it. Catching prediabetes early can reverse it.' },
+  { id: 'colorectal', kind: 'screening', emoji: '🎗️', name: 'Colon cancer screening', who: 'all', ageMin: 45, ageMax: 75,
+    freq: 'Colonoscopy every 10 years, or a stool test every 1–3 years', why: 'Finds and removes polyps before they become cancer — one of the most preventable major cancers.' },
+  { id: 'mammogram', kind: 'screening', emoji: '🌸', name: 'Mammogram (breast cancer)', who: 'women', ageMin: 40, ageMax: 74,
+    freq: 'Every 2 years (some choose yearly)', why: 'Finds breast cancer years before it can be felt, when treatment works best.' },
+  { id: 'cervical', kind: 'screening', emoji: '🔬', name: 'Cervical cancer screening (Pap/HPV)', who: 'women', ageMin: 21, ageMax: 65,
+    freq: 'Pap every 3 years, or Pap + HPV every 5 years', why: 'Cervical cancer is almost entirely preventable with regular screening.' },
+  { id: 'lung-ct', kind: 'screening', emoji: '🫁', name: 'Lung cancer scan (low-dose CT)', who: 'all', ageMin: 50, ageMax: 80,
+    freq: 'Yearly — only for current/former heavy smokers (20+ pack-years)', why: 'Catches lung cancer early in people at high risk from smoking.' },
+  { id: 'psa', kind: 'screening', emoji: '🧪', name: 'Prostate cancer (PSA) — a conversation', who: 'men', ageMin: 55, ageMax: 69,
+    freq: 'Discuss the pros and cons with your doctor', why: 'PSA testing has trade-offs; the recommendation is to decide together with your doctor.' },
+  { id: 'dexa', kind: 'screening', emoji: '🦴', name: 'Bone density scan (DEXA)', who: 'women', ageMin: 65, ageMax: null,
+    freq: 'At 65, repeat per your doctor (earlier if risk factors)', why: 'Finds osteoporosis before the first fracture.' },
+  { id: 'aaa', kind: 'screening', emoji: '🫀', name: 'Abdominal aortic aneurysm ultrasound', who: 'men', ageMin: 65, ageMax: 75,
+    freq: 'Once — for men who have ever smoked', why: 'A one-time painless ultrasound that can catch a silent, dangerous bulge in the aorta.' },
+  { id: 'hep-c', kind: 'screening', emoji: '🧫', name: 'Hepatitis C blood test', who: 'all', ageMin: 18, ageMax: 79,
+    freq: 'At least once in adulthood', why: 'Millions carry hep C without symptoms — and it’s now curable with pills.' },
+  { id: 'hiv', kind: 'screening', emoji: '🎀', name: 'HIV test', who: 'all', ageMin: 15, ageMax: 65,
+    freq: 'At least once; yearly if higher risk', why: 'Modern treatment means a normal lifespan — but only if you know.' },
+  { id: 'depression-screen', kind: 'screening', emoji: '🧠', name: 'Depression check-in', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'At routine visits', why: 'Two quick questions at a checkup can catch depression early. Treatment works.' },
+  { id: 'eye-exam', kind: 'screening', emoji: '👁️', name: 'Comprehensive eye exam', who: 'all', ageMin: 40, ageMax: null,
+    freq: 'Every 1–2 years (yearly with diabetes)', why: 'Glaucoma and diabetic eye disease steal vision silently; an exam catches them early.' },
+  { id: 'dental', kind: 'screening', emoji: '🦷', name: 'Dental cleaning & exam', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'Every 6 months', why: 'Gum disease is linked to heart health, and small cavities are cheap; big ones aren’t.' },
+  // -- vaccines --
+  { id: 'flu-shot', kind: 'vaccine', emoji: '💉', name: 'Flu shot', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'Every fall', why: 'Cuts your risk of flu — and makes it much milder if you do catch it.' },
+  { id: 'covid-vax', kind: 'vaccine', emoji: '💉', name: 'Updated COVID-19 vaccine', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'Yearly updated dose (especially 65+ or higher-risk)', why: 'Keeps protection current against severe illness.' },
+  { id: 'tdap', kind: 'vaccine', emoji: '💉', name: 'Tdap / tetanus booster', who: 'all', ageMin: 18, ageMax: null,
+    freq: 'Every 10 years', why: 'Tetanus protection fades — and the Tdap version also protects newborns around you from whooping cough.' },
+  { id: 'shingles-vax', kind: 'vaccine', emoji: '💉', name: 'Shingles vaccine (Shingrix)', who: 'all', ageMin: 50, ageMax: null,
+    freq: 'Two doses, once', why: 'Over 90% effective at preventing shingles and its lingering nerve pain.' },
+  { id: 'pneumonia-vax', kind: 'vaccine', emoji: '💉', name: 'Pneumococcal (pneumonia) vaccine', who: 'all', ageMin: 50, ageMax: null,
+    freq: 'Once (sometimes a second dose later)', why: 'Protects against the most common cause of bacterial pneumonia.' },
+  { id: 'hpv-vax', kind: 'vaccine', emoji: '💉', name: 'HPV vaccine', who: 'all', ageMin: 18, ageMax: 26,
+    freq: 'Catch-up series through age 26', why: 'Prevents the virus behind most cervical, throat, and other HPV cancers.' },
+  { id: 'rsv-vax', kind: 'vaccine', emoji: '💉', name: 'RSV vaccine', who: 'all', ageMin: 75, ageMax: null,
+    freq: 'Once (60+ with health conditions: ask your doctor)', why: 'RSV hospitalizes thousands of older adults each winter.' },
+];
+
 /* ---------------- external link builders ---------------- */
 const enc = encodeURIComponent;
 
