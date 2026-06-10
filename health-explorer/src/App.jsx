@@ -1109,6 +1109,11 @@ export default function App() {
             Prescription decisions belong to you and your clinician. Cost-comparison links go to third-party sites we don’t control.
           </p>
           <p className="text-slate-600">Crisis support: call or text <span className="font-semibold text-slate-400">988</span> · Emergencies: <span className="font-semibold text-slate-400">911</span></p>
+          <p>
+            <a href="https://shanewilliamcodes.github.io/my-first-projects/" className="font-semibold text-slate-500 transition hover:text-emerald-300">
+              ← All apps by Shane
+            </a>
+          </p>
         </div>
       </footer>
 

@@ -878,7 +878,12 @@ export default function App() {
 
       {selectedPlayer && <PlayerDetailModal player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />}
 
-      <footer className="mt-16 text-center text-xs text-slate-600">Data from ESPN · Built by Shane</footer>
+      <footer className="mt-16 text-center text-xs text-slate-600">
+        Data from ESPN · Built by Shane ·{' '}
+        <a href="https://shanewilliamcodes.github.io/my-first-projects/" className="font-semibold text-slate-500 transition hover:text-orange-300">
+          All apps →
+        </a>
+      </footer>
     </div>
   );
 }
