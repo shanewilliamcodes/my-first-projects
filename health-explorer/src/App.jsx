@@ -47,6 +47,40 @@ function useLive(fn, deps) {
   return state;
 }
 
+// Saved conditions/drugs, persisted in localStorage.
+function useFavorites() {
+  const [favs, setFavs] = useState(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem('he:favs'));
+      if (raw && Array.isArray(raw.conditions) && Array.isArray(raw.drugs)) return raw;
+    } catch { /* fresh start */ }
+    return { conditions: [], drugs: [] };
+  });
+  useEffect(() => {
+    try { localStorage.setItem('he:favs', JSON.stringify(favs)); } catch { /* quota */ }
+  }, [favs]);
+  const toggleFav = (kind, key) =>
+    setFavs((f) => {
+      const has = f[kind].includes(key);
+      return { ...f, [kind]: has ? f[kind].filter((x) => x !== key) : [...f[kind], key] };
+    });
+  return [favs, toggleFav];
+}
+
+function Star({ active, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      title={active ? 'Remove from saved' : 'Save for quick access'}
+      className={`flex h-9 w-9 items-center justify-center rounded-full text-lg transition ${
+        active ? 'bg-amber-400/20 text-amber-300' : 'bg-white/10 text-slate-400 hover:text-amber-300'
+      }`}
+    >
+      {active ? '★' : '☆'}
+    </button>
+  );
+}
+
 function Spinner({ label }) {
   return (
     <div className="flex flex-col items-center gap-3 py-12">
@@ -282,7 +316,7 @@ function NewsView() {
 
 /* ============================ condition modal ============================ */
 
-function ConditionModal({ condition: c, onClose, onOpenDrug }) {
+function ConditionModal({ condition: c, onClose, onOpenDrug, isFav, onToggleFav }) {
   const spec = specialtyById(c.specialtyId);
   const research = useLive(() => fetchPubMed(`${c.name} treatment`, { retmax: 5 }), [c.id]);
 
@@ -301,12 +335,15 @@ function ConditionModal({ condition: c, onClose, onOpenDrug }) {
         className="relative my-4 w-full max-w-2xl rounded-3xl border border-white/10 bg-slate-900 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-        >
-          ✕
-        </button>
+        <div className="absolute right-4 top-4 z-10 flex gap-2">
+          <Star active={isFav} onClick={onToggleFav} />
+          <button
+            onClick={onClose}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+          >
+            ✕
+          </button>
+        </div>
 
         {/* header */}
         <div className="rounded-t-3xl bg-gradient-to-b from-emerald-500/20 to-transparent px-6 pt-8 pb-5">
@@ -541,7 +578,7 @@ function LiveConditionModal({ live, onClose }) {
 
 /* ============================ drug modal ============================ */
 
-function DrugModal({ drug: d, onClose, onOpenCondition }) {
+function DrugModal({ drug: d, onClose, onOpenCondition, isFav, onToggleFav }) {
   const cond = d.conditionId ? conditionById(d.conditionId) : null;
   const label = useLive(() => fetchDrugLabel(d.name), [d.name]);
   const cleanName = d.name.replace(/\s*\(.*?\)\s*/g, '').split('/')[0].trim();
@@ -563,7 +600,10 @@ function DrugModal({ drug: d, onClose, onOpenCondition }) {
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-black/70 p-3 backdrop-blur-sm sm:p-6" onClick={onClose}>
       <div className="relative my-4 w-full max-w-xl rounded-3xl border border-white/10 bg-slate-900 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20">✕</button>
+        <div className="absolute right-4 top-4 z-10 flex gap-2">
+          <Star active={isFav} onClick={onToggleFav} />
+          <button onClick={onClose} className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20">✕</button>
+        </div>
 
         <div className="rounded-t-3xl bg-gradient-to-b from-emerald-500/20 to-transparent px-6 pt-8 pb-5">
           <div className="mb-2 text-4xl">💊</div>
@@ -745,10 +785,12 @@ function SearchResults({ query, onOpenCondition, onOpenLive, onOpenDrug, onClear
 
 /* ============================ tabs / views ============================ */
 
-function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSearch }) {
+function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSearch, favs }) {
   const featured = FEATURED_IDS.map(conditionById).filter(Boolean);
   const topTen = TOP_DRUGS.slice(0, 10);
   const [heroQ, setHeroQ] = useState('');
+  const savedConditions = (favs?.conditions || []).map(conditionById).filter(Boolean);
+  const savedDrugs = favs?.drugs || [];
 
   const submitHero = (e) => {
     e.preventDefault();
@@ -798,6 +840,31 @@ function HomeView({ onOpenCondition, onGoTab, onOpenSpecialty, onOpenDrug, onSea
           Searches the U.S. National Library of Medicine — thousands of conditions, plus the top 100 drugs.
         </p>
       </section>
+
+      {/* saved items */}
+      {(savedConditions.length > 0 || savedDrugs.length > 0) && (
+        <section>
+          <h2 className="mb-1 text-xl font-bold text-white">⭐ Your saved items</h2>
+          <p className="mb-4 text-sm text-slate-400">Tap the star on any condition or drug to keep it here.</p>
+          {savedConditions.length > 0 && (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {savedConditions.map((c) => (
+                <ConditionCard key={c.id} c={c} onClick={() => onOpenCondition(c.id)} />
+              ))}
+            </div>
+          )}
+          {savedDrugs.length > 0 && (
+            <div className={`flex flex-wrap gap-2 ${savedConditions.length > 0 ? 'mt-4' : ''}`}>
+              {savedDrugs.map((name) => (
+                <button key={name} onClick={() => onOpenDrug(TOP_DRUGS.find((d) => d.name === name) || { name })}
+                  className="rounded-full border border-amber-400/20 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-200 transition hover:bg-amber-400/20">
+                  💊 {name}
+                </button>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* most-searched conditions */}
       <section>
@@ -949,11 +1016,62 @@ function DrugsView({ onOpenCondition, onOpenDrug }) {
 }
 
 function SpecialtiesView({ onOpenSpecialty }) {
+  const [helperQ, setHelperQ] = useState('');
+  const [suggestion, setSuggestion] = useState(null);
+
+  const submitHelper = (e) => {
+    e.preventDefault();
+    const q = helperQ.trim();
+    if (q) setSuggestion({ q, spec: specialtyById(guessSpecialtyId(q)) });
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {SPECIALTIES.map((s) => (
-        <SpecialtyCard key={s.id} s={s} onClick={() => onOpenSpecialty(s.id)} />
-      ))}
+    <div>
+      {/* which doctor do I need? */}
+      <section className="mb-8 rounded-3xl border border-cyan-400/20 bg-cyan-500/[0.06] p-5 sm:p-6">
+        <h2 className="text-lg font-bold text-white">🤔 Not sure which kind of doctor you need?</h2>
+        <p className="mt-1 text-sm text-slate-400">
+          Type the condition or problem and we'll point you to the right specialty.
+        </p>
+        <form onSubmit={submitHelper} className="mt-4">
+          <div className="relative max-w-xl">
+            <input
+              value={helperQ}
+              onChange={(e) => setHelperQ(e.target.value)}
+              placeholder="e.g. “itchy rash”, “chest pain”, “kidney stones”…"
+              className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-4 pr-28 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-400/50 focus:bg-white/10"
+            />
+            <button type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-cyan-500 px-3.5 py-2 text-xs font-bold text-slate-900 transition hover:bg-cyan-400">
+              Who treats it?
+            </button>
+          </div>
+        </form>
+        {suggestion && (
+          <div className="mt-4 rounded-2xl border border-white/10 bg-slate-900/60 p-4">
+            <p className="text-sm text-slate-300">
+              For <span className="font-semibold text-white">“{suggestion.q}”</span>, you'd usually start with a{' '}
+              <span className="font-bold text-cyan-300">{suggestion.spec.emoji} {suggestion.spec.find}</span>.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button onClick={() => onOpenSpecialty(suggestion.spec.id)}
+                className="rounded-xl bg-cyan-600/80 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-cyan-500">
+                See what they treat
+              </button>
+              <LinkBtn href={findProviderUrl(suggestion.spec.find)}>🗺️ Find one near me</LinkBtn>
+            </div>
+            <p className="mt-3 text-xs text-slate-600">
+              Rough guide only — your primary-care doctor can always point you to the right specialist.
+            </p>
+          </div>
+        )}
+      </section>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {SPECIALTIES.map((s) => (
+          <SpecialtyCard key={s.id} s={s} onClick={() => onOpenSpecialty(s.id)} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -1007,13 +1125,60 @@ const TABS = [
   { id: 'news', label: 'News' },
 ];
 
+// Shareable URLs: #c/<condition-id>, #d/<drug name>, #s/<specialty-id>, #<tab>.
+function parseHash(hash) {
+  const h = decodeURIComponent((hash || '').replace(/^#/, ''));
+  if (h.startsWith('c/')) return { conditionId: h.slice(2) };
+  if (h.startsWith('d/')) return { drugName: h.slice(2) };
+  if (h.startsWith('s/')) return { specialtyId: h.slice(2), tab: 'specialties' };
+  if (TABS.some((t) => t.id === h)) return { tab: h };
+  return {};
+}
+const drugByName = (name) =>
+  TOP_DRUGS.find((d) => d.name.toLowerCase() === (name || '').toLowerCase()) || (name ? { name } : null);
+
 export default function App() {
-  const [tab, setTab] = useState('home');
+  // Restore state from a shared link on first load.
+  const init = useMemo(() => parseHash(window.location.hash), []);
+  const [tab, setTab] = useState(init.tab || 'home');
   const [query, setQuery] = useState('');
-  const [openConditionId, setOpenConditionId] = useState(null);
-  const [openSpecialtyId, setOpenSpecialtyId] = useState(null);
+  const [openConditionId, setOpenConditionId] = useState(
+    init.conditionId && conditionById(init.conditionId) ? init.conditionId : null
+  );
+  const [openSpecialtyId, setOpenSpecialtyId] = useState(
+    init.specialtyId && specialtyById(init.specialtyId) ? init.specialtyId : null
+  );
   const [openLive, setOpenLive] = useState(null);
-  const [openDrug, setOpenDrug] = useState(null);
+  const [openDrug, setOpenDrug] = useState(init.drugName ? drugByName(init.drugName) : null);
+  const [favs, toggleFav] = useFavorites();
+
+  // Keep the URL hash in sync so any view is shareable.
+  useEffect(() => {
+    const h = openDrug ? `d/${openDrug.name}`
+      : openConditionId ? `c/${openConditionId}`
+      : openSpecialtyId ? `s/${openSpecialtyId}`
+      : tab !== 'home' ? tab : '';
+    const cur = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (cur === h) return;
+    if (h) window.location.hash = h;
+    else window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }, [tab, openConditionId, openSpecialtyId, openDrug]);
+
+  // Back/forward buttons walk through modals and tabs naturally.
+  useEffect(() => {
+    const onHash = () => {
+      const p = parseHash(window.location.hash);
+      if (p.conditionId && conditionById(p.conditionId)) {
+        setOpenConditionId(p.conditionId); setOpenDrug(null); return;
+      }
+      if (p.drugName) { setOpenDrug(drugByName(p.drugName)); return; }
+      setOpenConditionId(null); setOpenDrug(null);
+      setOpenSpecialtyId(p.specialtyId && specialtyById(p.specialtyId) ? p.specialtyId : null);
+      setTab(p.tab || 'home');
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
 
   const openCondition = conditionById(openConditionId);
   const openSpecialty = specialtyById(openSpecialtyId);
@@ -1084,7 +1249,7 @@ export default function App() {
         ) : openSpecialty ? (
           <SpecialtyDetail specialty={openSpecialty} onBack={() => setOpenSpecialtyId(null)} onOpenCondition={setOpenConditionId} />
         ) : tab === 'home' ? (
-          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} onSearch={setQuery} />
+          <HomeView onOpenCondition={setOpenConditionId} onGoTab={goTab} onOpenSpecialty={setOpenSpecialtyId} onOpenDrug={setOpenDrug} onSearch={setQuery} favs={favs} />
         ) : tab === 'conditions' ? (
           <ConditionsView onOpenCondition={setOpenConditionId} />
         ) : tab === 'drugs' ? (
@@ -1122,6 +1287,8 @@ export default function App() {
           condition={openCondition}
           onClose={() => setOpenConditionId(null)}
           onOpenDrug={setOpenDrug}
+          isFav={favs.conditions.includes(openCondition.id)}
+          onToggleFav={() => toggleFav('conditions', openCondition.id)}
         />
       )}
 
@@ -1130,7 +1297,13 @@ export default function App() {
       )}
 
       {openDrug && (
-        <DrugModal drug={openDrug} onClose={() => setOpenDrug(null)} onOpenCondition={setOpenConditionId} />
+        <DrugModal
+          drug={openDrug}
+          onClose={() => setOpenDrug(null)}
+          onOpenCondition={setOpenConditionId}
+          isFav={favs.drugs.includes(openDrug.name)}
+          onToggleFav={() => toggleFav('drugs', openDrug.name)}
+        />
       )}
     </div>
   );
